@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1180" viewBox="0 0 1700 1180">
+<rect x="0" y="0" width="1700" height="1180" fill="#ffffff"/>
+<text x="850" y="48" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#1b2d26" font-weight="bold" text-anchor="middle">MCD — MODELE CONCEPTUEL DE DONNEES</text>
+<text x="850" y="76" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#5d7268" font-weight="normal" text-anchor="middle">CoVoiturage Campus  ·  Arkam, Bilel &amp; Ilyes  ·  BTS SIO 2</text>
+<rect x="70" y="170" width="400" height="198" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="70" y="170" width="400" height="34" rx="3" fill="#d6eddf" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="70" y="198" width="400" height="6" rx="0" fill="#d6eddf" stroke="#d6eddf" stroke-width="1.2"/>
+<path d="M 70 204 L 470 204" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="270.0" y="193" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">UTILISATEUR</text>
+<text x="86" y="228" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 86 231 L 100.2 231" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="86" y="252" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">nom</text>
+<text x="86" y="276" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">email</text>
+<text x="86" y="300" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">mot_de_passe</text>
+<text x="86" y="324" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">role</text>
+<text x="86" y="348" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_inscription</text>
+<rect x="1150" y="150" width="480" height="246" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1150" y="150" width="480" height="34" rx="3" fill="#e1eaf6" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1150" y="178" width="480" height="6" rx="0" fill="#e1eaf6" stroke="#e1eaf6" stroke-width="1.2"/>
+<path d="M 1150 184 L 1630 184" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1390.0" y="173" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">TRAJET</text>
+<text x="1166" y="208" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 1166 211 L 1180.2 211" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="1166" y="232" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">origine</text>
+<text x="1166" y="256" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">destination</text>
+<text x="1166" y="280" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_heure</text>
+<text x="1166" y="304" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">places_totales</text>
+<text x="1166" y="328" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">places_restantes</text>
+<text x="1166" y="352" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">statut</text>
+<text x="1166" y="376" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">prix</text>
+<rect x="620" y="760" width="380" height="126" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="620" y="760" width="380" height="34" rx="3" fill="#fcefcb" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="620" y="788" width="380" height="6" rx="0" fill="#fcefcb" stroke="#fcefcb" stroke-width="1.2"/>
+<path d="M 620 794 L 1000 794" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="810.0" y="783" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">RESERVATION</text>
+<text x="636" y="818" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 636 821 L 650.2 821" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="636" y="842" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">statut</text>
+<text x="636" y="866" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_reservation</text>
+<rect x="1180" y="760" width="420" height="150" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1180" y="760" width="420" height="34" rx="3" fill="#f9e0dd" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1180" y="788" width="420" height="6" rx="0" fill="#f9e0dd" stroke="#f9e0dd" stroke-width="1.2"/>
+<path d="M 1180 794 L 1600 794" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1390.0" y="783" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">AVIS</text>
+<text x="1196" y="818" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 1196 821 L 1210.2 821" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="1196" y="842" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">note</text>
+<text x="1196" y="866" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">commentaire</text>
+<text x="1196" y="890" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_avis</text>
+<polygon points="810,189 922,235 810,281 698,235" fill="#f3f7f5" stroke="#4a6359" stroke-width="1.2"/>
+<text x="810" y="240" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">conduit</text>
+<path d="M 470 235 L 698 235" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<path d="M 922 235 L 1150 235" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="518" y="225" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0,n</text>
+<text x="1102" y="225" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1,1</text>
+<polygon points="400,554 512,600 400,646 288,600" fill="#f3f7f5" stroke="#4a6359" stroke-width="1.2"/>
+<text x="400" y="605" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">reserve</text>
+<path d="M 270 368 L 270 600 L 288 600" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<path d="M 512 600 L 680 600 L 680 760" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="300" y="575" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0,n</text>
+<text x="700" y="735" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1,1</text>
+<polygon points="1240,554 1352,600 1240,646 1128,600" fill="#f3f7f5" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1240" y="605" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">concerne</text>
+<path d="M 1240 396 L 1240 554" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<path d="M 1240 646 L 1240 700 L 930 700 L 930 760" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1278" y="520" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0,n</text>
+<text x="900" y="740" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1,1</text>
+<polygon points="1520,554 1632,600 1520,646 1408,600" fill="#f3f7f5" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1520" y="605" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">porte sur</text>
+<path d="M 1520 396 L 1520 554" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<path d="M 1520 646 L 1520 760" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1558" y="520" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0,n</text>
+<text x="1558" y="740" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1,1</text>
+<polygon points="400,904 512,950 400,996 288,950" fill="#f3f7f5" stroke="#4a6359" stroke-width="1.2"/>
+<text x="400" y="955" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">ecrit</text>
+<path d="M 170 368 L 170 950 L 288 950" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<path d="M 512 950 L 1180 950" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="230" y="925" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0,n</text>
+<text x="1132" y="925" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1,1</text>
+<polygon points="400,1054 512,1100 400,1146 288,1100" fill="#f3f7f5" stroke="#4a6359" stroke-width="1.2"/>
+<text x="400" y="1105" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">est note par</text>
+<path d="M 110 368 L 110 1100 L 288 1100" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<path d="M 512 1100 L 1380 1100 L 1380 910" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="180" y="1075" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0,n</text>
+<text x="1410" y="1075" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1,1</text>
+<text x="400" y="888" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="middle" font-style="italic">role : auteur</text>
+<text x="400" y="1038" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="middle" font-style="italic">role : cible</text>
+<text x="810" y="173" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="middle" font-style="italic">role : conducteur</text>
+<text x="400" y="538" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="middle" font-style="italic">role : passager</text>
+<text x="70" y="1150" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#5d7268" font-weight="normal" text-anchor="start">Il n'existe pas d'entite Conducteur ni Passager : un meme utilisateur est conducteur sur le trajet qu'il publie et passager sur celui qu'il reserve.</text>
+</svg>

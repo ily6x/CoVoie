@@ -1,0 +1,1044 @@
+/* CoVoiturage Campus — présentation Urban. */
+:root {
+    --vert:#161815;
+    --fond:#f6f7f3;
+    --texte:#181a17;
+    --bord:#e5e7df;
+    --gris:#70746a;
+    --accent:#d7efb4;
+}
+
+* {
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+    margin:0;
+    background:var(--fond);
+    color:var(--texte);
+    font:15px/1.65 'Segoe UI',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+}
+
+a {
+    color:inherit;
+    text-decoration:none;
+}
+
+a:hover {
+    color:#566c3d;
+}
+
+a:focus-visible,button:focus-visible {
+    outline:3px solid #90ae64;
+    outline-offset:5px;
+}
+
+.conteneur {
+    width:100%;
+    max-width:1280px;
+    margin:auto;
+    padding:0 40px;
+}
+
+header {
+    position:relative;
+    z-index:5;
+    background:rgba(246,247,243,.95);
+    border-bottom:1px solid transparent;
+}
+
+.entete {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:22px;
+    min-height:100px;
+    padding-top:20px;
+    padding-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.logo {
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:19px;
+    font-weight:650;
+    letter-spacing:-.9px;
+    white-space:nowrap;
+}
+
+.logo strong {
+    font-weight:400;
+}
+
+.logo-carre {
+    display:grid;
+    place-items:center;
+    width:35px;
+    height:35px;
+    margin-right:4px;
+    background:#191b17;
+    color:var(--accent);
+    border-radius:11px;
+    font-size:12px;
+    letter-spacing:-1px;
+    transform:rotate(-7deg);
+}
+
+nav,.entete-compte {
+    display:flex;
+    align-items:center;
+    gap:24px;
+    flex-wrap:wrap;
+}
+
+nav {
+    font-size:13px;
+}
+
+nav a {
+    position:relative;
+    padding:7px 0;
+}
+
+nav a::after {
+    content:'';
+    position:absolute;
+    bottom:2px;
+    left:0;
+    width:100%;
+    height:1px;
+    background:currentColor;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .25s;
+}
+
+nav a:hover::after {
+    transform:scaleX(1);
+}
+
+.entete-compte {
+    gap:12px;
+    font-size:13px;
+}
+
+main {
+    min-height:75vh;
+    padding-top:28px!important;
+    padding-bottom:68px!important;
+}
+
+.page-accueil main {
+    padding-top:0!important;
+}
+
+h1,h2,p {
+    margin-top:0;
+}
+
+h1 {
+    font-size:clamp(28px,4vw,42px);
+    line-height:1.13;
+    font-weight:550;
+    letter-spacing:-1.6px;
+    margin-bottom:18px;
+}
+
+h2 {
+    font-size:21px;
+    font-weight:600;
+    letter-spacing:-.7px;
+    margin-bottom:20px;
+}
+
+.sous-titre,.note-vide,.aide {
+    color:var(--gris);
+}
+
+.bloc {
+    background:#fff;
+    border:1px solid var(--bord);
+    border-radius:21px;
+    padding:28px;
+    margin:20px 0;
+    overflow-x:auto;
+    box-shadow:0 4px 20px #1c271003;
+}
+
+.bloc-formulaire {
+    max-width:620px;
+    margin:30px auto;
+    padding:36px;
+}
+
+.bloc-formulaire h1 {
+    font-size:34px;
+}
+
+.banniere {
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+    min-height:750px;
+    padding:48px 0 0;
+    background:radial-gradient(ellipse at 50% 88%,#eaf3de77,transparent 65%);
+    border-radius:0 0 30px 30px;
+}
+
+.hero-contenu {
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:0 20px;
+}
+
+.hero-sur-titre {
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    color:#646b59;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    margin-bottom:23px;
+}
+
+.hero-sur-titre>span {
+    width:6px;
+    height:6px;
+    background:#a4c779;
+    border-radius:50%;
+    box-shadow:0 0 0 4px #a4c77918;
+}
+
+.banniere h1 {
+    max-width:920px;
+    margin:0 auto 22px;
+    font-size:clamp(36px,5.1vw,66px);
+    font-weight:500;
+    letter-spacing:-3.5px;
+    line-height:1.04;
+}
+
+.point-titre {
+    color:#789551;
+}
+
+.banniere p {
+    max-width:510px;
+    margin:0 auto 27px;
+    font-size:14px;
+    line-height:1.7;
+    color:#73776c;
+}
+
+.hero-actions {
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.bouton {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    border:1px solid transparent;
+    border-radius:100px;
+    padding:12px 20px;
+    font:inherit;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    line-height:1.4;
+    text-decoration:none!important;
+    transition:transform .22s,box-shadow .22s,background .22s;
+}
+
+.bouton:hover {
+    transform:translateY(-2px);
+}
+
+.bouton:active {
+    transform:translateY(0) scale(.98);
+}
+
+.bouton-vert,.bouton-blanc {
+    background:#171a15;
+    color:white;
+}
+
+.bouton-vert:hover,.bouton-blanc:hover {
+    background:#30382a;
+    color:white;
+    box-shadow:0 8px 18px #15200d18;
+}
+
+.hero-actions .bouton-blanc {
+    padding:16px 24px;
+    background:linear-gradient(#30332c,#11130f);
+    border:1px solid #4b4e45;
+    box-shadow:0 4px 0 #0c0f0b,0 15px 24px #1b28182b;
+}
+
+.hero-actions .bouton-blanc span {
+    font-size:17px;
+    font-weight:400;
+}
+
+.bouton-gris {
+    background:#eceedf80;
+    border-color:#e1e5d8;
+    color:var(--texte);
+}
+
+.entete-compte .bouton-gris {
+    background:transparent;
+    border-color:transparent;
+}
+
+.bouton-rouge {
+    background:#fff1ee;
+    color:#a34b3e;
+    border-color:#f0dfdb;
+}
+
+.bouton-transparent {
+    background:transparent;
+    color:#42493c;
+    border-color:#d6dccb;
+}
+
+.bouton-petit {
+    font-size:12px;
+    padding:7px 13px;
+}
+
+.action-inline {
+    display:inline-block;
+    margin:0;
+}
+
+.hero-carte {
+    --pointer-x:0px;
+    --pointer-y:0px;
+    position:relative;
+    height:380px;
+    margin-top:-16px;
+    pointer-events:auto;
+}
+
+.campus-scene {
+    display:block;
+    width:calc(100% + 80px);
+    height:510px;
+    max-width:none;
+    margin-left:-40px;
+    transform:translate(var(--pointer-x),var(--pointer-y));
+    transition:transform .6s ease-out;
+}
+
+.route-pointilles {
+    animation:route-flow 2s linear infinite;
+}
+
+.carte-flottante {
+    position:absolute;
+    top:80px;
+    left:51%;
+    width:158px;
+    padding:18px 18px 16px;
+    background:linear-gradient(135deg,#ffffffed,#ffffffbd);
+    border:1px solid #fff;
+    border-radius:20px;
+    box-shadow:0 22px 30px #434f3020,inset 0 1px #fff;
+    transform:rotate(-8deg);
+    animation:flotter 6s ease-in-out infinite;
+    backdrop-filter:blur(8px);
+}
+
+.carte-surtitre {
+    font-size:10px;
+    font-weight:600;
+}
+
+.carte-mini-voiture {
+    width:105px;
+    margin:13px auto 12px;
+}
+
+.carte-mini-voiture svg, .carte-mini-voiture img {
+    width:100%;
+    filter:drop-shadow(0 6px 3px #282c2215);
+}
+
+.carte-etapes {
+    display:flex;
+    align-items:center;
+    gap:0;
+    padding:0 8px;
+}
+
+.carte-etapes i {
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    border:1px solid #777f6b;
+}
+
+.carte-etapes i:first-child {
+    background:#1f2818;
+    border-color:#1f2818;
+}
+
+.carte-etapes span {
+    flex:1;
+    height:1px;
+    background:#d1d8c7;
+}
+
+.carte-legende {
+    display:flex;
+    justify-content:space-between;
+    margin-top:8px;
+    color:#858b7c;
+    font-size:7px;
+}
+
+.carte-label {
+    position:absolute;
+    font-size:10px;
+    font-weight:550;
+    letter-spacing:.2px;
+    padding:7px 12px;
+    background:#ffffffd6;
+    border:1px solid #fff;
+    border-radius:30px;
+    box-shadow:0 4px 12px #25391c0a;
+}
+
+.carte-label i {
+    display:inline-block;
+    width:5px;
+    height:5px;
+    background:#1a2115;
+    border-radius:50%;
+    margin-right:5px;
+}
+
+.label-depart {
+    left:14%;
+    top:200px;
+    transform:rotate(-7deg);
+}
+
+.label-campus {
+    right:17%;
+    top:178px;
+    transform:rotate(7deg);
+}
+
+.hero-bas {
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid #dfe5d480;
+    margin:28px 0 0;
+    padding:21px 7px;
+    color:#7a826f;
+    font-size:11px;
+    letter-spacing:.4px;
+}
+
+.hero-bas>span:last-child {
+    display:grid;
+    place-items:center;
+    width:28px;
+    height:28px;
+    border:1px solid #d5dccb;
+    border-radius:50%;
+    color:#49543b;
+}
+
+.grille-chiffres {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px;
+    margin:26px 0 48px;
+}
+
+.chiffre {
+    background:#fff;
+    border:1px solid var(--bord);
+    border-radius:18px;
+    text-align:center;
+    padding:23px 12px;
+    transition:transform .25s,box-shadow .25s;
+}
+
+.chiffre:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 24px #39462409;
+}
+
+.chiffre-valeur {
+    font-size:34px;
+    font-weight:500;
+    letter-spacing:-1.5px;
+}
+
+.chiffre-texte {
+    font-size:11px;
+    color:var(--gris);
+    margin-top:3px;
+}
+
+.page-accueil .grille-chiffres {
+    background:#e9eddf80;
+    padding:8px;
+    border-radius:24px;
+}
+
+.page-accueil .chiffre {
+    border-color:transparent;
+    background:#ffffffb3;
+}
+
+.deux-colonnes {
+    display:grid;
+    grid-template-columns:minmax(0,2fr) minmax(0,1fr);
+    gap:32px;
+}
+
+.deux-colonnes>div {
+    min-width:0;
+}
+
+.deux-champs {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.carte-trajet {
+    display:flex;
+    gap:20px;
+    align-items:center;
+    background:white;
+    border:1px solid var(--bord);
+    padding:23px;
+    border-radius:18px;
+    margin:14px 0;
+    color:var(--texte);
+    transition:border-color .25s,transform .25s,box-shadow .25s;
+}
+
+.carte-trajet:hover {
+    border-color:#b6c697;
+    color:inherit;
+    transform:translateY(-3px);
+    box-shadow:0 12px 22px #30451a08;
+}
+
+.trajet-villes-bloc {
+    flex:1;
+    min-width:0;
+}
+
+.trajet-villes {
+    font-weight:600;
+    font-size:14px;
+}
+
+.trajet-villes .badge {
+    margin-left:5px;
+}
+
+.trajet-infos {
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px 14px;
+    font-size:11px;
+    color:var(--gris);
+    margin-top:9px;
+}
+
+.trajet-places {
+    font-size:10px;
+    color:var(--gris);
+    white-space:nowrap;
+}
+
+.trajet-places strong {
+    font-size:20px;
+    color:var(--texte);
+    font-weight:500;
+    margin-right:3px;
+}
+
+.trajet-prix {
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:-.7px;
+    white-space:nowrap;
+}
+
+.fleche {
+    color:#859769;
+    padding:0 5px;
+}
+
+.badge {
+    display:inline-block;
+    font-size:10px;
+    font-weight:500;
+    border-radius:20px;
+    padding:3px 9px;
+    white-space:nowrap;
+    letter-spacing:.2px;
+}
+
+.badge-ouvert,.badge-confirmee {
+    background:#e8f2d8;
+    color:#536c31;
+}
+
+.badge-complet,.badge-attente {
+    background:#f9efda;
+    color:#8d743b;
+}
+
+.badge-termine {
+    background:#ecefe8;
+    color:#737b66;
+}
+
+.badge-refusee {
+    background:#fbebe6;
+    color:#a46451;
+}
+
+.etoiles {
+    color:#788e4f;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.vide {
+    padding:28px;
+    background:#edf0e6;
+    border:1px dashed #d6ddca;
+    border-radius:16px;
+    margin:20px 0;
+    color:#69735b;
+}
+
+.message {
+    padding:16px 22px;
+    border:1px solid #d5e2c6;
+    border-radius:14px;
+    margin-bottom:18px;
+}
+
+.message-succes {
+    background:#eaf3df;
+}
+
+.message-erreur {
+    background:#fff0ea;
+    border-color:#efded4;
+}
+
+label {
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+input,select,textarea {
+    width:100%;
+    padding:13px 15px;
+    border:1px solid #dfe4d7;
+    border-radius:11px;
+    font:inherit;
+    font-size:14px;
+    background:#fafbf7;
+    color:var(--texte);
+    transition:border-color .2s,box-shadow .2s;
+}
+
+input:hover,select:hover,textarea:hover {
+    border-color:#bccba6;
+}
+
+input:focus,select:focus,textarea:focus {
+    outline:none;
+    border-color:#8caa65;
+    box-shadow:0 0 0 3px #b8d68e25;
+    background:#fff;
+}
+
+textarea {
+    resize:vertical;
+}
+
+input[type=hidden] {
+    display:none;
+}
+
+.champ-court {
+    max-width:250px;
+}
+
+.aide {
+    display:block;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.formulaire-filtres {
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    align-items:end;
+}
+
+.formulaire-filtres>div {
+    flex:1;
+    min-width:170px;
+}
+
+table {
+    border-collapse:collapse;
+    width:100%;
+    font-size:13px;
+}
+
+th,td {
+    text-align:left;
+    padding:14px 12px;
+    border-bottom:1px solid #ecefe5;
+}
+
+th {
+    color:#929986;
+    font-size:10px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+}
+
+tr:last-child td {
+    border-bottom:0;
+}
+
+td .bouton {
+    margin:3px;
+}
+
+td a:not(.bouton):hover {
+    text-decoration:underline;
+    text-underline-offset:4px;
+}
+
+.avis-entete,.ligne-classement {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.ligne-classement {
+    padding:15px 0;
+    border-bottom:1px solid #ecefe5;
+    font-size:13px;
+}
+
+.ligne-classement:last-child {
+    border-bottom:0;
+}
+
+.ligne-classement>a {
+    flex:1;
+}
+
+.ligne-classement .etoiles {
+    margin-right:-5px;
+}
+
+footer {
+    border-top:1px solid var(--bord);
+    padding:22px 0;
+    font-size:11px;
+    color:#919886;
+}
+
+footer p {
+    margin:0;
+}
+
+.apparition.est-visible {
+    animation:apparaitre .65s cubic-bezier(.2,.7,.25,1) both;
+}
+
+.hero-contenu {
+    animation:apparaitre .8s ease-out both;
+}
+
+.hero-carte {
+    animation:carte-entree 1.1s ease-out both;
+}
+
+@keyframes apparaitre {
+    from {
+    opacity:0;
+    transform:translateY(16px);
+}
+ to {
+    opacity:1;
+    transform:translateY(0);
+}
+
+}
+
+@keyframes carte-entree {
+    from {
+    opacity:0;
+    transform:translateY(26px);
+}
+ to {
+    opacity:1;
+    transform:translateY(0);
+}
+
+}
+
+@keyframes flotter {
+    0%,100% {
+    transform:translateY(0) rotate(-8deg);
+}
+ 50% {
+    transform:translateY(-9px) rotate(-6deg);
+}
+
+}
+
+@keyframes route-flow {
+    to {
+    stroke-dashoffset:-32;
+}
+
+}
+
+@media(min-width:1400px) {
+    .banniere {
+    padding-top:60px;
+}
+
+}
+
+@media(max-width:1050px) {
+    .entete {
+    gap:15px;
+}
+ nav {
+    gap:15px;
+    flex:1;
+    justify-content:center;
+}
+ .entete-compte {
+    gap:6px;
+}
+ .logo {
+    font-size:16px;
+}
+ .conteneur {
+    padding:0 28px;
+}
+ .banniere h1 {
+    letter-spacing:-2.5px;
+}
+ .campus-scene {
+    width:calc(100% + 120px);
+    margin-left:-60px;
+}
+
+}
+
+@media(max-width:760px) {
+    .conteneur {
+    padding:0 18px;
+}
+ .entete {
+    min-height:90px;
+    gap:14px;
+    padding-top:17px;
+    padding-bottom:17px;
+}
+ .logo {
+    font-size:15px;
+}
+ .logo-carre {
+    width:29px;
+    height:29px;
+    font-size:10px;
+}
+ nav {
+    order:3;
+    width:100%;
+    flex-basis:100%;
+    justify-content:flex-start;
+    gap:18px;
+    font-size:12px;
+}
+ .entete-compte {
+    margin-left:auto;
+}
+ .entete-compte .bouton {
+    font-size:11px;
+    padding:9px 12px;
+}
+ .deux-colonnes,.deux-champs {
+    display:block;
+}
+ .banniere {
+    min-height:640px;
+    padding-top:36px;
+}
+ .hero-contenu {
+    padding:0;
+}
+ .hero-sur-titre {
+    font-size:9px;
+    letter-spacing:1.2px;
+    margin-bottom:22px;
+}
+ .banniere h1 {
+    font-size:clamp(34px,7.3vw,49px);
+    letter-spacing:-1.8px;
+    line-height:1.1;
+}
+ .banniere p {
+    font-size:12px;
+    max-width:340px;
+}
+ .hero-actions .bouton {
+    padding:13px 18px;
+    font-size:12px;
+}
+ .hero-carte {
+    height:290px;
+    margin-top:12px;
+}
+ .campus-scene {
+    position:absolute;
+    width:820px;
+    height:365px;
+    left:50%;
+    margin-left:-410px;
+}
+ .carte-flottante {
+    top:58px;
+    left:49%;
+    width:125px;
+    padding:13px;
+    border-radius:15px;
+}
+ .carte-mini-voiture {
+    width:83px;
+    margin:9px auto;
+}
+ .carte-surtitre {
+    font-size:8px;
+}
+ .carte-legende {
+    font-size:6px;
+}
+ .label-depart {
+    top:157px;
+    left:0;
+}
+ .label-campus {
+    top:146px;
+    right:0;
+}
+ .carte-label {
+    font-size:8px;
+    padding:5px 9px;
+}
+ .hero-bas {
+    margin-top:8px;
+    font-size:9px;
+}
+ .grille-chiffres {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+    margin-bottom:30px;
+}
+ .chiffre {
+    padding:18px 10px;
+}
+ .chiffre-valeur {
+    font-size:28px;
+}
+ .carte-trajet {
+    flex-wrap:wrap;
+    gap:12px;
+    padding:19px;
+}
+ .trajet-villes-bloc {
+    flex-basis:100%;
+}
+ .trajet-prix {
+    margin-left:auto;
+}
+ .bloc {
+    padding:20px;
+    border-radius:17px;
+}
+ .bloc-formulaire {
+    padding:25px;
+}
+ .bloc-formulaire h1 {
+    font-size:29px;
+}
+ main {
+    padding-top:24px!important;
+    padding-bottom:40px!important;
+}
+ .formulaire-filtres {
+    gap:15px;
+}
+ footer {
+    font-size:10px;
+}
+
+}
+
+@media(prefers-reduced-motion:reduce) {
+    html {
+    scroll-behavior:auto;
+}
+ *,*::before,*::after {
+    animation:none!important;
+    transition:none!important;
+}
+ .campus-scene {
+    transform:none;
+}
+
+}
+

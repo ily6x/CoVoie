@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1860" height="1320" viewBox="0 0 1860 1320">
+<rect x="0" y="0" width="1860" height="1320" fill="#ffffff"/>
+<text x="930" y="48" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#1b2d26" font-weight="bold" text-anchor="middle">DIAGRAMME DE CLASSES — COVOITURAGE CAMPUS</text>
+<text x="930" y="76" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#5d7268" font-weight="normal" text-anchor="middle">Correspond exactement au code livre  ·  Arkam, Bilel &amp; Ilyes</text>
+<rect x="70" y="150" width="540" height="367" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="70" y="150" width="540" height="38" rx="3" fill="#d6eddf" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="70" y="182" width="540" height="6" rx="0" fill="#d6eddf" stroke="#d6eddf" stroke-width="1.2"/>
+<path d="M 70 188 L 610 188" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="340.0" y="176" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#1b2d26" font-weight="bold" text-anchor="middle">Utilisateur</text>
+<text x="84" y="215" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- id: int</text>
+<text x="84" y="238" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- nom: string</text>
+<text x="84" y="261" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- email: string</text>
+<text x="84" y="284" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- motDePasse: string</text>
+<text x="84" y="307" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- role: string</text>
+<path d="M 70 323 L 610 323" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="84" y="350" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ find(id): ?Utilisateur</text>
+<text x="84" y="373" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ findByEmail(email): ?Utilisateur</text>
+<text x="84" y="396" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ all(): Utilisateur[]</text>
+<text x="84" y="419" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ register(nom, email, mdp, confirm): int</text>
+<text x="84" y="442" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="bold" text-anchor="start">+ noteMoyenne(): ?float</text>
+<text x="84" y="465" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ nombreAvis(): int</text>
+<text x="84" y="488" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ completedTripCount(): int</text>
+<text x="84" y="511" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ delete(id, admin): void</text>
+<rect x="1130" y="150" width="660" height="505" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1130" y="150" width="660" height="38" rx="3" fill="#e1eaf6" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1130" y="182" width="660" height="6" rx="0" fill="#e1eaf6" stroke="#e1eaf6" stroke-width="1.2"/>
+<path d="M 1130 188 L 1790 188" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1460.0" y="176" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#1b2d26" font-weight="bold" text-anchor="middle">Trajet</text>
+<text x="1144" y="215" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- id: int</text>
+<text x="1144" y="238" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- origine: string</text>
+<text x="1144" y="261" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- destination: string</text>
+<text x="1144" y="284" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- dateHeure: string</text>
+<text x="1144" y="307" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- placesTotales: int</text>
+<text x="1144" y="330" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- placesRestantes: int</text>
+<text x="1144" y="353" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- statut: string</text>
+<text x="1144" y="376" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- prix: ?float</text>
+<text x="1144" y="399" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- idConducteur: int</text>
+<path d="M 1130 415 L 1790 415" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1144" y="442" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ find(id): Trajet</text>
+<text x="1144" y="465" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ verrouiller(id): Trajet</text>
+<text x="1144" y="488" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ search(origine, destination, date): Trajet[]</text>
+<text x="1144" y="511" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ create(conducteur, origine, dest, date, places, prix): int</text>
+<text x="1144" y="534" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="bold" text-anchor="start">+ reserverPlace(idPassager): bool</text>
+<text x="1144" y="557" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ update(id, conducteur, donnees): void</text>
+<text x="1144" y="580" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ cloturer(id, conducteur): void</text>
+<text x="1144" y="603" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ delete(id, conducteur): void</text>
+<text x="1144" y="626" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ occupiedSeats(): int</text>
+<text x="1144" y="649" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ statistics(conducteur): array</text>
+<rect x="360" y="830" width="540" height="321" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="360" y="830" width="540" height="38" rx="3" fill="#fcefcb" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="360" y="862" width="540" height="6" rx="0" fill="#fcefcb" stroke="#fcefcb" stroke-width="1.2"/>
+<path d="M 360 868 L 900 868" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="630.0" y="856" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#1b2d26" font-weight="bold" text-anchor="middle">Reservation</text>
+<text x="374" y="895" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- id: int</text>
+<text x="374" y="918" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- statut: string</text>
+<text x="374" y="941" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- dateReservation: string</text>
+<text x="374" y="964" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- idTrajet: int</text>
+<text x="374" y="987" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- idPassager: int</text>
+<path d="M 360 1003 L 900 1003" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="374" y="1030" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ getList(condition, params): Reservation[]</text>
+<text x="374" y="1053" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ hasRequest(trajet, passager): bool</text>
+<text x="374" y="1076" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ create(trajet, passager): int</text>
+<text x="374" y="1099" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ traiter(trajet, resa, conducteur, accepter): void</text>
+<text x="374" y="1122" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ cancel(id, passager): void</text>
+<text x="374" y="1145" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ passengerRating(): ?float</text>
+<rect x="1130" y="830" width="660" height="390" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1130" y="830" width="660" height="38" rx="3" fill="#f9e0dd" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1130" y="862" width="660" height="6" rx="0" fill="#f9e0dd" stroke="#f9e0dd" stroke-width="1.2"/>
+<path d="M 1130 868 L 1790 868" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1460.0" y="856" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#1b2d26" font-weight="bold" text-anchor="middle">Avis</text>
+<text x="1144" y="895" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- id: int</text>
+<text x="1144" y="918" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- note: int</text>
+<text x="1144" y="941" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- commentaire: ?string</text>
+<text x="1144" y="964" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- dateAvis: string</text>
+<text x="1144" y="987" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- idTrajet: int</text>
+<text x="1144" y="1010" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- idAuteur: int</text>
+<text x="1144" y="1033" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">- idCible: int</text>
+<path d="M 1130 1049 L 1790 1049" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1144" y="1076" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="bold" text-anchor="start">+ noteMoyenne(idUtilisateur): ?float</text>
+<text x="1144" y="1099" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ nombreAvis(id): int</text>
+<text x="1144" y="1122" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ getList(cible): Avis[]</text>
+<text x="1144" y="1145" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ hasReviewed(trajet, auteur, cible): bool</text>
+<text x="1144" y="1168" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ participants(trajet, auteur): array</text>
+<text x="1144" y="1191" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ create(trajet, auteur, cible, note, commentaire): void</text>
+<text x="1144" y="1214" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="normal" text-anchor="start">+ stars(): string</text>
+<path d="M 610 230 L 1130 230" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="870.0" y="220" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">conduit</text>
+<text x="642" y="222" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1</text>
+<text x="1094" y="222" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0..*</text>
+<text x="624" y="252" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="start" font-style="italic">conducteur</text>
+<path d="M 470 517 L 470 830" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="484" y="673.5" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="start">reserve</text>
+<text x="448" y="545" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1</text>
+<text x="442" y="814" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0..*</text>
+<text x="484" y="693.5" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="start" font-style="italic">passager</text>
+<path d="M 1130 700 L 990 700 L 990 890 L 900 890" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1060" y="690" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">contient</text>
+<text x="1094" y="692" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1</text>
+<text x="936" y="882" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0..*</text>
+<path d="M 1700 655 L 1700 830" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1714" y="742.5" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="start">porte sur</text>
+<text x="1676" y="683" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1</text>
+<text x="1670" y="814" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0..*</text>
+<path d="M 180 517 L 180 1200 L 1040 1200 L 1040 1000 L 1130 1000" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="620" y="1190" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">ecrit</text>
+<text x="158" y="545" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1</text>
+<text x="1094" y="992" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0..*</text>
+<text x="620" y="1222" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="middle" font-style="italic">auteur</text>
+<path d="M 120 517 L 120 1265 L 1090 1265 L 1090 1080 L 1130 1080" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="620" y="1255" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b2d26" font-weight="bold" text-anchor="middle">est note par</text>
+<text x="98" y="545" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">1</text>
+<text x="1094" y="1072" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="bold" text-anchor="middle">0..*</text>
+<text x="620" y="1287" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#5d7268" font-weight="normal" text-anchor="middle" font-style="italic">cible</text>
+<text x="70" y="104" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#5d7268" font-weight="normal" text-anchor="start">Notation :  -  attribut prive      +  methode publique      Les deux methodes nommees par le sujet sont en gras.</text>
+</svg>

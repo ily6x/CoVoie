@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1020" viewBox="0 0 1700 1020">
+<rect x="0" y="0" width="1700" height="1020" fill="#ffffff"/>
+<text x="850" y="48" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#1b2d26" font-weight="bold" text-anchor="middle">MLD — MODELE LOGIQUE DE DONNEES</text>
+<text x="850" y="76" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#5d7268" font-weight="normal" text-anchor="middle">Traduction du MCD en tables relationnelles</text>
+<rect x="90" y="160" width="420" height="198" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="90" y="160" width="420" height="34" rx="3" fill="#d6eddf" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="90" y="188" width="420" height="6" rx="0" fill="#d6eddf" stroke="#d6eddf" stroke-width="1.2"/>
+<path d="M 90 194 L 510 194" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="300.0" y="183" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">utilisateurs</text>
+<text x="106" y="218" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 106 221 L 120.2 221" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="106" y="242" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">nom</text>
+<text x="106" y="266" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">email</text>
+<text x="106" y="290" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">mot_de_passe</text>
+<text x="106" y="314" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">role</text>
+<text x="106" y="338" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_inscription</text>
+<rect x="1120" y="160" width="490" height="270" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1120" y="160" width="490" height="34" rx="3" fill="#e1eaf6" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1120" y="188" width="490" height="6" rx="0" fill="#e1eaf6" stroke="#e1eaf6" stroke-width="1.2"/>
+<path d="M 1120 194 L 1610 194" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1365.0" y="183" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">trajets</text>
+<text x="1136" y="218" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 1136 221 L 1150.2 221" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="1136" y="242" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">origine</text>
+<text x="1136" y="266" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">destination</text>
+<text x="1136" y="290" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_heure</text>
+<text x="1136" y="314" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">places_totales</text>
+<text x="1136" y="338" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">places_restantes</text>
+<text x="1136" y="362" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">statut</text>
+<text x="1136" y="386" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">prix</text>
+<text x="1136" y="410" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#8a5a1a" font-weight="normal" text-anchor="start">#id_conducteur</text>
+<rect x="90" y="640" width="420" height="174" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="90" y="640" width="420" height="34" rx="3" fill="#fcefcb" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="90" y="668" width="420" height="6" rx="0" fill="#fcefcb" stroke="#fcefcb" stroke-width="1.2"/>
+<path d="M 90 674 L 510 674" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="300.0" y="663" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">reservations</text>
+<text x="106" y="698" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 106 701 L 120.2 701" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="106" y="722" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">statut</text>
+<text x="106" y="746" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_reservation</text>
+<text x="106" y="770" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#8a5a1a" font-weight="normal" text-anchor="start">#id_trajet</text>
+<text x="106" y="794" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#8a5a1a" font-weight="normal" text-anchor="start">#id_passager</text>
+<rect x="1120" y="620" width="490" height="222" rx="3" fill="#ffffff" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1120" y="620" width="490" height="34" rx="3" fill="#f9e0dd" stroke="#4a6359" stroke-width="1.2"/>
+<rect x="1120" y="648" width="490" height="6" rx="0" fill="#f9e0dd" stroke="#f9e0dd" stroke-width="1.2"/>
+<path d="M 1120 654 L 1610 654" fill="none" stroke="#4a6359" stroke-width="1.2"/>
+<text x="1365.0" y="643" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1b2d26" font-weight="bold" text-anchor="middle">avis</text>
+<text x="1136" y="678" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="bold" text-anchor="start">id</text>
+<path d="M 1136 681 L 1150.2 681" fill="none" stroke="#1b2d26" stroke-width="1"/>
+<text x="1136" y="702" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">note</text>
+<text x="1136" y="726" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">commentaire</text>
+<text x="1136" y="750" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#1b2d26" font-weight="normal" text-anchor="start">date_avis</text>
+<text x="1136" y="774" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#8a5a1a" font-weight="normal" text-anchor="start">#id_trajet</text>
+<text x="1136" y="798" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#8a5a1a" font-weight="normal" text-anchor="start">#id_auteur</text>
+<text x="1136" y="822" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#8a5a1a" font-weight="normal" text-anchor="start">#id_cible</text>
+<path d="M 510 230 L 1120 230" fill="none" stroke="#9fb3a9" stroke-width="1.2"/>
+<text x="815.0" y="220" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="normal" text-anchor="middle">id_conducteur</text>
+<path d="M 300 358 L 300 640" fill="none" stroke="#9fb3a9" stroke-width="1.2"/>
+<text x="312" y="499.0" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="normal" text-anchor="start">id_passager</text>
+<path d="M 510 720 L 1060 720 L 1060 300 L 1120 300" fill="none" stroke="#9fb3a9" stroke-width="1.2"/>
+<text x="530" y="710" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="normal" text-anchor="start">id_trajet</text>
+<path d="M 1320 430 L 1320 620" fill="none" stroke="#9fb3a9" stroke-width="1.2"/>
+<text x="1332" y="525.0" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="normal" text-anchor="start">id_trajet</text>
+<path d="M 210 358 L 210 960 L 1300 960 L 1300 842" fill="none" stroke="#9fb3a9" stroke-width="1.2"/>
+<text x="700" y="952" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#5d7268" font-weight="normal" text-anchor="middle">id_auteur  et  id_cible</text>
+<rect x="90" y="880" width="900" height="60" rx="4" fill="#f3f7f5" stroke="#9fb3a9" stroke-width="1.2"/>
+<text x="110" y="903" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12" fill="#1b2d26" font-weight="bold" text-anchor="start">CLES UNIQUES</text>
+<text x="110" y="925" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" fill="#5d7268" font-weight="normal" text-anchor="start">reservations (id_trajet, id_passager)   ·   avis (id_trajet, id_auteur, id_cible)</text>
+<text x="90" y="1000" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#5d7268" font-weight="normal" text-anchor="start">Legende :  cle primaire soulignee   ·   # cle etrangere   ·   toutes les cles etrangeres sont ON DELETE CASCADE</text>
+</svg>
