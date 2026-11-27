@@ -10,9 +10,10 @@
 /** @var int $trajetsRealises */
 /** @var array $avisRecus */
 ?>
+<!-- En-tête du profil : avatar, nom, date d'inscription et chiffres -->
 <div class="carte">
     <div class="profil">
-        <span class="avatar avatar-grand"><?= e(initiales($membre->nom)) ?></span>
+        <?= avatar($membre->nom, 'avatar-grand') ?>
         <div>
             <h1>
                 <?= e($membre->nom) ?>
@@ -23,8 +24,9 @@
 
         <div class="profil-chiffres">
             <div>
+                <!-- RÈGLE MÉTIER : sans avis, Avis::noteMoyenne() renvoie null -> on affiche "Pas encore noté" et pas 0 -->
                 <?php if ($note === null) { ?>
-                    <b class="note-vide">–</b><small>Pas encore noté</small>
+                    <b class="note-vide">-</b><small>Pas encore noté</small>
                 <?php } else { ?>
                     <b class="note"><?= formaterNote($note) ?></b><small>note moyenne</small>
                 <?php } ?>
@@ -42,14 +44,16 @@
         <div class="vide"><b>Aucun avis pour le moment</b>La note apparaîtra après un premier trajet terminé.</div>
     <?php } ?>
 
+    <!-- Liste des avis reçus, du plus récent au plus ancien -->
     <?php foreach ($avisRecus as $avis) { ?>
         <div class="avis">
             <div class="avis-tete">
-                <span class="avatar"><?= e(initiales($avis['nom_auteur'])) ?></span>
+                <?= avatar($avis['nom_auteur']) ?>
                 <a href="index.php?page=profil&amp;id=<?= $avis['id_auteur'] ?>"><?= e($avis['nom_auteur']) ?></a>
-                <small>· <?= e($avis['origine']) ?> → <?= e($avis['destination']) ?> · <?= formaterDate($avis['date_avis']) ?></small>
+                <small>- <?= e($avis['origine']) ?> → <?= e($avis['destination']) ?> - <?= formaterDate($avis['date_avis']) ?></small>
                 <span class="etoiles"><?= etoiles((int) $avis['note']) ?></span>
             </div>
+            <!-- Le commentaire est facultatif : il peut être NULL dans la base -->
             <?php if ($avis['commentaire'] !== null) { ?>
                 <p><?= e($avis['commentaire']) ?></p>
             <?php } ?>

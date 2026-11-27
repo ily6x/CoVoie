@@ -9,14 +9,14 @@
 --
 --  UTILISATION (WAMP) :
 --    phpMyAdmin -> onglet "Importer" -> choisir ce fichier -> Exécuter
---    (le script crée lui-même la base "covoiturage")
+--    (le script crée lui-même la base "bdd_covoie")
 --
 --  Les dates sont calculées à partir du jour de l'import : le jeu de
 --  données reste cohérent quel que soit le jour de la démonstration.
 -- ======================================================================
 
-CREATE DATABASE covoiturage DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE covoiturage;
+CREATE DATABASE bdd_covoie DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE bdd_covoie;
 
 
 -- ======================================================================

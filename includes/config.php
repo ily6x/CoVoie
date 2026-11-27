@@ -20,7 +20,7 @@ date_default_timezone_set('Europe/Paris');
 // Connexion MySQL (valeurs par défaut de WAMP)
 define('BDD_HOTE', '127.0.0.1');
 define('BDD_PORT', '3306');
-define('BDD_NOM', 'covoiturage');
+define('BDD_NOM', 'bdd_covoie');
 define('BDD_UTILISATEUR', 'root');
 define('BDD_MOT_DE_PASSE', '');
 

@@ -7,9 +7,11 @@
 /** @var string $email */
 ?>
 <div class="carte formulaire-centre">
+    <img class="logo-formulaire" src="images/logo.svg" alt="">
     <h1>Connexion</h1>
     <p class="sous-titre">Heureux de vous revoir sur CoVoie.</p>
 
+    <!-- Formulaire envoyé en POST vers AuthController::connecter() -->
     <form method="post" action="index.php?page=connexion-valider">
         <?= champCsrf() ?>
 
@@ -31,8 +33,8 @@
 
     <!-- Aide pour la démonstration (à retirer en production) -->
     <div class="demo">
-        <strong>Comptes de démonstration</strong> — mot de passe : <code>Password123!</code><br>
+        <strong>Comptes de démonstration</strong> - mot de passe : <code>Password123!</code><br>
         Admin : ilyes.karim@campus.fr<br>
-        Conducteur : sarah.benjelloun@campus.fr · Passagère : emma.girard@campus.fr
+        Conducteur : sarah.benjelloun@campus.fr - Passagère : emma.girard@campus.fr
     </div>
 </div>

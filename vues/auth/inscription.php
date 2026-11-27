@@ -9,9 +9,11 @@
 /** @var string $email */
 ?>
 <div class="carte formulaire-centre">
+    <img class="logo-formulaire" src="images/logo.svg" alt="">
     <h1>Créer un compte</h1>
     <p class="sous-titre">Un seul compte pour conduire et pour voyager.</p>
 
+    <!-- Erreurs renvoyées par Utilisateur::inscrire() (champ trop court, email déjà pris...) -->
     <?php if (count($erreurs) > 0) { ?>
         <div class="message message-erreur">
             Le formulaire contient des erreurs :
@@ -23,6 +25,7 @@
         </div>
     <?php } ?>
 
+    <!-- Les attributs minlength / maxlength / required aident l'utilisateur, mais la vraie vérification est faite en PHP -->
     <form method="post" action="index.php?page=inscription-valider">
         <?= champCsrf() ?>
 

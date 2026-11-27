@@ -11,6 +11,7 @@
 /** @var float|null $moyenneGenerale */
 require 'vues/admin/onglets.php';
 ?>
+<!-- Statistiques globales demandées par le sujet : trajets réalisés et taux de remplissage moyen -->
 <h2>Trajets</h2>
 <section class="chiffres">
     <div class="chiffre"><b><?= $stats['publies'] ?></b><span>trajets publiés</span></div>

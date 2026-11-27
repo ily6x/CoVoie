@@ -19,6 +19,7 @@ require 'vues/admin/onglets.php';
                 <th>Note</th>
                 <th></th>
             </tr>
+            <!-- Une ligne par compte, avec sa note moyenne et son nombre de trajets conduits -->
             <?php foreach ($utilisateurs as $u) { ?>
                 <tr>
                     <td>

@@ -46,11 +46,13 @@
 
 <div class="section">
     <h2><?= count($trajets) ?> trajet(s) trouvé(s)</h2>
+    <!-- Le lien "Effacer les filtres" n'apparaît que si au moins un critère est rempli -->
     <?php if ($depart !== '' || $arrivee !== '' || $date !== '') { ?>
         <a href="index.php?page=trajets">Effacer les filtres</a>
     <?php } ?>
 </div>
 
+<!-- Aucun résultat : message d'aide, sinon la grille de billets -->
 <?php if (count($trajets) === 0) { ?>
     <div class="vide">
         <b>Aucun trajet ne correspond</b>

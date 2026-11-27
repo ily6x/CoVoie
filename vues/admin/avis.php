@@ -19,6 +19,7 @@ require 'vues/admin/onglets.php';
                 <th>Commentaire</th>
                 <th></th>
             </tr>
+            <!-- Une ligne par avis ; le bouton Supprimer envoie un formulaire POST (avec jeton CSRF) -->
             <?php foreach ($avis as $a) { ?>
                 <tr>
                     <td><?= formaterDate($a['date_avis']) ?></td>
@@ -27,7 +28,7 @@ require 'vues/admin/onglets.php';
                     <td class="etoiles"><?= etoiles((int) $a['note']) ?></td>
                     <td>
                         <?php if ($a['commentaire'] === null) { ?>
-                            <span class="note-vide">—</span>
+                            <span class="note-vide">-</span>
                         <?php } else { ?>
                             <?= e($a['commentaire']) ?>
                         <?php } ?>

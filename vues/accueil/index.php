@@ -10,6 +10,7 @@
 /** @var array $prochainsTrajets */
 /** @var array $meilleursMembres */
 ?>
+<!-- Haut de page : titre, formulaire de recherche et illustration -->
 <section class="hero">
     <div>
         <h1>Partagez la route <em>vers le campus.</em></h1>
@@ -48,7 +49,7 @@
     <div class="chiffre"><b><?= $stats['realises'] ?></b><span>trajets réalisés</span></div>
     <div class="chiffre"><b><?= $nombreMembres ?></b><span>étudiants inscrits</span></div>
     <div class="chiffre">
-        <b><?= $moyenneGenerale === null ? '–' : number_format($moyenneGenerale, 1, ',', ' ') . ' / 5' ?></b>
+        <b><?= $moyenneGenerale === null ? '-' : number_format($moyenneGenerale, 1, ',', ' ') . ' / 5' ?></b>
         <span>note moyenne</span>
     </div>
 </section>
@@ -60,10 +61,12 @@
             <a href="index.php?page=trajets">Tous les trajets →</a>
         </div>
 
+        <!-- S'il n'y a aucun trajet à venir, on affiche un message à la place de la grille -->
         <?php if (count($prochainsTrajets) === 0) { ?>
             <div class="vide"><b>Aucun départ prévu</b>Soyez le premier à publier un trajet.</div>
         <?php } else { ?>
             <div class="grille-billets">
+                <!-- Chaque trajet est affiché avec le même gabarit de billet (vues/gabarit/carte-trajet.php) -->
                 <?php foreach ($prochainsTrajets as $t) {
                     require 'vues/gabarit/carte-trajet.php';
                 } ?>
@@ -75,10 +78,11 @@
         <div class="carte">
             <h2>Les mieux notés</h2>
             <ol class="classement">
+                <!-- $rang commence à 0 : on affiche $rang + 1 pour avoir 1, 2, 3... -->
                 <?php foreach ($meilleursMembres as $rang => $membre) { ?>
                     <li>
                         <span class="rang"><?= $rang + 1 ?></span>
-                        <span class="avatar"><?= e(initiales($membre['nom'])) ?></span>
+                        <?= avatar($membre['nom']) ?>
                         <a class="nom" href="index.php?page=profil&amp;id=<?= $membre['id'] ?>"><?= e($membre['nom']) ?></a>
                         <span class="note"><?= formaterNote((float) $membre['moyenne']) ?></span>
                     </li>

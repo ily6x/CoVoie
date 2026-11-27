@@ -15,7 +15,7 @@ $placesPrises = $t['places_totales'] - $t['places_restantes'];
 <article class="billet">
     <div class="billet-haut">
         <div class="conducteur">
-            <span class="avatar"><?= e(initiales($t['nom_conducteur'])) ?></span>
+            <?= avatar($t['nom_conducteur']) ?>
             <div>
                 <span class="nom"><?= e($t['nom_conducteur']) ?></span>
                 <?php if ($t['note_conducteur'] === null) { ?>
@@ -40,9 +40,11 @@ $placesPrises = $t['places_totales'] - $t['places_restantes'];
         </div>
     </div>
 
-    <div class="decoupe"></div>
+    <!-- Découpe du billet, avec le numéro du trajet sur 4 chiffres (ex : 0026) -->
+    <div class="decoupe"><span>Billet n° <?= sprintf('%04d', $t['id']) ?></span></div>
 
     <div class="billet-bas">
+        <!-- Un petit carré par place : gris = déjà prise, vert = encore libre -->
         <div class="sieges" title="<?= $t['places_restantes'] ?> place(s) libre(s)">
             <?php for ($i = 1; $i <= $t['places_totales']; $i++) { ?>
                 <i class="siege<?= $i <= $placesPrises ? ' pris' : '' ?>"></i>

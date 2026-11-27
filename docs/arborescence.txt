@@ -41,7 +41,7 @@ covoie/
 │   ├── Trajet.php                 module A (reserverPlace)
 │   └── Utilisateur.php            comptes, connexion, inscription
 ├── sql/
-│   └── covoiturage.sql            base + données de démo
+│   └── bdd_covoie.sql             base + données de démo
 ├── vues/
 │   ├── accueil/
 │   │   ├── index.php              page d'accueil
@@ -60,8 +60,8 @@ covoie/
 │   │   └── mes-avis.php
 │   ├── gabarit/
 │   │   ├── carte-trajet.php       billet réutilisable
-│   │   ├── en-tete.php            en-tête + menu
-│   │   └── pied.php               pied de page
+│   │   ├── footer.php             bas de page
+│   │   └── header.php             haut de page + menu
 │   ├── reservations/
 │   │   ├── mes-reservations.php
 │   │   └── recherche.php

@@ -10,7 +10,7 @@
 <div class="titre-page">
     <div>
         <h1>Noter le trajet</h1>
-        <p><?= e($trajet->origine) ?> → <?= e($trajet->destination) ?> · <?= formaterDate($trajet->date_heure) ?></p>
+        <p><?= e($trajet->origine) ?> → <?= e($trajet->destination) ?> - <?= formaterDate($trajet->date_heure) ?></p>
     </div>
     <a class="bouton bouton-secondaire" href="index.php?page=mes-avis">← Mes avis</a>
 </div>
@@ -20,10 +20,11 @@
 <?php } ?>
 
 <div class="grille-billets">
+    <!-- Une carte par personne à noter : les passagers pour le conducteur, le conducteur pour un passager -->
     <?php foreach ($participants as $participant) { ?>
         <div class="carte">
             <div class="conducteur">
-                <span class="avatar"><?= e(initiales($participant['nom'])) ?></span>
+                <?= avatar($participant['nom']) ?>
                 <a class="nom" href="index.php?page=profil&amp;id=<?= $participant['id'] ?>"><?= e($participant['nom']) ?></a>
                 <?php if ($participant['deja_note'] > 0) { ?>
                     <span class="statut statut-confirmee">Déjà noté</span>

@@ -39,7 +39,7 @@ function connexionBdd(): PDO
             ]);
         } catch (PDOException $erreur) {
             // Message clair au lieu d'une erreur PHP brute (WAMP arrêté ou base non importée)
-            afficherErreur(500, 'Base de données inaccessible : lancez WAMP et importez sql/covoiturage.sql.');
+            afficherErreur(500, 'Base de données inaccessible : lancez WAMP et importez sql/bdd_covoie.sql.');
         }
     }
 

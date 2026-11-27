@@ -209,7 +209,7 @@ function redirection(string $page): void
 }
 
 /**
- * Affiche une page complète : en-tête + vue demandée + pied de page.
+ * Affiche une page complète : header + vue demandée + footer.
  * @param string $vue     Chemin de la vue dans le dossier vues/, sans .php (ex : 'trajets/detail')
  * @param array  $donnees Variables transmises à la vue (ex : ['trajet' => $trajet])
  */
@@ -218,9 +218,9 @@ function afficherVue(string $vue, array $donnees = []): void
     // extract() transforme ['trajet' => $t] en une variable $trajet utilisable dans la vue
     extract($donnees);
 
-    require 'vues/gabarit/en-tete.php';
+    require 'vues/gabarit/header.php';
     require 'vues/' . $vue . '.php';
-    require 'vues/gabarit/pied.php';
+    require 'vues/gabarit/footer.php';
 }
 
 /**
@@ -322,6 +322,21 @@ function initiales(string $nom): string
         }
     }
     return mb_substr($initiales, 0, 2);
+}
+
+/**
+ * Pastille ronde avec les initiales d'un membre.
+ * La couleur est choisie à partir du nom : un même membre a toujours la même couleur.
+ * @param string $nom    Le nom du membre (ex : "Bilel Allali")
+ * @param string $classe Classe CSS en plus (ex : 'avatar-grand')
+ * @return string Le code HTML de la pastille
+ */
+function avatar(string $nom, string $classe = ''): string
+{
+    // crc32 transforme le nom en nombre ; % 5 donne une couleur entre 0 et 4
+    $couleur = abs(crc32($nom)) % 5;
+
+    return '<span class="avatar avatar-couleur-' . $couleur . ' ' . $classe . '">' . e(initiales($nom)) . '</span>';
 }
 
 /**

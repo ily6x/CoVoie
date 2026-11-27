@@ -19,19 +19,20 @@
 </div>
 
 <!-- ===== Demandes en attente ===== -->
+<!-- Cet encart n'apparaît que s'il y a des demandes en attente sur des trajets à venir -->
 <?php if (count($demandes) > 0) { ?>
     <div class="carte">
         <h2>À traiter <span class="statut statut-en-attente"><?= count($demandes) ?> demande(s)</span></h2>
         <ul class="liste">
             <?php foreach ($demandes as $demande) { ?>
                 <li>
-                    <span class="avatar"><?= e(initiales($demande['nom_passager'])) ?></span>
+                    <?= avatar($demande['nom_passager']) ?>
                     <div class="infos-personne">
                         <b><a href="index.php?page=profil&amp;id=<?= $demande['id_passager'] ?>"><?= e($demande['nom_passager']) ?></a></b>
                         <small>
                             <a href="index.php?page=trajet&amp;id=<?= $demande['id_trajet'] ?>"><?= e($demande['origine']) ?> → <?= e($demande['destination']) ?></a>
-                            · <?= formaterJour($demande['date_heure']) ?> à <?= formaterHeure($demande['date_heure']) ?>
-                            · <?= $demande['places_restantes'] ?> place(s) libre(s)
+                            - <?= formaterJour($demande['date_heure']) ?> à <?= formaterHeure($demande['date_heure']) ?>
+                            - <?= $demande['places_restantes'] ?> place(s) libre(s)
                         </small>
                     </div>
                     <div class="actions">

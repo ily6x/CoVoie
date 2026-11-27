@@ -27,7 +27,6 @@ $etapeTermine = ($trajet->statut === 'Termine');
             <div class="billet-haut">
                 <div class="ligne-haut">
                     <span class="statut <?= classeStatut($trajet->statut) ?>"><?= libelleStatut($trajet->statut) ?></span>
-                    <span class="discret"><?= ucfirst(formaterJour($trajet->date_heure)) ?> <?= date('Y', strtotime($trajet->date_heure)) ?></span>
                 </div>
 
                 <div class="horaire">
@@ -37,7 +36,7 @@ $etapeTermine = ($trajet->statut === 'Termine');
                     </div>
                     <div class="trait"></div>
                     <div class="lieu arrivee">
-                        <b>Arrivée</b>
+                        <b><?= formaterJour($trajet->date_heure) ?></b>
                         <span><?= e($trajet->destination) ?></span>
                     </div>
                 </div>
@@ -49,7 +48,7 @@ $etapeTermine = ($trajet->statut === 'Termine');
                 </div>
             </div>
 
-            <div class="decoupe"></div>
+            <div class="decoupe"><span>Billet n° <?= sprintf('%04d', $trajet->id) ?></span></div>
 
             <div class="billet-bas">
                 <!-- Cycle de vie du trajet -->
@@ -78,7 +77,7 @@ $etapeTermine = ($trajet->statut === 'Termine');
                 <ul class="liste">
                     <?php foreach ($demandes as $demande) { ?>
                         <li>
-                            <span class="avatar"><?= e(initiales($demande['nom_passager'])) ?></span>
+                            <?= avatar($demande['nom_passager']) ?>
                             <div class="infos-personne">
                                 <b><a href="index.php?page=profil&amp;id=<?= $demande['id_passager'] ?>"><?= e($demande['nom_passager']) ?></a></b>
                                 <small>
@@ -87,7 +86,7 @@ $etapeTermine = ($trajet->statut === 'Termine');
                                     <?php } else { ?>
                                         <span class="note"><?= formaterNote((float) $demande['note_passager']) ?></span>
                                     <?php } ?>
-                                    · demande du <?= formaterDate($demande['date_reservation']) ?>
+                                    - demande du <?= formaterDate($demande['date_reservation']) ?>
                                 </small>
                             </div>
 
@@ -119,13 +118,13 @@ $etapeTermine = ($trajet->statut === 'Termine');
         <div class="carte">
             <h2>Conducteur</h2>
             <div class="conducteur">
-                <span class="avatar"><?= e(initiales($conducteur->nom)) ?></span>
+                <?= avatar($conducteur->nom) ?>
                 <div>
                     <a class="nom" href="index.php?page=profil&amp;id=<?= $conducteur->id ?>"><?= e($conducteur->nom) ?></a>
                     <?php if ($noteConducteur === null) { ?>
                         <small class="note-vide">Pas encore noté</small>
                     <?php } else { ?>
-                        <small><span class="note"><?= formaterNote($noteConducteur) ?></span> · <?= $nombreAvisConducteur ?> avis</small>
+                        <small><span class="note"><?= formaterNote($noteConducteur) ?></span> - <?= $nombreAvisConducteur ?> avis</small>
                     <?php } ?>
                 </div>
             </div>
@@ -175,7 +174,7 @@ $etapeTermine = ($trajet->statut === 'Termine');
                 <p class="discret">Le conducteur recevra votre demande et pourra l'accepter.</p>
                 <form method="post" action="index.php?page=reserver&amp;id=<?= $trajet->id ?>">
                     <?= champCsrf() ?>
-                    <button class="bouton bouton-large" type="submit">Demander une place · <?= formaterPrix($trajet->prix) ?></button>
+                    <button class="bouton bouton-large" type="submit">Demander une place - <?= formaterPrix($trajet->prix) ?></button>
                 </form>
             <?php } ?>
         </div>

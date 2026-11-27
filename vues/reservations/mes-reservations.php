@@ -18,11 +18,12 @@
     <div class="vide"><b>Aucune réservation</b>Cherchez un trajet et demandez une place.</div>
 <?php } else { ?>
     <div class="grille-billets">
+        <!-- Chaque réservation est affichée comme un billet, avec son statut en haut à droite -->
         <?php foreach ($reservations as $r) { ?>
             <article class="billet">
                 <div class="billet-haut">
                     <div class="conducteur">
-                        <span class="avatar"><?= e(initiales($r['nom_conducteur'])) ?></span>
+                        <?= avatar($r['nom_conducteur']) ?>
                         <div>
                             <span class="nom"><?= e($r['nom_conducteur']) ?></span>
                             <small>Conducteur</small>
@@ -42,7 +43,7 @@
                     </div>
                 </div>
 
-                <div class="decoupe"></div>
+                <div class="decoupe"><span>Réservation n° <?= sprintf('%04d', $r['id']) ?></span></div>
 
                 <div class="billet-bas">
                     <span class="tampon"><?= formaterPrix((float) $r['prix']) ?></span>

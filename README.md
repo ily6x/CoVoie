@@ -1,4 +1,4 @@
-# CoVoie — Covoiturage entre étudiants du campus
+# CoVoie - Covoiturage entre étudiants du campus
 
 Application web PHP / MySQL en architecture **MVC**, réalisée pour le BTS SIO option SLAM.
 Un étudiant publie ses trajets vers le campus (Paris 15e), les autres demandent une place,
@@ -6,9 +6,9 @@ puis chacun note l'autre après le trajet.
 
 | Module | Rôle | Contrôleur |
 |---|---|---|
-| **A** — Gestion des trajets | Le conducteur publie, modifie, supprime ses trajets et accepte / refuse les demandes | `TrajetController` |
-| **B** — Recherche et réservation | Le passager cherche un trajet, demande une place, suit ou annule ses demandes | `ReservationController` |
-| **C** — Avis et réputation | Après un trajet terminé, conducteur et passagers se notent de 1 à 5 | `AvisController` |
+| **A** - Gestion des trajets | Le conducteur publie, modifie, supprime ses trajets et accepte / refuse les demandes | `TrajetController` |
+| **B** - Recherche et réservation | Le passager cherche un trajet, demande une place, suit ou annule ses demandes | `ReservationController` |
+| **C** - Avis et réputation | Après un trajet terminé, conducteur et passagers se notent de 1 à 5 | `AvisController` |
 | Back-office | L'administrateur modère les avis, gère les comptes, consulte les statistiques | `AdminController` |
 
 ---
@@ -17,9 +17,9 @@ puis chacun note l'autre après le trajet.
 
 1. Copier le dossier `covoie` dans `C:\wamp64\www\`.
 2. Démarrer WAMP (icône verte).
-3. Ouvrir phpMyAdmin → onglet **Importer** → choisir `sql/covoiturage.sql` → **Exécuter**.
-   Le script crée lui-même la base `covoiturage`.
-   *Si une ancienne base `covoiturage` existe déjà, la supprimer d'abord (phpMyAdmin → base → Opérations → Supprimer la base).*
+3. Ouvrir phpMyAdmin → onglet **Importer** → choisir `sql/bdd_covoie.sql` → **Exécuter**.
+   Le script crée lui-même la base `bdd_covoie`.
+   *Si une ancienne base `bdd_covoie` existe déjà, la supprimer d'abord (phpMyAdmin → base → Opérations → Supprimer la base).*
 4. Ouvrir **http://localhost/covoie/**
 
 Réglages de connexion dans `includes/config.php` (par défaut : `root` sans mot de passe, comme WAMP).
@@ -59,12 +59,12 @@ covoie/
 ├── css/style.css        Toute la mise en forme (variables de couleur en haut)
 ├── js/script.js         Menu mobile, confirmation, inverser départ/arrivée
 ├── images/  fonts/      Logo, illustration d'accueil, police Roboto
-├── sql/covoiturage.sql  Structure de la base + jeu de démonstration
+├── sql/bdd_covoie.sql  Structure de la base + jeu de démonstration
 ├── docs/                MCD, MLD, diagramme de classes, conception
 └── gantt/               Planning du projet (GanttProject)
 ```
 
-**Parcours d'une requête** — `index.php?page=trajet&id=12` :
+**Parcours d'une requête** - `index.php?page=trajet&id=12` :
 
 1. `index.php` charge les fichiers puis lit `page=trajet` ;
 2. `routes.php` indique `['TrajetController', 'detail']` ;
@@ -105,5 +105,5 @@ covoie/
 ## Documentation
 
 - **[Documentation technique (PDF)](docs/documentation.pdf)** : MLD, diagramme de classes, décrément des places, clôture, note moyenne
-- [MCD](docs/mcd.png) · [MLD](docs/mld.png) · [Diagramme de classes](docs/diagramme-classes.png)
-- [Conception détaillée](docs/conception.md) · [Arborescence](docs/arborescence.txt)
+- [MCD](docs/mcd.png) - [MLD](docs/mld.png) - [Diagramme de classes](docs/diagramme-classes.png)
+- [Conception détaillée](docs/conception.md) - [Arborescence](docs/arborescence.txt)

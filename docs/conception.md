@@ -1,4 +1,4 @@
-# Conception — CoVoie
+# Conception - CoVoie
 
 ## 1. MCD (Merise)
 
@@ -6,8 +6,8 @@
 
 - **UTILISATEUR** (<u>id</u>, nom, email, mot_de_passe, role, date_inscription)
 - **TRAJET** (<u>id</u>, origine, destination, date_heure, places_totales, places_restantes, statut, prix)
-- **CONDUIRE** : UTILISATEUR (0,n) — TRAJET (1,1)
-- **RÉSERVER** (statut, date_reservation) : UTILISATEUR (0,n) — TRAJET (0,n)
+- **CONDUIRE** : UTILISATEUR (0,n) - TRAJET (1,1)
+- **RÉSERVER** (statut, date_reservation) : UTILISATEUR (0,n) - TRAJET (0,n)
 - **NOTER** (note, commentaire, date_avis) : association ternaire entre UTILISATEUR *auteur* (0,n),
   UTILISATEUR *cible* (0,n) et TRAJET (0,n)
 
@@ -20,8 +20,8 @@ publie et passager de ceux qu'il réserve.
 
 - **utilisateurs** (<u>id</u>, nom, email, mot_de_passe, role, date_inscription)
 - **trajets** (<u>id</u>, origine, destination, date_heure, places_totales, places_restantes, statut, prix, #id_conducteur)
-- **reservations** (<u>id</u>, statut, date_reservation, #id_trajet, #id_passager) — UNIQUE (id_trajet, id_passager)
-- **avis** (<u>id</u>, note, commentaire, date_avis, #id_trajet, #id_auteur, #id_cible) — UNIQUE (id_trajet, id_auteur, id_cible)
+- **reservations** (<u>id</u>, statut, date_reservation, #id_trajet, #id_passager) - UNIQUE (id_trajet, id_passager)
+- **avis** (<u>id</u>, note, commentaire, date_avis, #id_trajet, #id_auteur, #id_cible) - UNIQUE (id_trajet, id_auteur, id_cible)
 
 Les associations RÉSERVER et NOTER deviennent des tables. On leur donne un identifiant `id`
 (plus simple à manipuler dans les URL) et la clé UNIQUE garde la règle « une seule fois ».
@@ -43,8 +43,8 @@ Convention suivie dans les modèles :
 - les méthodes qui modifient la base renvoient un **message d'erreur**, ou `''` si tout s'est bien passé.
 
 Méthodes demandées par le cahier des charges :
-- `Trajet::reserverPlace($idPassager)` — retire une place lors de l'acceptation d'une demande ;
-- `Avis::noteMoyenne($idUtilisateur)` — méthode statique, renvoie la moyenne ou `null`.
+- `Trajet::reserverPlace($idPassager)` - retire une place lors de l'acceptation d'une demande ;
+- `Avis::noteMoyenne($idUtilisateur)` - méthode statique, renvoie la moyenne ou `null`.
 
 ## 4. Cycle de vie
 

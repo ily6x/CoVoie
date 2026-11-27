@@ -19,6 +19,7 @@ require 'vues/admin/onglets.php';
                 <th class="nombre">Prix</th>
                 <th>Statut</th>
             </tr>
+            <!-- Places : occupées / totales (occupées = totales - restantes) -->
             <?php foreach ($trajets as $t) { ?>
                 <tr>
                     <td><?= formaterDate($t['date_heure']) ?> <span class="discret"><?= formaterHeure($t['date_heure']) ?></span></td>

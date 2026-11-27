@@ -1,7 +1,7 @@
 <?php
 /**
  * ------------------------------------------------------------------
- *  Gabarit : en-tête commun à toutes les pages
+ *  Gabarit : header (haut de page) commun à toutes les pages
  * ------------------------------------------------------------------
  *  Variables utilisées : $titre (titre de l'onglet du navigateur)
  *  Le menu change selon que le visiteur est connecté, et s'il est admin.
@@ -15,13 +15,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($titre) ?> · <?= NOM_APPLICATION ?></title>
+    <title><?= e($titre) ?> - <?= NOM_APPLICATION ?></title>
     <link rel="icon" href="images/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header class="entete">
+<header class="header">
     <div class="conteneur">
         <a class="marque" href="index.php">
             <img src="images/logo.svg" alt="">
@@ -49,7 +49,7 @@
             <div class="droite">
                 <?php if (estConnecte()) { ?>
                     <a class="moi" href="index.php?page=profil">
-                        <span class="avatar"><?= e(initiales(nomConnecte())) ?></span>
+                        <?= avatar(nomConnecte()) ?>
                         <?= e(nomConnecte()) ?>
                     </a>
                     <!-- La déconnexion modifie la session : formulaire POST + jeton CSRF -->

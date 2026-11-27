@@ -14,6 +14,7 @@
         <h1>Mes avis</h1>
         <p>
             Ma note moyenne :
+            <!-- null = aucun avis reçu (voir Avis::noteMoyenne()) -->
             <?php if ($note === null) { ?>
                 <span class="note-vide">pas encore noté</span>
             <?php } else { ?>
@@ -52,11 +53,11 @@
         <?php foreach ($recus as $avis) { ?>
             <div class="avis">
                 <div class="avis-tete">
-                    <span class="avatar"><?= e(initiales($avis['nom_auteur'])) ?></span>
+                    <?= avatar($avis['nom_auteur']) ?>
                     <b><?= e($avis['nom_auteur']) ?></b>
                     <span class="etoiles"><?= etoiles((int) $avis['note']) ?></span>
                 </div>
-                <small class="discret"><?= e($avis['origine']) ?> → <?= e($avis['destination']) ?> · <?= formaterDate($avis['date_avis']) ?></small>
+                <small class="discret"><?= e($avis['origine']) ?> → <?= e($avis['destination']) ?> - <?= formaterDate($avis['date_avis']) ?></small>
                 <?php if ($avis['commentaire'] !== null) { ?>
                     <p><?= e($avis['commentaire']) ?></p>
                 <?php } ?>
@@ -73,11 +74,11 @@
         <?php foreach ($ecrits as $avis) { ?>
             <div class="avis">
                 <div class="avis-tete">
-                    <span class="avatar"><?= e(initiales($avis['nom_cible'])) ?></span>
+                    <?= avatar($avis['nom_cible']) ?>
                     <b><?= e($avis['nom_cible']) ?></b>
                     <span class="etoiles"><?= etoiles((int) $avis['note']) ?></span>
                 </div>
-                <small class="discret"><?= e($avis['origine']) ?> → <?= e($avis['destination']) ?> · <?= formaterDate($avis['date_avis']) ?></small>
+                <small class="discret"><?= e($avis['origine']) ?> → <?= e($avis['destination']) ?> - <?= formaterDate($avis['date_avis']) ?></small>
                 <?php if ($avis['commentaire'] !== null) { ?>
                     <p><?= e($avis['commentaire']) ?></p>
                 <?php } ?>

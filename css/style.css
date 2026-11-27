@@ -8,14 +8,14 @@
    Sommaire
      1. Police et couleurs (variables)
      2. Base
-     3. En-tête et navigation
+     3. Header et navigation
      4. Boutons
      5. Cartes, billets et pastilles de statut
      6. Formulaires
      7. Accueil
      8. Pages de détail et listes
      9. Tableaux et back-office
-    10. Pied de page
+    10. Footer
     11. Écrans étroits (téléphone)
    ================================================================== */
 
@@ -59,7 +59,7 @@ body {
     line-height: 1.5;
     color: var(--encre);
     background: var(--fond);
-    /* Le pied de page reste en bas même sur une page courte */
+    /* Le footer reste en bas même sur une page courte */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -94,10 +94,10 @@ main.conteneur { padding-top: 28px; padding-bottom: 60px; }
 .message ul { margin: 6px 0 0; padding-left: 20px; font-weight: 400; }
 
 
-/* ============ 3. EN-TÊTE ET NAVIGATION ============ */
+/* ============ 3. HEADER ET NAVIGATION ============ */
 
-.entete { background: var(--surface); border-bottom: 1px solid var(--bord); position: sticky; top: 0; z-index: 10; }
-.entete .conteneur { display: flex; align-items: center; gap: 24px; height: 66px; }
+.header { background: var(--surface); border-bottom: 1px solid var(--bord); position: sticky; top: 0; z-index: 10; }
+.header .conteneur { display: flex; align-items: center; gap: 24px; height: 66px; }
 
 .marque { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--encre); }
 .marque:hover { text-decoration: none; }
@@ -131,7 +131,6 @@ main.conteneur { padding-top: 28px; padding-bottom: 60px; }
     padding: 11px 20px;
     font: inherit; font-weight: 500;
     cursor: pointer;
-    transition: background .15s;
 }
 .bouton:hover { background: var(--primaire-fonce); text-decoration: none; }
 .bouton-secondaire { background: var(--clair); color: var(--primaire-fonce); }
@@ -162,6 +161,12 @@ main.conteneur { padding-top: 28px; padding-bottom: 60px; }
     font-weight: 700; font-size: 14px;
 }
 .avatar-grand { width: 72px; height: 72px; font-size: 26px; }
+/* 5 couleurs d'avatar (choisies par la fonction PHP avatar()) */
+.avatar-couleur-0 { background: var(--clair); color: var(--primaire-fonce); }
+.avatar-couleur-1 { background: var(--jaune-clair); color: #7a5b00; }
+.avatar-couleur-2 { background: #dbeafe; color: #1e4b8f; }
+.avatar-couleur-3 { background: #fde4dc; color: #9a3b1f; }
+.avatar-couleur-4 { background: #ece6fb; color: #4b3a8c; }
 
 .note { color: var(--etoile); font-weight: 700; }
 .note-vide { color: var(--gris); font-style: italic; font-weight: 400; }
@@ -179,13 +184,19 @@ main.conteneur { padding-top: 28px; padding-bottom: 60px; }
 .decoupe::before, .decoupe::after { content: ""; position: absolute; top: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--fond); }
 .decoupe::before { left: -29px; }
 .decoupe::after { right: -29px; }
+/* Numéro du billet, posé au milieu du pointillé */
+.decoupe span {
+    position: absolute; left: 50%; top: -9px; transform: translateX(-50%);
+    background: var(--surface); padding: 0 8px;
+    font-size: 10.5px; letter-spacing: 1.5px; color: var(--gris); text-transform: uppercase; white-space: nowrap;
+}
 
 .conducteur { display: flex; align-items: center; gap: 10px; }
 .conducteur .nom { font-weight: 500; color: var(--encre); }
 .conducteur small { display: block; color: var(--gris); font-size: 12.5px; }
 .conducteur .statut { margin-left: auto; }
 
-/* Ligne horaire : 08:15 Départ ····· Arrivée */
+/* Ligne horaire : 08:15 Départ ----- Arrivée */
 .horaire { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
 .horaire .lieu { flex: 1; min-width: 0; }
 .horaire .lieu b { display: block; font-size: 17px; }
@@ -193,6 +204,11 @@ main.conteneur { padding-top: 28px; padding-bottom: 60px; }
 .horaire .lieu.arrivee { text-align: right; }
 .horaire .trait { flex: 0 0 64px; border-bottom: 2px dotted var(--primaire); position: relative; top: -8px; }
 .horaire .trait::after { content: ""; position: absolute; right: -4px; top: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--primaire); }
+/* Petite voiture dessinée en SVG au milieu de la ligne pointillée */
+.horaire .trait::before {
+    content: ""; position: absolute; left: 50%; top: -8px; width: 22px; height: 14px; margin-left: -11px;
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 14'%3E%3Cpath d='M5 4l2.5-3h7L17 4h2.5A1.5 1.5 0 0 1 21 5.5V10h-2a2 2 0 0 0-4 0H7a2 2 0 0 0-4 0H1V5.5A1.5 1.5 0 0 1 2.5 4z' fill='%230f7a63'/%3E%3Ccircle cx='5' cy='11' r='2' fill='%2310261f'/%3E%3Ccircle cx='17' cy='11' r='2' fill='%2310261f'/%3E%3C/svg%3E") center / 18px no-repeat;
+}
 
 /* Sièges : un carré par place, gris si occupé */
 .sieges { display: flex; align-items: center; gap: 4px; color: var(--gris); font-size: 13px; }
@@ -204,7 +220,8 @@ main.conteneur { padding-top: 28px; padding-bottom: 60px; }
 .tampon { background: var(--jaune); color: var(--encre); border-radius: 10px; padding: 4px 10px; font-weight: 700; font-size: 16px; white-space: nowrap; }
 
 /* Pastilles de statut (classe générée par classeStatut()) */
-.statut { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+.statut { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+.statut::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .statut-ouvert, .statut-confirmee { background: var(--clair); color: var(--primaire-fonce); }
 .statut-complet, .statut-en-attente { background: var(--jaune-clair); color: #8a6a00; }
 .statut-termine { background: #e8edeb; color: var(--gris); }
@@ -236,6 +253,7 @@ textarea { min-height: 110px; resize: vertical; }
 /* Petit formulaire centré (connexion, inscription) */
 .formulaire-centre { max-width: 440px; margin: 10px auto; }
 .formulaire-centre h1 { text-align: center; }
+.logo-formulaire { display: block; width: 56px; height: 56px; margin: 0 auto 14px; }
 .formulaire-centre .sous-titre { text-align: center; margin-bottom: 20px; }
 
 .formulaire-large { max-width: 600px; }
@@ -255,7 +273,7 @@ textarea { min-height: 110px; resize: vertical; }
 /* ============ 7. ACCUEIL ============ */
 
 .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 30px; align-items: center; margin-bottom: 34px; }
-.hero h1 { font-size: 44px; line-height: 1.08; letter-spacing: -1px; margin-bottom: 14px; }
+.hero h1 { font-size: 44px; line-height: 1.08; letter-spacing: -1px; margin-bottom: 14px; text-wrap: balance; }
 .hero h1 em { font-style: normal; background: linear-gradient(transparent 62%, var(--jaune) 62%); }
 .hero .intro { color: var(--gris); font-size: 17px; max-width: 460px; }
 .hero img { width: 100%; height: auto; }
@@ -282,9 +300,12 @@ textarea { min-height: 110px; resize: vertical; }
 
 /* Chiffres clés */
 .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 34px; }
-.chiffre { background: var(--surface); border-radius: var(--rayon); padding: 18px 20px; box-shadow: var(--ombre); }
+.chiffre { background: var(--surface); border-radius: var(--rayon); padding: 18px 20px; box-shadow: var(--ombre); border-left: 5px solid var(--primaire); }
+.chiffre:nth-child(2) { border-left-color: var(--jaune); }
+.chiffre:nth-child(3) { border-left-color: #3aa486; }
+.chiffre:nth-child(4) { border-left-color: var(--primaire-fonce); }
 .chiffre b { display: block; font-size: 28px; color: var(--primaire-fonce); }
-.chiffre span { color: var(--gris); font-size: 14px; }
+.chiffre span { color: var(--gris); font-size: 13px; text-transform: uppercase; letter-spacing: .5px; }
 
 .section { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 14px; }
 .section h2 { margin: 0; }
@@ -375,7 +396,10 @@ textarea { min-height: 110px; resize: vertical; }
 /* Le conteneur permet de faire défiler le tableau sur téléphone */
 .tableau-defilant { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th { text-align: left; color: var(--gris); font-weight: 500; font-size: 12.5px; text-transform: uppercase; letter-spacing: .4px; padding: 10px 12px; border-bottom: 2px solid var(--bord); white-space: nowrap; }
+th { text-align: left; color: var(--primaire-fonce); background: var(--fond); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 10px 12px; white-space: nowrap; }
+th:first-child { border-radius: 10px 0 0 10px; }
+th:last-child { border-radius: 0 10px 10px 0; }
+tr:hover td { background: #fafdfc; }
 td { padding: 12px; border-bottom: 1px solid var(--bord); vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
 td.nombre, th.nombre { text-align: right; }
@@ -389,13 +413,39 @@ td.nombre, th.nombre { text-align: right; }
 
 /* Page d'erreur */
 .erreur { text-align: center; padding: 50px 20px; }
-.erreur .code { font-size: 64px; font-weight: 700; color: var(--clair); line-height: 1; }
+.erreur .code { display: inline-block; font-size: 56px; font-weight: 700; color: var(--primaire); line-height: 1; padding: 10px 22px; border: 3px dashed var(--clair); border-radius: 16px; margin-bottom: 12px; }
 
 
-/* ============ 10. PIED DE PAGE ============ */
+/* ============ 10. FOOTER ============ */
 
-.pied { border-top: 1px solid var(--bord); background: var(--surface); color: var(--gris); font-size: 13.5px; }
-.pied .conteneur { display: flex; justify-content: space-between; gap: 10px; padding-top: 18px; padding-bottom: 18px; flex-wrap: wrap; }
+.footer { border-top: 1px solid var(--bord); background: var(--surface); color: var(--gris); font-size: 13.5px; }
+.footer .conteneur { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 18px; padding-bottom: 18px; flex-wrap: wrap; }
+.footer .footer-marque { display: flex; align-items: center; gap: 8px; }
+.footer img { width: 22px; height: 22px; }
+
+
+/* ============ 10 bis. ANIMATIONS DOUCES ============ */
+
+/* Les billets se soulèvent un peu au survol */
+.billet { transition: transform .2s ease, box-shadow .2s ease; }
+.billet:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(15, 122, 99, .14); }
+
+/* Les boutons s'enfoncent légèrement au clic */
+.bouton { transition: background .15s, transform .1s; }
+.bouton:active { transform: scale(.97); }
+
+/* Le contenu de la page et les messages apparaissent en fondu */
+@keyframes apparition {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+main.conteneur > * { animation: apparition .35s ease both; }
+.message { animation: apparition .3s ease both; }
+
+/* Accessibilité : pas d'animation si l'utilisateur les a désactivées sur son ordinateur */
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+}
 
 
 /* ============ 11. ÉCRANS ÉTROITS ============ */
