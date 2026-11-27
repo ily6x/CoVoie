@@ -3,6 +3,8 @@
  * Vue : liste de tous les trajets
  * Variables : $trajets (tous les trajets avec le nom du conducteur)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $trajets */
 require 'vues/admin/onglets.php';
 ?>
 <div class="carte">

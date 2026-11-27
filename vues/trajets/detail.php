@@ -5,6 +5,14 @@
  *             $estConducteur (bool), $demandes (liste, seulement pour le conducteur),
  *             $maDemande (statut de ma demande, ou null)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var Trajet $trajet */
+/** @var bool $estConducteur */
+/** @var array $demandes */
+/** @var Utilisateur $conducteur */
+/** @var float|null $noteConducteur */
+/** @var int $nombreAvisConducteur */
+/** @var string|null $maDemande */
 
 // Étapes du cycle de vie : quelles étapes sont atteintes ?
 $etapeComplet = ($trajet->statut === 'Complet' || $trajet->statut === 'Termine');

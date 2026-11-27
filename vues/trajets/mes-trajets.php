@@ -3,6 +3,9 @@
  * Vue : "Mes trajets" (espace conducteur)
  * Variables : $demandes (demandes en attente sur mes trajets à venir), $trajets (tous mes trajets)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $demandes */
+/** @var array $trajets */
 ?>
 <div class="titre-page">
     <div>

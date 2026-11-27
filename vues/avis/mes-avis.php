@@ -3,6 +3,11 @@
  * Vue : "Mes avis"
  * Variables : $aNoter (trajets terminés à noter), $note (ma moyenne), $recus, $ecrits
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var float|null $note */
+/** @var array $recus */
+/** @var array $aNoter */
+/** @var array $ecrits */
 ?>
 <div class="titre-page">
     <div>

@@ -3,6 +3,12 @@
  * Vue : tableau de bord administrateur
  * Variables : $stats (trajets), $reservations (compteurs), $nombreMembres, $nombreAvis, $moyenneGenerale
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $stats */
+/** @var array $reservations */
+/** @var int $nombreMembres */
+/** @var int $nombreAvis */
+/** @var float|null $moyenneGenerale */
 require 'vues/admin/onglets.php';
 ?>
 <h2>Trajets</h2>

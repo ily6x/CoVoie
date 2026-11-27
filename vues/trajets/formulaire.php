@@ -4,6 +4,11 @@
  * Variables : $trajet (null = publication, objet Trajet = modification),
  *             $valeurs (valeurs des champs), $erreurs (liste de messages)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var Trajet|null $trajet */
+/** @var string $titre */
+/** @var array $erreurs */
+/** @var array $valeurs */
 
 // Le même formulaire sert aux deux actions : seule l'adresse d'envoi change
 if ($trajet === null) {

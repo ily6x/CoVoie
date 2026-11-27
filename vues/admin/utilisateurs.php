@@ -3,6 +3,8 @@
  * Vue : liste des comptes
  * Variables : $utilisateurs (tous les comptes avec leur note et leur nombre de trajets)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $utilisateurs */
 require 'vues/admin/onglets.php';
 ?>
 <div class="carte">

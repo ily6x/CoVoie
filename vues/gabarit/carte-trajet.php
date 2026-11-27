@@ -8,6 +8,8 @@
  *  (avec nom_conducteur et note_conducteur).
  * ------------------------------------------------------------------
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $t */
 $placesPrises = $t['places_totales'] - $t['places_restantes'];
 ?>
 <article class="billet">

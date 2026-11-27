@@ -3,6 +3,9 @@
  * Vue : noter les participants d'un trajet terminé
  * Variables : $trajet (Trajet), $participants (personnes notables, avec 'deja_note')
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var Trajet $trajet */
+/** @var array $participants */
 ?>
 <div class="titre-page">
     <div>

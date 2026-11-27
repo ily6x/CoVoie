@@ -3,6 +3,12 @@
  * Vue : page d'accueil
  * Variables : $stats, $nombreMembres, $moyenneGenerale, $prochainsTrajets, $meilleursMembres
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $stats */
+/** @var int $nombreMembres */
+/** @var float|null $moyenneGenerale */
+/** @var array $prochainsTrajets */
+/** @var array $meilleursMembres */
 ?>
 <section class="hero">
     <div>

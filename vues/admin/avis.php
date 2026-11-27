@@ -3,6 +3,8 @@
  * Vue : modération des avis
  * Variables : $avis (tous les avis avec le nom de l'auteur et de la cible)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $avis */
 require 'vues/admin/onglets.php';
 ?>
 <div class="carte">

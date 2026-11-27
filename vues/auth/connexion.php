@@ -3,6 +3,8 @@
  * Vue : formulaire de connexion
  * Variables : $email (pré-rempli après une erreur)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var string $email */
 ?>
 <div class="carte formulaire-centre">
     <h1>Connexion</h1>

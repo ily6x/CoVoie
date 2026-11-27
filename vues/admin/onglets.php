@@ -3,6 +3,9 @@
  * Vue partielle : en-tête et onglets du back-office (inclus en haut de chaque page admin)
  * Variable : $onglet (nom de la page active)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var string $titre */
+/** @var string $onglet */
 $liens = [
     'admin' => 'Tableau de bord',
     'admin-avis' => 'Modération des avis',

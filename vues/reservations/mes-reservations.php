@@ -3,6 +3,8 @@
  * Vue : "Mes réservations" (espace passager)
  * Variables : $reservations (mes demandes avec le trajet et son conducteur)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $reservations */
 ?>
 <div class="titre-page">
     <div>

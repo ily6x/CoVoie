@@ -24,6 +24,7 @@ require_once 'includes/config.php';
 require_once 'includes/connexion.php';
 require_once 'includes/fonctions.php';
 require_once 'includes/routes.php';
+/** @var array $routes  Table des pages, définie dans includes/routes.php */
 
 require_once 'modeles/Utilisateur.php';
 require_once 'modeles/Trajet.php';

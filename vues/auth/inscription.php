@@ -3,6 +3,10 @@
  * Vue : formulaire d'inscription
  * Variables : $nom, $email (pré-remplis après une erreur), $erreurs (liste de messages)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $erreurs */
+/** @var string $nom */
+/** @var string $email */
 ?>
 <div class="carte formulaire-centre">
     <h1>Créer un compte</h1>

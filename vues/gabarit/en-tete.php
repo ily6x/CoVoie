@@ -7,6 +7,8 @@
  *  Le menu change selon que le visiteur est connecté, et s'il est admin.
  * ------------------------------------------------------------------
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var string $titre */
 ?>
 <!DOCTYPE html>
 <html lang="fr">

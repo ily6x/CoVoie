@@ -3,6 +3,11 @@
  * Vue : recherche de trajets
  * Variables : $depart, $arrivee, $date (critères saisis), $trajets (résultats)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var string $depart */
+/** @var string $arrivee */
+/** @var string $date */
+/** @var array $trajets */
 ?>
 <div class="titre-page">
     <div>

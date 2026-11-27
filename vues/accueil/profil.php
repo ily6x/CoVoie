@@ -3,6 +3,12 @@
  * Vue : profil public d'un membre
  * Variables : $membre (Utilisateur), $note, $nombreAvis, $trajetsRealises, $avisRecus
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var Utilisateur $membre */
+/** @var float|null $note */
+/** @var int $nombreAvis */
+/** @var int $trajetsRealises */
+/** @var array $avisRecus */
 ?>
 <div class="carte">
     <div class="profil">

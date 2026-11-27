@@ -3,6 +3,11 @@
  * Vue : statistiques du conducteur
  * Variables : $stats (Trajet::statistiques), $maNote, $nombreAvis, $passagerFrequent (ou null)
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var array $stats */
+/** @var float|null $maNote */
+/** @var int $nombreAvis */
+/** @var array|null $passagerFrequent */
 $taux = round((float) $stats['taux']);
 ?>
 <div class="titre-page">

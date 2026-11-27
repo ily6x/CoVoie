@@ -3,6 +3,9 @@
  * Vue : page d'erreur (404, 403...)
  * Variables : $code, $message
  */
+// Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
+/** @var int $code */
+/** @var string $message */
 ?>
 <div class="carte erreur">
     <div class="code"><?= $code ?></div>
