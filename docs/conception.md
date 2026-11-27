@@ -1,98 +1,130 @@
-﻿# Conception
+# Conception — CoVoie
 
-## MLD
+## 1. MCD (Merise)
 
-- **utilisateurs** : **id**, nom, email (unique), mot_de_passe, role, date_inscription.
-- **trajets** : **id**, origine, destination, date_heure, places_totales, places_restantes, statut, prix, **id_conducteur → utilisateurs.id**.
-- **reservations** : **id**, statut, date_reservation, **id_trajet → trajets.id**, **id_passager → utilisateurs.id**. Unicité `(id_trajet, id_passager)`.
-- **avis** : **id**, note, commentaire, date_avis, **id_trajet → trajets.id**, **id_auteur → utilisateurs.id**, **id_cible → utilisateurs.id**. Unicité `(id_trajet, id_auteur, id_cible)`.
+![MCD](mcd.png)
 
-Toutes les clés étrangères utilisent une suppression en cascade. Les places sont restituées par la logique applicative avant la suppression d’un passager. Le rôle `membre` ne distingue pas conducteur et passager : ces rôles dépendent de chaque trajet. La propriété PHP `Utilisateur::password` correspond à la colonne SQL `mot_de_passe`.
+- **UTILISATEUR** (<u>id</u>, nom, email, mot_de_passe, role, date_inscription)
+- **TRAJET** (<u>id</u>, origine, destination, date_heure, places_totales, places_restantes, statut, prix)
+- **CONDUIRE** : UTILISATEUR (0,n) — TRAJET (1,1)
+- **RÉSERVER** (statut, date_reservation) : UTILISATEUR (0,n) — TRAJET (0,n)
+- **NOTER** (note, commentaire, date_avis) : association ternaire entre UTILISATEUR *auteur* (0,n),
+  UTILISATEUR *cible* (0,n) et TRAJET (0,n)
 
-## Diagramme de classes
+Il n'y a pas d'entité CONDUCTEUR ni PASSAGER : un même compte est conducteur des trajets qu'il
+publie et passager de ceux qu'il réserve.
 
-```mermaid
-classDiagram
-class Database {
-  +get() PDO
-  +query(sql, params) PDOStatement
-  +transaction(operation)
+## 2. MLD
+
+![MLD](mld.png)
+
+- **utilisateurs** (<u>id</u>, nom, email, mot_de_passe, role, date_inscription)
+- **trajets** (<u>id</u>, origine, destination, date_heure, places_totales, places_restantes, statut, prix, #id_conducteur)
+- **reservations** (<u>id</u>, statut, date_reservation, #id_trajet, #id_passager) — UNIQUE (id_trajet, id_passager)
+- **avis** (<u>id</u>, note, commentaire, date_avis, #id_trajet, #id_auteur, #id_cible) — UNIQUE (id_trajet, id_auteur, id_cible)
+
+Les associations RÉSERVER et NOTER deviennent des tables. On leur donne un identifiant `id`
+(plus simple à manipuler dans les URL) et la clé UNIQUE garde la règle « une seule fois ».
+Toutes les clés étrangères sont en `ON DELETE CASCADE`.
+
+Les statuts sont enregistrés **sans accent** (`Termine`, `Confirmee`, `Refusee`) : ce sont des
+valeurs techniques comparées dans le code. La fonction `libelleStatut()` affiche le texte accentué.
+
+## 3. Diagramme de classes
+
+![Diagramme de classes](diagramme-classes.png)
+
+Les attributs des classes portent le même nom que les colonnes de la table : PDO peut ainsi
+créer directement un objet rempli avec `fetchObject('Trajet')`.
+
+Convention suivie dans les modèles :
+- `trouver($id)` renvoie **un objet** (ou `null`) pour travailler sur un élément précis ;
+- les méthodes `lister...()` renvoient **des tableaux** (avec des jointures, ex. le nom du conducteur) pour les listes affichées ;
+- les méthodes qui modifient la base renvoient un **message d'erreur**, ou `''` si tout s'est bien passé.
+
+Méthodes demandées par le cahier des charges :
+- `Trajet::reserverPlace($idPassager)` — retire une place lors de l'acceptation d'une demande ;
+- `Avis::noteMoyenne($idUtilisateur)` — méthode statique, renvoie la moyenne ou `null`.
+
+## 4. Cycle de vie
+
+**Trajet** : `Ouvert` → `Complet` (plus de place) → `Termine` (clôture automatique dès que l'heure de départ est passée).
+Un trajet complet redevient `Ouvert` si le conducteur ajoute des places ou si l'admin supprime un passager.
+
+**Réservation** : `En attente` → `Confirmee` (acceptée) ou `Refusee` (refusée par le conducteur, ou encore en attente au moment de la clôture).
+Une demande en attente peut être annulée (supprimée) par le passager.
+
+## 5. Acceptation d'une demande (transaction)
+
+Accepter une demande modifie **deux tables** : il faut que les deux réussissent ensemble.
+
+```php
+$pdo->beginTransaction();
+try {
+    if (!$trajet->reserverPlace($idPassager)) {   // 1. trajets : places_restantes - 1
+        $pdo->rollBack();
+        return 'Il ne reste plus de place sur ce trajet.';
+    }
+    requete("UPDATE reservations SET statut = 'Confirmee' WHERE id = ?", [$id]);   // 2.
+    $pdo->commit();
+} catch (PDOException $erreur) {
+    $pdo->rollBack();      // en cas d'erreur, rien n'est modifié
 }
-class Utilisateur {
-  +int id
-  +string nom
-  +string email
-  +string password
-  +string role
-  +register(nom, email, password, confirmation) int
-  +noteMoyenne() float
-  +completedTripCount() int
-}
-class Trajet {
-  +int id
-  +string origine
-  +string destination
-  +string dateHeure
-  +int placesTotales
-  +int placesRestantes
-  +string statut
-  +float prix
-  +int idConducteur
-  +create(conducteur, origine, destination, date, places, prix) int
-  +reserverPlace(idPassager) bool
-  +update(id, conducteur, champs)
-  +cloturer(id, conducteur)
-}
-class Reservation {
-  +int id
-  +string statut
-  +string dateReservation
-  +int idTrajet
-  +int idPassager
-  +create(trajet, passager) int
-  +traiter(trajet, reservation, conducteur, accepter)
-  +cancel(id, passager)
-}
-class Avis {
-  +int id
-  +int note
-  +string commentaire
-  +string date
-  +int idTrajet
-  +int idAuteur
-  +int idCible
-  +create(trajet, auteur, cible, note, commentaire)
-  +noteMoyenne(utilisateur) float
-  +participants(trajet, auteur) array
-}
-Utilisateur "1" --> "0..*" Trajet : conduit
-Utilisateur "1" --> "0..*" Reservation : demande
-Trajet "1" --> "0..*" Reservation : reçoit
-Trajet "1" --> "0..*" Avis : concerne
-Utilisateur "1" --> "0..*" Avis : écrit
-Utilisateur "1" --> "0..*" Avis : reçoit
 ```
 
-La moyenne est nullable. `reserverPlace` est appelée pendant la confirmation, dans la transaction qui détient le verrou du trajet. Les propriétés complémentaires telles que les noms sont chargées par jointures pour les vues.
+Dans `reserverPlace()`, la condition `places_restantes > 0` est écrite **dans** la requête `UPDATE` :
+si deux acceptations arrivent en même temps, la seconde ne modifie aucune ligne (`rowCount() = 0`)
+et le compteur ne peut jamais passer sous zéro.
 
-## Cycle de vie
+## 6. Clôture automatique
 
-```mermaid
-stateDiagram-v2
-[*] --> Ouvert : publication
-Ouvert --> Complet : dernière demande acceptée
-Complet --> Ouvert : capacité augmentée ou compte passager supprimé
-Ouvert --> Termine : clôture après le départ
-Complet --> Termine : clôture après le départ
-Termine --> [*]
+Le sujet demande qu'un trajet « Ouvert » ou « Complet » passe « Terminé » quand il atteint sa date/heure.
+`index.php` appelle `Trajet::cloturerTrajetsPasses()` au début de **chaque page** :
+
+```sql
+-- 1. les demandes encore en attente sur un trajet parti sont refusées
+UPDATE reservations SET statut = 'Refusee'
+WHERE statut = 'En attente'
+AND id_trajet IN (SELECT id FROM trajets WHERE statut <> 'Termine' AND date_heure <= maintenant);
+
+-- 2. les trajets partis passent "Termine"
+UPDATE trajets SET statut = 'Termine' WHERE statut <> 'Termine' AND date_heure <= maintenant;
 ```
 
-La clôture nécessite l’identité du conducteur. Les trajets passés sont exclus de la recherche même si le conducteur ne les a pas encore clôturés. Un trajet terminé ne peut plus être modifié.
+L'ordre compte : la requête 1 repère les trajets **pas encore** terminés, elle passe donc avant la 2.
+Ces requêtes ne font rien si aucun trajet n'est concerné : on peut les relancer sans risque.
+Sur un site très fréquenté, on les lancerait plutôt par une tâche planifiée (cron).
 
-## Concurrence et sécurité
+## 7. Calcul de la note moyenne
 
-Chaque acceptation exécute `SELECT ... FOR UPDATE` sur le trajet, puis verrouille la demande. Deux acceptations du même trajet sont donc sérialisées dans MySQL : la seconde relit le compteur actualisé. Le changement du compteur et le changement de statut de la demande sont validés par un même `COMMIT`. En cas d’échec, `ROLLBACK` annule les deux opérations.
+La note moyenne n'est **pas enregistrée** dans une colonne : elle est recalculée à chaque affichage.
 
-Les contraintes d’unicité de MySQL complètent les contrôles applicatifs. Les notes sont validées de 1 à 5, les commentaires jusqu’à 500 caractères, les places de 1 à 8 et le prix de 0 à 200 €. Les profils comptent les trajets terminés en tant que conducteur ou passager confirmé, sans double comptage. Le taux de remplissage est la moyenne des taux de chaque trajet, et non un ratio pondéré par sa capacité.
+```php
+public static function noteMoyenne(int $idUtilisateur): ?float
+{
+    $moyenne = requete('SELECT AVG(note) FROM avis WHERE id_cible = ?', [$idUtilisateur])->fetchColumn();
 
-Les contrôleurs utilisent les conventions anglaises vues en cours et remplissent les responsabilités des `TrajetController`, `ReservationController` et `AvisController` cités dans le sujet.
+    if ($moyenne === null) {   // AVG() renvoie NULL quand il n'y a aucun avis
+        return null;
+    }
+    return (float) $moyenne;
+}
+```
+
+- `AVG(note)` fait la moyenne de tous les avis **reçus** (`id_cible`), quel que soit le trajet.
+- Sans avis, on renvoie `null` et le site affiche « Pas encore noté » : afficher 0 voudrait dire « très mal noté ».
+- Comme rien n'est stocké, la moyenne est toujours juste : si l'admin supprime un avis abusif, elle change toute seule.
+
+## 8. Contrôles de saisie
+
+| Champ | Règle |
+|---|---|
+| Nom | 2 à 100 caractères |
+| Email | format valide, 180 caractères max, unique |
+| Mot de passe | 8 à 72 caractères, confirmation identique |
+| Départ / arrivée | 2 à 120 caractères, différents l'un de l'autre |
+| Date de départ | obligatoire et dans le futur |
+| Places | 1 à 8 |
+| Prix | 0 à 200 € (0 = gratuit) |
+| Note | 1 à 5 |
+| Commentaire | facultatif, 500 caractères max |

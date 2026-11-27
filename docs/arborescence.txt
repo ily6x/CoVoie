@@ -1,132 +1,75 @@
-﻿ARBORESCENCE DU PROJET - COVOITURAGE CAMPUS
-Arkam, Bilel & Ilyes - BTS SIO 2
-
+CoVoie - Arborescence du projet
 
 covoie/
-│
-├── index.php                      POINT D'ENTREE UNIQUE + ROUTEUR
-│
-├── includes/                      Fichiers charges sur toutes les pages
-│   ├── config.php                   identifiants de la base de donnees
-│   ├── database.php                 connexion PDO partagee
-│   ├── functions.php                echappement, session, CSRF, rendu des vues
-│   └── routes.php                   table de routage (31 routes)
-│
-├── models/                        LES MODELES
-│   │                              Seuls fichiers qui parlent a MySQL.
-│   │                              Contiennent les regles metier.
-│   ├── Utilisateur.php              classe commune aux 3 modules
-│   ├── Trajet.php                   reserverPlace(idPassager), cloturer(), update()
-│   ├── Reservation.php              create(), traiter(), cancel()
-│   └── Avis.php                     Avis::noteMoyenne(idUtilisateur)
-│
-├── controllers/                   LES CONTROLEURS
-│   │                              Droits d'acces et validation des formulaires.
-│   │                              Aucun SQL, aucun HTML.
-│   ├── HomeController.php           page d'accueil
-│   ├── AuthController.php           connexion / inscription / deconnexion
-│   ├── TrajetController.php         >>> MODULE A - Conducteur
-│   ├── ReservationController.php    >>> MODULE B - Passager
-│   ├── AvisController.php           >>> MODULE C - Avis
-│   └── AdminController.php          >>> MODULE C - Back-office
-│
-├── views/                         LES VUES
-│   │                              Affichage HTML uniquement.
-│   ├── layouts/                     entete, pied de page, carte-trajet
-│   ├── home/                        accueil
-│   ├── auth/                        connexion, inscription
-│   ├── trips/                       module A
-│   ├── reservations/                module B
-│   ├── profile/                     module B
-│   ├── reviews/                     module C
-│   ├── admin/                       module C
-│   └── error.php                    page d'erreur commune
-│
+├── controleurs/
+│   ├── AccueilController.php      accueil, profil
+│   ├── AdminController.php        back-office
+│   ├── AuthController.php         connexion, inscription
+│   ├── AvisController.php         module C
+│   ├── ReservationController.php  module B
+│   └── TrajetController.php       module A
 ├── css/
 │   └── style.css                  feuille de style unique
-│
-├── js/
-│   └── design.js                  interactions legeres de l'interface
-│
-├── images/                        illustrations de l'accueil
-│
-├── sql/
-│   └── covoiturage.sql            schema + jeu de donnees de demonstration
-│                                  (22 comptes, 42 trajets, 100 reservations, 44 avis)
-│
 ├── docs/
-│   ├── arborescence.txt             ce document
-│   ├── conception.md                MLD detaille et logique metier
-│   ├── mcd.svg / mcd.png            modele conceptuel de donnees (Merise)
-│   ├── mld.svg / mld.png            modele logique de donnees
-│   └── diagramme-classes.svg/.png   diagramme de classes UML
-│
+│   ├── conception.md
+│   ├── diagramme-classes.png
+│   ├── diagramme-classes.svg
+│   ├── documentation.pdf          documentation courte (livrable)
+│   ├── mcd.png
+│   ├── mcd.svg
+│   ├── mld.png
+│   └── mld.svg
+├── fonts/
+│   ├── roboto-latin-400-normal.woff2
+│   ├── roboto-latin-500-normal.woff2
+│   └── roboto-latin-700-normal.woff2
 ├── gantt/
-│   └── covoiturage.gan            planning previsionnel (GanttProject)
-│
-├── tests/
-│   ├── metier.php                   27 controles metier (SQLite en memoire)
-│   ├── mysql.php                    les memes controles sur MySQL
-│   └── http.php                     34 controles HTTP sur le site local
-│
-│
-├── .gitignore
-└── README.md                      installation, comptes et parcours de demo
-
-
-POURQUOI CETTE ORGANISATION
----------------------------
-
-Les dossiers sont ranges par ROLE DANS LE MVC, pas par fonctionnalite.
-Un meme module a donc ses fichiers repartis dans trois dossiers.
-
-Exemple pour le module A (conducteur) :
-    models/Trajet.php               le modele
-    controllers/TrajetController.php  le controleur
-    views/trips/                    les pages
-
-    DOSSIER        ROLE          ON Y TROUVE            ON N'Y TROUVE JAMAIS
-    ------------   -----------   --------------------   --------------------
-    models/        Modele        requetes SQL,          du HTML
-                                 regles metier
-    controllers/   Controleur    droits d'acces,        du SQL, du HTML
-                                 validation
-    views/         Vue           HTML, boucles          du SQL, des decisions
-    includes/      Outillage     config, connexion,     de la logique metier
-                                 fonctions communes
-
-
-LE CHEMIN D'UNE REQUETE
------------------------
-
-    Navigateur
-        |   index.php?page=trajets
-        v
-    index.php ......... le ROUTEUR lit $_GET['page'] dans includes/routes.php
-        |
-        v
-    ReservationController::search() ..... verifie les droits, lit les filtres
-        |
-        v
-    Trajet::search(origine, destination, date) ... la seule couche qui parle a MySQL
-        |
-        v
-    views/reservations/search.php ....... affiche, et rien d'autre
-
-
-REPARTITION PAR ETUDIANT
-------------------------
-
-    MODULE                 QUI       FICHIERS
-    --------------------   -------   --------------------------------------
-    Socle commun           les 3     index.php, includes/,
-                                     models/Utilisateur.php,
-                                     AuthController.php, views/layouts/
-    A - Conducteur         Arkam     models/Trajet.php,
-                                     TrajetController.php, views/trips/
-    B - Passager           Bilel     models/Reservation.php,
-                                     ReservationController.php,
-                                     views/reservations/, views/profile/
-    C - Avis & Admin       Ilyes     models/Avis.php, AvisController.php,
-                                     AdminController.php, views/reviews/,
-                                     views/admin/
+│   └── covoiturage.gan
+├── images/
+│   ├── illustration-accueil.svg   illustration de l'accueil
+│   └── logo.svg                   logo
+├── includes/
+│   ├── config.php                 réglages + session
+│   ├── connexion.php              PDO + requete()
+│   ├── fonctions.php              fonctions utilitaires
+│   └── routes.php                 table des pages
+├── js/
+│   └── script.js                  petit JavaScript
+├── modeles/
+│   ├── Avis.php                   module C (noteMoyenne)
+│   ├── Reservation.php            module B
+│   ├── Trajet.php                 module A (reserverPlace)
+│   └── Utilisateur.php            comptes, connexion, inscription
+├── sql/
+│   └── covoiturage.sql            base + données de démo
+├── vues/
+│   ├── accueil/
+│   │   ├── index.php              page d'accueil
+│   │   └── profil.php
+│   ├── admin/
+│   │   ├── avis.php
+│   │   ├── onglets.php
+│   │   ├── tableau-de-bord.php
+│   │   ├── trajets.php
+│   │   └── utilisateurs.php
+│   ├── auth/
+│   │   ├── connexion.php          formulaire de connexion
+│   │   └── inscription.php
+│   ├── avis/
+│   │   ├── formulaire.php
+│   │   └── mes-avis.php
+│   ├── gabarit/
+│   │   ├── carte-trajet.php       billet réutilisable
+│   │   ├── en-tete.php            en-tête + menu
+│   │   └── pied.php               pied de page
+│   ├── reservations/
+│   │   ├── mes-reservations.php
+│   │   └── recherche.php
+│   ├── trajets/
+│   │   ├── detail.php
+│   │   ├── formulaire.php
+│   │   ├── mes-trajets.php
+│   │   └── statistiques.php
+│   └── erreur.php
+├── index.php                      contrôleur frontal (routeur)
+└── README.md

@@ -1,65 +1,109 @@
-﻿# CoVoiturage Campus
+# CoVoie — Covoiturage entre étudiants du campus
 
-Application PHP orientée objet / MySQL en MVC, réalisée à partir du sujet fourni. Les trois modules sont utilisables : conducteur, passager, avis et administration.
+Application web PHP / MySQL en architecture **MVC**, réalisée pour le BTS SIO option SLAM.
+Un étudiant publie ses trajets vers le campus (Paris 15e), les autres demandent une place,
+puis chacun note l'autre après le trajet.
 
-## Démarrer avec Wamp
+| Module | Rôle | Contrôleur |
+|---|---|---|
+| **A** — Gestion des trajets | Le conducteur publie, modifie, supprime ses trajets et accepte / refuse les demandes | `TrajetController` |
+| **B** — Recherche et réservation | Le passager cherche un trajet, demande une place, suit ou annule ses demandes | `ReservationController` |
+| **C** — Avis et réputation | Après un trajet terminé, conducteur et passagers se notent de 1 à 5 | `AvisController` |
+| Back-office | L'administrateur modère les avis, gère les comptes, consulte les statistiques | `AdminController` |
 
-1. Démarrer Apache et MySQL dans Wamp.
-2. Pour une **nouvelle installation**, importer `sql/covoiturage.sql` dans phpMyAdmin. Le script crée `covoiturage` et refuse de remplacer une base existante : il ne supprime aucune base.
-3. Ouvrir http://localhost/covoie/index.php.
+---
 
-La base a été initialisée et testée sur ce poste. Configuration par défaut : MySQL `127.0.0.1:3306`, base `covoiturage`, utilisateur `root`, mot de passe vide. Pour une autre installation, définir `COVOIE_DSN`, `COVOIE_DB_USER` et `COVOIE_DB_PASSWORD` dans l’environnement du serveur. PHP 8.1 minimum, extensions PDO MySQL et mbstring ; SQLite pour les tests en mémoire, cURL pour les tests HTTP.
+## Installation avec WAMP
 
-### Comptes de démonstration
+1. Copier le dossier `covoie` dans `C:\wamp64\www\`.
+2. Démarrer WAMP (icône verte).
+3. Ouvrir phpMyAdmin → onglet **Importer** → choisir `sql/covoiturage.sql` → **Exécuter**.
+   Le script crée lui-même la base `covoiturage`.
+   *Si une ancienne base `covoiturage` existe déjà, la supprimer d'abord (phpMyAdmin → base → Opérations → Supprimer la base).*
+4. Ouvrir **http://localhost/covoie/**
 
-Mot de passe de tous les comptes : **Password123!**
+Réglages de connexion dans `includes/config.php` (par défaut : `root` sans mot de passe, comme WAMP).
+Aucune dépendance à installer : PHP 8 et l'extension PDO MySQL suffisent. La police Roboto est
+enregistrée dans `fonts/`, le site fonctionne donc **sans connexion Internet**.
 
-| Email | Démonstration |
+---
+
+## Comptes de démonstration
+
+Mot de passe de **tous** les comptes : `Password123!`
+
+| Compte | Ce qu'il permet de montrer |
 |---|---|
-| arkam.benali@campus.fr | Administration et conducteur |
-| sarah.benjelloun@campus.fr | Demandes de réservation à traiter |
-| emma.girard@campus.fr | Historique des réservations |
-| bilel.mansouri@campus.fr | Profil noté 4,75/5 |
-| camille.rousset@campus.fr | Profil noté 3,25/5 |
-| hugo.petit@campus.fr | Profil sans note |
+| `ilyes.karim@campus.fr` | **Administrateur** : tableau de bord, modération des avis, comptes, trajets |
+| `sarah.benjelloun@campus.fr` | **Module A** : 2 demandes pour la dernière place du trajet Issy → Versailles (en accepter une le fait passer « Complet ») ; son trajet d'hier est **clôturé automatiquement**, elle peut noter Emma |
+| `emma.girard@campus.fr` | **Module B** : réservations dans les 3 états (En attente, Confirmée, Refusée) |
+| `bilel.mansouri@campus.fr` | **Module C** : profil noté 4,75 / 5 |
+| `camille.rousset@campus.fr` | Profil noté 3,25 / 5 (pour comparer) |
+| `hugo.petit@campus.fr` | Aucun avis : affiche « Pas encore noté » (et non 0) |
 
-### Parcours de démonstration
+---
 
-Rechercher un trajet en visiteur. Se connecter avec Sarah, ouvrir Mes trajets et traiter une demande sur un trajet ouvert. Le compteur diminue seulement lors de l’acceptation. Avec Emma, suivre les trois états des demandes. Pour montrer la clôture, publier un trajet futur avec des participants confirmés, puis attendre son départ : le conducteur peut le clôturer depuis sa fiche. Les trajets déjà terminés du jeu de données permettent immédiatement de démontrer la notation. Avec Arkam, modérer les avis et consulter les statistiques.
+## Organisation du code
 
-## Architecture et règles
-
-`index.php` charge le socle, contrôle la méthode HTTP et le jeton CSRF, puis consulte la table de routes. Les contrôleurs valident l’identité et préparent les données des vues. Les classes portent les règles métier et utilisent la connexion PDO commune.
-
-- Une demande reste **En attente** sans consommer de place. L’acceptation verrouille le trajet dans une transaction, décrémente le compteur et confirme la demande. À zéro place, le trajet devient **Complet**.
-- La modification de capacité conserve le nombre de places déjà confirmées.
-- La clôture est **manuelle après le départ**. Elle refuse les demandes en attente restantes, puis débloque la notation.
-- Un avis est autorisé entre le conducteur et chaque passager confirmé, une seule fois par paire et par trajet. Les passagers ne se notent pas entre eux. Ce choix permet au conducteur de noter chacun de ses passagers, comme demandé dans le module C.
-- La moyenne est calculée par `AVG(note)` à chaque consultation ; sans avis, elle vaut `NULL` et l’interface affiche « Pas encore noté ».
-- La suppression d’un passager restitue les places confirmées avant la suppression en cascade.
-- Les pages personnelles sont filtrées sur l’identité de session ; la fiche publique ne révèle pas les demandes des autres participants. La modération et la gestion des comptes exigent le rôle admin.
-- Les écritures nécessitent POST et un jeton CSRF. Les mots de passe sont hachés et les requêtes préparées ; les contenus saisis sont échappés en HTML.
-
-Documentation : [MCD](docs/mcd.png), [MLD](docs/mld.png), [diagramme de classes](docs/diagramme-classes.png), [conception détaillée](docs/conception.md). Le planning prévisionnel est dans `gantt/covoiturage.gan`.
-
-## Vérifications
-
-```powershell
-php tests/metier.php
-php tests/mysql.php
-php tests/http.php
+```
+covoie/
+├── index.php            Contrôleur frontal : TOUTES les pages passent par lui
+├── includes/
+│   ├── config.php       Nom du site, fuseau horaire, identifiants MySQL, session
+│   ├── connexion.php    connexionBdd() et requete() : requêtes préparées PDO
+│   ├── fonctions.php    Session, contrôle d'accès, CSRF, messages, affichage
+│   └── routes.php       Tableau  page => [Contrôleur, méthode]
+├── modeles/             Classes métier : SQL + règles de gestion
+├── controleurs/         Font le lien entre l'URL, les modèles et les vues
+├── vues/                HTML (un dossier par thème + gabarit commun)
+├── css/style.css        Toute la mise en forme (variables de couleur en haut)
+├── js/script.js         Menu mobile, confirmation, inverser départ/arrivée
+├── images/  fonts/      Logo, illustration d'accueil, police Roboto
+├── sql/covoiturage.sql  Structure de la base + jeu de démonstration
+├── docs/                MCD, MLD, diagramme de classes, conception
+└── gantt/               Planning du projet (GanttProject)
 ```
 
-`metier.php` teste les règles dans une base SQLite en mémoire. `mysql.php` exécute les mêmes contrôles dans une base MySQL temporaire au nom aléatoire, puis supprime uniquement cette base de test. `http.php` teste les pages, les sessions et les autorisations sur le site local avec les comptes de démonstration. Les tests HTTP ne suppriment aucune donnée de démonstration.
+**Parcours d'une requête** — `index.php?page=trajet&id=12` :
 
-Sur ce poste, la configuration CLI de Wamp référence une extension Xdebug dans un ancien chemin `E:`. Pour tester sans cette configuration système :
+1. `index.php` charge les fichiers puis lit `page=trajet` ;
+2. `routes.php` indique `['TrajetController', 'detail']` ;
+3. `TrajetController::detail()` appelle le modèle `Trajet::trouver(12)` ;
+4. le contrôleur transmet les données à la vue `vues/trajets/detail.php` avec `afficherVue()`.
 
-```powershell
-php -n -d extension_dir=C:\wamp64\bin\php\php8.4.0\ext -d extension=php_pdo_sqlite.dll -d extension=php_mbstring.dll tests/metier.php
-php -n -d extension_dir=C:\wamp64\bin\php\php8.4.0\ext -d extension=php_pdo_mysql.dll -d extension=php_mbstring.dll tests/mysql.php
-php -n -d extension_dir=C:\wamp64\bin\php\php8.4.0\ext -d extension=php_curl.dll tests/http.php
-```
+---
 
-## Livrable Git
+## Règles métier principales
 
-Aucun dépôt Git n’existait dans le dossier fourni. L’historique de commits par étudiant demandé dans le sujet doit être constitué par les trois étudiants : les contributions ne sont pas inventées. Le code et la documentation sont prêts à être ajoutés à leur dépôt.
+- **Une seule demande** par passager et par trajet (vérifié en PHP **et** par la clé `UNIQUE une_seule_demande`).
+- Une demande reste *En attente* sans prendre de place. C'est l'**acceptation** qui appelle
+  `Trajet::reserverPlace()` : la place est retirée et, à zéro, le trajet passe *Complet*.
+  Les deux mises à jour sont faites dans une **transaction** (`beginTransaction` / `commit` / `rollBack`).
+- On ne réserve pas son propre trajet, ni un trajet complet, parti ou terminé.
+- Le conducteur ne peut pas descendre le nombre de places sous les places déjà réservées.
+- La **clôture est automatique** : au début de chaque page, `Trajet::cloturerTrajetsPasses()` passe
+  en *Terminé* les trajets dont l'heure de départ est passée et refuse leurs demandes encore en
+  attente. La notation devient alors possible.
+- Le conducteur note chacun de ses passagers acceptés, chaque passager note le conducteur,
+  **une seule fois** par trajet (clé `UNIQUE un_seul_avis`).
+- La note moyenne n'est **pas stockée** : `Avis::noteMoyenne()` la calcule avec `AVG(note)`.
+  Sans avis, elle vaut `null` et le site affiche « Pas encore noté ».
+- La suppression d'un compte par l'admin rend d'abord les places qu'il occupait, puis la
+  suppression en cascade (`ON DELETE CASCADE`) efface ses trajets, réservations et avis.
+
+## Sécurité
+
+| Risque | Protection | Où ? |
+|---|---|---|
+| Injection SQL | Requêtes préparées (`prepare` + `execute`) | `requete()` dans `connexion.php` |
+| Vol de mot de passe | `password_hash()` / `password_verify()` | `Utilisateur` |
+| Faille XSS | `htmlspecialchars()` sur tout ce qui est affiché | fonction `e()` |
+| Faille CSRF | Jeton secret dans chaque formulaire POST | `champCsrf()`, `verifierFormulaire()` |
+| Accès non autorisé | Vérification à chaque action | `proteger()`, `protegerAdmin()`, contrôle du conducteur |
+| Vol de session | `session_regenerate_id()` à la connexion, cookie `httponly` | `AuthController`, `config.php` |
+
+## Documentation
+
+- **[Documentation technique (PDF)](docs/documentation.pdf)** : MLD, diagramme de classes, décrément des places, clôture, note moyenne
+- [MCD](docs/mcd.png) · [MLD](docs/mld.png) · [Diagramme de classes](docs/diagramme-classes.png)
+- [Conception détaillée](docs/conception.md) · [Arborescence](docs/arborescence.txt)

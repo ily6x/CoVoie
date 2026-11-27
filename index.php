@@ -1,40 +1,65 @@
 <?php
+/**
+ * ------------------------------------------------------------------
+ *  CoVoie - index.php  (CONTRÔLEUR FRONTAL)
+ * ------------------------------------------------------------------
+ *  TOUTES les pages du site passent par ce fichier.
+ *  L'URL indique la page voulue : index.php?page=mes-trajets
+ *
+ *  Étapes :
+ *   1. charger les fichiers nécessaires (config, fonctions, classes)
+ *   2. lire la page demandée dans l'URL
+ *   3. trouver le contrôleur correspondant dans la table des routes
+ *   4. appeler la méthode du contrôleur, qui affichera la vue
+ *
+ *  Architecture MVC :
+ *   - Modèle      (modeles/)     : les requêtes SQL et les règles métier
+ *   - Vue         (vues/)        : le HTML affiché
+ *   - Contrôleur  (controleurs/) : fait le lien entre les deux
+ * ------------------------------------------------------------------
+ */
 
-declare(strict_types = 1);
-require __DIR__ . '/includes/config.php';
-require __DIR__ . '/includes/database.php';
-require __DIR__ . '/includes/functions.php';
-spl_autoload_register(function ($className) {
-    foreach (['models', 'controllers'] as $directory) {
-        $filePath = __DIR__ . "/$directory/$className.php";
-        if (is_file($filePath)) {
-            require $filePath;
-            return;
-        }
-    }
-});
-try {
-    $page = inputText($_GET, 'page', 'accueil');
-    $routes = require __DIR__ . '/includes/routes.php';
-    if (!isset($routes[$page])) {
-        throw new HttpException('Page introuvable.', 404);
-    }
-    [$className, $method, $isWrite] = $routes[$page];
-    if ($isWrite) {
-        requirePost();
-    }
-    (new $className())->$method();
+// 1. Chargement des fichiers
+require_once 'includes/config.php';
+require_once 'includes/connexion.php';
+require_once 'includes/fonctions.php';
+require_once 'includes/routes.php';
+
+require_once 'modeles/Utilisateur.php';
+require_once 'modeles/Trajet.php';
+require_once 'modeles/Reservation.php';
+require_once 'modeles/Avis.php';
+
+require_once 'controleurs/AccueilController.php';
+require_once 'controleurs/AuthController.php';
+require_once 'controleurs/TrajetController.php';
+require_once 'controleurs/ReservationController.php';
+require_once 'controleurs/AvisController.php';
+require_once 'controleurs/AdminController.php';
+
+// Sécurité : si le compte connecté a été supprimé par l'admin,
+// on ferme sa session pour qu'il ne puisse plus rien faire.
+if (estConnecte() && Utilisateur::trouver(idConnecte()) === null) {
+    $_SESSION = [];
 }
-catch (HttpException $e) {
-    http_response_code($e->getCode());
-    render('error', ['titre' => 'Erreur', 'erreur' => $e->getMessage()]);
+
+// Clôture automatique : les trajets dont l'heure de départ est passée deviennent "Termine"
+Trajet::cloturerTrajetsPasses();
+
+// 2. Page demandée (par défaut : l'accueil)
+$page = 'accueil';
+if (isset($_GET['page']) && is_string($_GET['page'])) {
+    $page = $_GET['page'];
 }
-catch (DomainException $e) {
-    http_response_code(422);
-    render('error', ['titre' => 'Action impossible', 'erreur' => $e->getMessage()]);
+
+// 3. La page existe-t-elle dans la table des routes ?
+if (!isset($routes[$page])) {
+    afficherErreur(404, 'Cette page n\'existe pas.');
 }
-catch (Throwable $e) {
-    error_log((string) $e);
-    http_response_code(503);
-    render('error', ['titre' => 'Service indisponible', 'serviceIndisponible' => true, 'erreur' => 'Le service est indisponible. Vérifiez MySQL et l’installation décrite dans le README.']);
-}
+
+$nomControleur = $routes[$page][0];   // ex : 'TrajetController'
+$nomMethode = $routes[$page][1];      // ex : 'detail'
+
+// 4. On crée le contrôleur et on appelle sa méthode
+$controleur = new $nomControleur();
+$controleur->$nomMethode();
