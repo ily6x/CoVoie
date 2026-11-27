@@ -6,35 +6,49 @@
 // Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
 /** @var string $email */
 ?>
-<div class="carte formulaire-centre">
-    <img class="logo-formulaire" src="images/logo.svg" alt="">
-    <h1>Connexion</h1>
-    <p class="sous-titre">Heureux de vous revoir sur CoVoie.</p>
-
-    <!-- Formulaire envoyé en POST vers AuthController::connecter() -->
-    <form method="post" action="index.php?page=connexion-valider">
-        <?= champCsrf() ?>
-
-        <div class="groupe">
-            <label for="email">Adresse email</label>
-            <input type="email" id="email" name="email" value="<?= e($email) ?>" required autofocus>
+<div class="authentification-page">
+    <div class="entete-page">
+        <div>
+            <p class="surtitre">Mon compte</p>
+            <h1>Connexion</h1>
+            <p>Un seul compte pour conduire et pour voyager.</p>
         </div>
-        <div class="groupe">
-            <label for="mot_de_passe">Mot de passe</label>
-            <input type="password" id="mot_de_passe" name="mot_de_passe" required>
-        </div>
+    </div>
 
-        <button class="bouton bouton-large" type="submit">Se connecter</button>
-    </form>
+    <div class="authentification">
+        <section>
+            <!-- Formulaire envoyé en POST vers AuthController::connecter() -->
+            <form class="bloc" method="post" action="index.php?page=connexion-valider">
+                <?= champCsrf() ?>
 
-    <p class="discret lien-bas">
-        Pas encore de compte ? <a href="index.php?page=inscription">Créer un compte</a>
-    </p>
+                <div class="champ">
+                    <label for="email">Adresse email</label>
+                    <input type="email" id="email" name="email" value="<?= e($email) ?>" autocomplete="email" required autofocus>
+                </div>
+                <div class="champ">
+                    <label for="mot_de_passe">Mot de passe</label>
+                    <input type="password" id="mot_de_passe" name="mot_de_passe" autocomplete="current-password" required>
+                </div>
 
-    <!-- Aide pour la démonstration (à retirer en production) -->
-    <div class="demo">
-        <strong>Comptes de démonstration</strong> - mot de passe : <code>Password123!</code><br>
-        Admin : ilyes.karim@campus.fr<br>
-        Conducteur : sarah.benjelloun@campus.fr - Passagère : emma.girard@campus.fr
+                <button class="bouton bouton--principal bouton--large" type="submit">Se connecter</button>
+                <p class="lien-bas">Pas encore de compte ? <a href="index.php?page=inscription">Créer un compte</a></p>
+            </form>
+        </section>
+
+        <!-- Côté droit : illustration et comptes de démonstration du jeu de données -->
+        <aside class="authentification-cote">
+            <img class="authentification-illustration" src="images/illustration-connexion.svg" alt="Un étudiant ouvre une porte">
+            <div class="bloc bloc--doux">
+                <p class="surtitre">Comptes de démonstration</p>
+                <p class="discret">Mot de passe commun : <code>Password123!</code></p>
+                <ul class="comptes-demo">
+                    <li><span>Admin</span><code>ilyes.karim@campus.fr</code></li>
+                    <li><span>Conductrice</span><code>sarah.benjelloun@campus.fr</code></li>
+                    <li><span>Passagère</span><code>emma.girard@campus.fr</code></li>
+                    <li><span>Bien noté</span><code>bilel.mansouri@campus.fr</code></li>
+                    <li><span>Sans avis</span><code>hugo.petit@campus.fr</code></li>
+                </ul>
+            </div>
+        </aside>
     </div>
 </div>

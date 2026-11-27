@@ -7,28 +7,30 @@
 /** @var array $utilisateurs */
 require 'vues/admin/onglets.php';
 ?>
-<div class="carte">
+<div class="section-titre">
     <h2><?= count($utilisateurs) ?> comptes</h2>
-    <div class="tableau-defilant">
-        <table>
-            <tr>
-                <th>Membre</th>
-                <th>Email</th>
-                <th>Inscrit le</th>
-                <th class="nombre">Trajets</th>
-                <th>Note</th>
-                <th></th>
-            </tr>
+    <span class="discret">Supprimer un compte rend ses places et efface ses trajets, réservations et avis.</span>
+</div>
+
+<div class="defilant">
+    <table class="donnees">
+        <thead>
+            <tr><th>Membre</th><th>Email</th><th>Inscrit le</th><th class="nombre">Trajets</th><th>Note</th><th><span class="visuellement-cache">Action</span></th></tr>
+        </thead>
+        <tbody>
             <!-- Une ligne par compte, avec sa note moyenne et son nombre de trajets conduits -->
             <?php foreach ($utilisateurs as $u) { ?>
                 <tr>
                     <td>
-                        <a href="index.php?page=profil&amp;id=<?= $u['id'] ?>"><?= e($u['nom']) ?></a>
-                        <?php if ($u['role'] === 'admin') { ?><span class="badge-admin">ADMIN</span><?php } ?>
+                        <span class="personne">
+                            <?= avatar($u['nom'], 'avatar--petit') ?>
+                            <a class="personne-nom" href="index.php?page=profil&amp;id=<?= $u['id'] ?>"><?= e($u['nom']) ?></a>
+                            <?php if ($u['role'] === 'admin') { ?><span class="badge-admin">ADMIN</span><?php } ?>
+                        </span>
                     </td>
-                    <td><?= e($u['email']) ?></td>
-                    <td><?= formaterDate($u['date_inscription']) ?></td>
-                    <td class="nombre"><?= $u['nb_trajets'] ?></td>
+                    <td class="date"><?= e($u['email']) ?></td>
+                    <td class="date"><?= formaterDate($u['date_inscription']) ?></td>
+                    <td class="chiffre nombre"><?= $u['nb_trajets'] ?></td>
                     <td>
                         <?php if ($u['note'] === null) { ?>
                             <span class="note-vide">Pas encore noté</span>
@@ -43,12 +45,12 @@ require 'vues/admin/onglets.php';
                             <form class="en-ligne" method="post" action="index.php?page=admin-supprimer-compte&amp;id=<?= $u['id'] ?>"
                                   data-confirmation="Supprimer le compte de <?= e($u['nom']) ?> ? Ses trajets, réservations et avis seront aussi supprimés.">
                                 <?= champCsrf() ?>
-                                <button class="bouton bouton-danger bouton-petit" type="submit">Supprimer</button>
+                                <button class="bouton bouton--danger bouton--petit" type="submit">Supprimer</button>
                             </form>
                         <?php } ?>
                     </td>
                 </tr>
             <?php } ?>
-        </table>
-    </div>
+        </tbody>
+    </table>
 </div>

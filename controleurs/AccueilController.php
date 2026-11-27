@@ -22,7 +22,7 @@ class AccueilController
             'stats' => $stats,
             'nombreMembres' => $nombreMembres,
             'moyenneGenerale' => Avis::moyenneGenerale(),
-            'prochainsTrajets' => Trajet::listerProchains(4),
+            'prochainsTrajets' => Trajet::listerProchains(6),
             'meilleursMembres' => Utilisateur::meilleursMembres(5)
         ]);
     }

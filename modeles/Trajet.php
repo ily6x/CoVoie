@@ -158,37 +158,37 @@ class Trajet
      * @param string $dateHeure Valeur du champ datetime-local : "2026-12-03T08:15"
      * @param int    $places
      * @param float  $prix
-     * @return array La liste des erreurs (vide si tout est correct)
+     * @return array Les erreurs rangées par nom de champ, ex : ['prix' => '...'] (vide si tout est correct)
      */
     public static function valider(string $origine, string $destination, string $dateHeure, int $places, float $prix): array
     {
         $erreurs = [];
 
         if (mb_strlen($origine) < 2 || mb_strlen($origine) > 120) {
-            $erreurs[] = 'Le lieu de départ doit contenir entre 2 et 120 caractères.';
+            $erreurs['origine'] = 'Le lieu de départ doit contenir entre 2 et 120 caractères.';
         }
         if (mb_strlen($destination) < 2 || mb_strlen($destination) > 120) {
-            $erreurs[] = 'Le lieu d\'arrivée doit contenir entre 2 et 120 caractères.';
+            $erreurs['destination'] = 'Le lieu d\'arrivée doit contenir entre 2 et 120 caractères.';
         }
         // RÈGLE MÉTIER : on ne part pas pour arriver au même endroit
         if (mb_strtolower($origine) === mb_strtolower($destination)) {
-            $erreurs[] = 'Le départ et l\'arrivée doivent être différents.';
+            $erreurs['destination'] = 'Le départ et l\'arrivée doivent être différents.';
         }
 
         // RÈGLE MÉTIER : on ne publie pas un trajet dans le passé
         $date = DateTime::createFromFormat('Y-m-d\TH:i', $dateHeure);
         // createFromFormat "corrige" une date fausse (31 février -> 3 mars) : on refuse si elle a été modifiée
         if ($date === false || $date->format('Y-m-d\TH:i') !== $dateHeure) {
-            $erreurs[] = 'Indiquez une date et une heure de départ valides.';
+            $erreurs['date_heure'] = 'Indiquez une date et une heure de départ valides.';
         } elseif ($date->getTimestamp() <= time()) {
-            $erreurs[] = 'La date de départ doit être dans le futur.';
+            $erreurs['date_heure'] = 'La date de départ doit être dans le futur.';
         }
 
         if ($places < 1 || $places > 8) {
-            $erreurs[] = 'Le nombre de places doit être compris entre 1 et 8.';
+            $erreurs['places'] = 'Le nombre de places doit être compris entre 1 et 8.';
         }
         if ($prix < 0 || $prix > 200) {
-            $erreurs[] = 'Le prix doit être compris entre 0 et 200 €.';
+            $erreurs['prix'] = 'Le prix doit être compris entre 0 et 200 €.';
         }
 
         return $erreurs;

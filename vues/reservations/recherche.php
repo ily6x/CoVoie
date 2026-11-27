@@ -1,6 +1,6 @@
 <?php
 /**
- * Vue : recherche de trajets
+ * Vue : recherche de trajets (tous les trajets réservables, en cartes)
  * Variables : $depart, $arrivee, $date (critères saisis), $trajets (résultats)
  */
 // Variables transmises par le contrôleur (afficherVue) : ces lignes les décrivent pour l'éditeur
@@ -9,59 +9,53 @@
 /** @var string $date */
 /** @var array $trajets */
 ?>
-<div class="titre-page">
+<div class="entete-page">
     <div>
+        <p class="surtitre">Rechercher</p>
         <h1>Trouver un trajet</h1>
         <p>Seuls les trajets ouverts, à venir et avec des places libres sont affichés.</p>
     </div>
 </div>
 
 <!-- Formulaire en GET : on peut partager ou recharger l'URL des résultats -->
-<form class="carte recherche-ligne" method="get" action="index.php">
+<form class="recherche recherche--page" method="get" action="index.php">
     <input type="hidden" name="page" value="trajets">
 
-    <div>
+    <div class="champ">
         <label for="depart">Départ</label>
-        <div class="champ-lieu">
-            <i class="point"></i>
-            <input type="text" id="depart" name="depart" value="<?= e($depart) ?>" placeholder="Toutes les villes">
-        </div>
+        <input type="text" id="depart" name="depart" value="<?= e($depart) ?>" placeholder="Toutes les villes">
     </div>
-    <div>
+    <!-- Échange départ et arrivée (voir js/script.js) -->
+    <button type="button" class="bouton-inverser" data-inverser aria-label="Inverser départ et arrivée"><?= icone('inverser', 18) ?></button>
+    <div class="champ">
         <label for="arrivee">Arrivée</label>
-        <div class="champ-lieu">
-            <i class="point fin"></i>
-            <input type="text" id="arrivee" name="arrivee" value="<?= e($arrivee) ?>" placeholder="Toutes les villes">
-        </div>
+        <input type="text" id="arrivee" name="arrivee" value="<?= e($arrivee) ?>" placeholder="Toutes les villes">
     </div>
-    <div>
+    <div class="champ champ-date">
         <label for="date">Date</label>
         <input type="date" id="date" name="date" value="<?= e($date) ?>">
     </div>
-    <div class="actions">
-        <button type="button" class="bouton bouton-contour" data-inverser title="Inverser départ et arrivée">⇄</button>
-        <button class="bouton" type="submit">Rechercher</button>
-    </div>
+    <button class="bouton bouton--principal" type="submit"><?= icone('recherche', 18) ?>Rechercher</button>
 </form>
 
-<div class="section">
-    <h2><?= count($trajets) ?> trajet(s) trouvé(s)</h2>
+<div class="section-titre">
+    <h2><?= count($trajets) ?> départ<?= count($trajets) > 1 ? 's' : '' ?></h2>
     <!-- Le lien "Effacer les filtres" n'apparaît que si au moins un critère est rempli -->
     <?php if ($depart !== '' || $arrivee !== '' || $date !== '') { ?>
         <a href="index.php?page=trajets">Effacer les filtres</a>
     <?php } ?>
 </div>
 
-<!-- Aucun résultat : message d'aide, sinon la grille de billets -->
 <?php if (count($trajets) === 0) { ?>
+    <!-- Aucun résultat : message d'aide avec une action -->
     <div class="vide">
-        <b>Aucun trajet ne correspond</b>
-        Essayez une autre date ou une partie du nom seulement (ex : « Boulogne »).
+        <img class="vide-illustration" src="images/illustration-vide.svg" alt="">
+        <h3>Aucun départ ne correspond</h3>
+        <p>Essayez une autre date, ou seulement une partie du nom (ex : « Boulogne »).</p>
+        <a class="bouton bouton--secondaire" href="index.php?page=trajets">Voir tous les départs</a>
     </div>
-<?php } else { ?>
-    <div class="grille-billets">
-        <?php foreach ($trajets as $t) {
-            require 'vues/gabarit/carte-trajet.php';
-        } ?>
-    </div>
-<?php } ?>
+<?php } else {
+    // Paramètres du gabarit : cartes avec le conducteur
+    $modeConducteur = false;
+    require 'vues/gabarit/cartes-trajets.php';
+} ?>

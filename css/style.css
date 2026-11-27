@@ -1,485 +1,671 @@
 /* ==================================================================
-   CoVoie - Feuille de style
+   CoVoie - Feuille de style unique
    ------------------------------------------------------------------
-   Direction artistique « Ticket campus » : fond vert très pâle,
-   cartes blanches en forme de billet, un vert d'action et un jaune
-   pour les prix.
+   Direction artistique « Campus pop » : chaleureuse et lisible.
+     - fond crème, cartes blanches, orange pour l'action principale ;
+     - le parcours d'un trajet (rond vide -> rond orange) revient partout :
+       cartes, page détail, formulaire de publication ;
+     - pas de dégradé ni d'effet "lumineux" : des aplats, des bords fins.
 
    Sommaire
-     1. Police et couleurs (variables)
+     1. Polices et design tokens (variables)
      2. Base
-     3. Header et navigation
-     4. Boutons
-     5. Cartes, billets et pastilles de statut
-     6. Formulaires
-     7. Accueil
-     8. Pages de détail et listes
-     9. Tableaux et back-office
-    10. Footer
-    11. Écrans étroits (téléphone)
+     3. Mise en page
+     4. Composants
+          4.1 Header et barre mobile
+          4.2 En-tête de page et onglets
+          4.3 Boutons
+          4.4 Formulaires
+          4.5 Plaques de statut et prix
+          4.6 Avatar, note, sièges
+          4.7 Cartes de trajets
+          4.8 Tableaux de données
+          4.9 Billet (mes réservations)
+          4.10 Indicateurs, barres et jauges
+          4.11 Messages
+          4.12 Boîte de dialogue
+          4.13 États vides et page d'erreur
+          4.14 Footer
+     5. Pages
+     6. Utilitaires
+     7. Responsive (bureau étroit, tablette, mobile)
    ================================================================== */
 
 
-/* ============ 1. POLICE ET COULEURS ============ */
+/* ==================================================================
+   1. POLICES ET DESIGN TOKENS
+   Les polices sont enregistrées dans fonts/ : le site marche hors ligne.
+   Toutes les valeurs (couleurs, tailles, espacements) sont définies UNE
+   fois ici, puis réutilisées avec var(--nom).
+   ================================================================== */
 
-/* Police Roboto enregistrée dans le dossier fonts/ : le site marche sans Internet */
-@font-face { font-family: "Roboto"; src: url("../fonts/roboto-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
-@font-face { font-family: "Roboto"; src: url("../fonts/roboto-latin-500-normal.woff2") format("woff2"); font-weight: 500; }
-@font-face { font-family: "Roboto"; src: url("../fonts/roboto-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Poppins"; src: url("../fonts/poppins-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("../fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("../fonts/nunito-sans-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Nunito Sans"; src: url("../fonts/nunito-sans-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 
-/* Toutes les couleurs sont définies UNE fois ici, puis réutilisées avec var(--nom) */
 :root {
-    --fond: #f0f7f4;          /* fond de page */
-    --surface: #ffffff;       /* cartes */
-    --encre: #10261f;         /* texte principal */
-    --gris: #56706a;          /* texte secondaire */
-    --bord: #dcebe5;          /* bordures */
-    --primaire: #0f7a63;      /* vert d'action */
-    --primaire-fonce: #0b5a49;
-    --clair: #d3eee5;         /* vert très clair */
-    --champ: #f9fcfb;         /* fond des champs */
-    --jaune: #f2c94c;         /* tampon prix */
-    --jaune-clair: #fdf3d3;
-    --rouge: #c0392b;
-    --rouge-clair: #fbe5e2;
-    --etoile: #e8a917;
-    --ombre: 0 6px 20px rgba(15, 122, 99, .09);
-    --rayon: 16px;
+    /* --- Couleurs de base --- */
+    --fond: #FFF7F0;          /* fond de page, crème */
+    --surface: #FFFFFF;       /* cartes, champs, header */
+    --surface-douce: #FFF1E8; /* zones calmes : talon de billet, aide */
+    --encre: #2B2340;         /* texte principal, footer */
+    --texte-2: #6E6580;       /* texte secondaire */
+    --bord: #F1E4DA;          /* bords fins des cartes */
+    --bord-fort: #E2D2C5;     /* bord des champs */
+
+    /* --- Couleurs d'action --- */
+    --orange: #FF7A45;        /* action principale (texte encre dessus : contraste 5,7) */
+    --orange-survol: #F26A33;
+    --orange-pale: #FFE3D3;   /* fond du prix, sélection */
+    --orange-titre: #E8602A;  /* orange pour les GRANDS textes (contraste 3,4) */
+    --orange-texte: #B4470F;  /* orange pour les petits textes (contraste 5,5) */
+    --violet: #6C5CE7;        /* contour clavier */
+    --lien: #5443C9;          /* liens */
+    --turquoise: #2EC4B6;     /* places libres */
+
+    /* --- Statuts : une paire texte / fond pour chacun --- */
+    --ouvert: #0F7A6F;  --ouvert-fond: #DDF6F3;    /* Ouvert, Confirmée, succès */
+    --complet: #A3460A; --complet-fond: #FFE9D6;   /* Complet */
+    --attente: #5443C9; --attente-fond: #ECEAFD;   /* En attente */
+    --refuse: #C0352B;  --refuse-fond: #FDE4E1;    /* Refusée, danger, erreurs */
+    --termine: #5E566E; --termine-fond: #F1ECF0;   /* Terminé */
+    --etoile: #F5A524;                             /* étoiles des notes */
+
+    /* --- Teintes d'avatar (choisies par la fonction PHP avatar()) --- */
+    --avatar-0: #FFE3D3; --avatar-1: #DDF6F3; --avatar-2: #ECEAFD; --avatar-3: #FFF0C7; --avatar-4: #FDE4E1;
+
+    /* --- Typographie --- */
+    --police-titre: "Poppins", Arial, sans-serif;
+    --police-texte: "Nunito Sans", Arial, sans-serif;
+    --t-xs: 12px; --t-sm: 14px; --t-base: 16px; --t-md: 18px; --t-lg: 24px; --t-xl: 32px; --t-hero: 52px;
+
+    /* --- Espacements (multiples de 4) --- */
+    --e-1: 4px; --e-2: 8px; --e-3: 12px; --e-4: 16px; --e-5: 24px; --e-6: 32px; --e-7: 48px; --e-8: 64px;
+
+    /* --- Bords, rayons, ombres --- */
+    --rayon: 16px;            /* cartes */
+    --rayon-petit: 10px;      /* champs, boutons */
+    --trait: 1px solid var(--bord);
+    --ombre: 0 1px 2px rgba(43, 35, 64, .05);
+    --ombre-survol: 0 10px 24px rgba(43, 35, 64, .08);
+    --ombre-flottant: 0 16px 40px rgba(43, 35, 64, .16);   /* barre de recherche, dialogue */
+
+    /* --- Mise en page --- */
+    --largeur-max: 1200px;
+    --gouttiere: 32px;
+
+    /* --- Mouvement --- */
+    --vite: 140ms;
+    --normal: 220ms;
+    --courbe: cubic-bezier(.2, .7, .3, 1);
 }
 
 
-/* ============ 2. BASE ============ */
+/* ==================================================================
+   2. BASE
+   ================================================================== */
 
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
-    font-family: "Roboto", Arial, sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--encre);
-    background: var(--fond);
-    /* Le footer reste en bas même sur une page courte */
     min-height: 100vh;
-    display: flex;
+    display: flex;              /* le footer reste en bas même sur une page courte */
     flex-direction: column;
+    background: var(--fond);
+    color: var(--encre);
+    font-family: var(--police-texte);
+    font-size: var(--t-base);
+    line-height: 1.55;
 }
-main.conteneur { flex: 1; width: 100%; }
 
-a { color: var(--primaire); text-decoration: none; }
-a:hover { text-decoration: underline; }
+h1, h2, h3 { font-family: var(--police-titre); font-weight: 700; margin: 0 0 var(--e-3); line-height: 1.15; letter-spacing: -.02em; }
+h1 { font-size: var(--t-xl); }
+h2 { font-size: var(--t-lg); line-height: 1.2; }
+h3 { font-size: var(--t-md); font-weight: 600; letter-spacing: -.01em; }
+p { margin: 0 0 var(--e-3); }
 
-h1, h2, h3 { margin: 0 0 12px; line-height: 1.2; }
-h1 { font-size: 28px; letter-spacing: -.3px; }
-h2 { font-size: 19px; }
-h3 { font-size: 16px; }
-p { margin: 0 0 12px; }
+a { color: var(--lien); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* Contour bien visible quand on navigue au clavier (Tab) */
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; }
+
+code { font-family: Consolas, "Courier New", monospace; font-size: .9em; }
+::selection { background: var(--orange-pale); }
+
+
+/* ==================================================================
+   3. MISE EN PAGE
+   ================================================================== */
 
 /* Largeur maximale du contenu, centré */
-.conteneur { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-main.conteneur { padding-top: 28px; padding-bottom: 60px; }
+.conteneur { width: 100%; max-width: var(--largeur-max); margin: 0 auto; padding: 0 var(--gouttiere); }
+main.conteneur { flex: 1; padding-top: var(--e-6); padding-bottom: var(--e-8); }
 
-.sous-titre { color: var(--gris); margin-top: -4px; }
-.discret { color: var(--gris); font-size: 13px; }
+/* Gabarit "détail" : contenu (2/3) + panneau d'action (1/3) */
+.gabarit-detail { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: var(--e-6); align-items: start; }
 
-/* Titre de page avec un bouton à droite */
-.titre-page { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
-.titre-page h1 { margin-bottom: 4px; }
-.titre-page p { margin: 0; color: var(--gris); }
+/* Gabarit "formulaire" : champs à gauche, aide à droite */
+.gabarit-formulaire { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--e-6); align-items: start; }
 
-/* Messages flash (succès / erreur) */
-.message { padding: 12px 16px; border-radius: 12px; margin-bottom: 18px; font-weight: 500; }
-.message-succes { background: var(--clair); color: var(--primaire-fonce); }
-.message-erreur { background: var(--rouge-clair); color: var(--rouge); }
-.message ul { margin: 6px 0 0; padding-left: 20px; font-weight: 400; }
+/* Deux colonnes égales */
+.deux-colonnes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--e-6); align-items: start; }
+
+/* Une section de page : titre + contenu */
+.section { margin-bottom: var(--e-7); }
+.section-titre { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e-4); margin-bottom: var(--e-4); }
+.section-titre h2 { margin: 0; }
+.section-titre a { font-family: var(--police-titre); font-weight: 600; font-size: var(--t-sm); }
+
+/* Carte blanche simple : formulaires et blocs d'info */
+.bloc { background: var(--surface); border: var(--trait); border-radius: var(--rayon); padding: var(--e-5); box-shadow: var(--ombre); }
+.bloc + .bloc { margin-top: var(--e-5); }
+.gabarit-detail > .bloc, .gabarit-formulaire > .bloc, .deux-colonnes > .bloc { margin-top: 0; }
+
+/* Variante douce (fond crème orangé) pour les encarts d'aide */
+.bloc--doux { background: var(--surface-douce); border-color: var(--orange-pale); box-shadow: none; }
 
 
-/* ============ 3. HEADER ET NAVIGATION ============ */
+/* ==================================================================
+   4. COMPOSANTS
+   ================================================================== */
 
-.header { background: var(--surface); border-bottom: 1px solid var(--bord); position: sticky; top: 0; z-index: 10; }
-.header .conteneur { display: flex; align-items: center; gap: 24px; height: 66px; }
+/* ---------- 4.1 Header et barre mobile ---------- */
 
-.marque { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--encre); }
-.marque:hover { text-decoration: none; }
+.header { background: var(--surface); border-bottom: var(--trait); position: sticky; top: 0; z-index: 20; }
+.header-interieur { display: flex; align-items: center; gap: var(--e-6); height: 72px; }
+
+.marque { display: flex; align-items: center; gap: var(--e-2); color: var(--encre); text-decoration: none; font-family: var(--police-titre); font-weight: 700; font-size: 22px; letter-spacing: -.02em; }
 .marque img { width: 36px; height: 36px; }
-.marque em { font-style: normal; color: var(--primaire); }
+.marque em { font-style: normal; color: var(--orange); }   /* logotype : pas soumis au contraste */
 
-.menu { display: flex; align-items: center; gap: 4px; flex: 1; }
-.menu a { color: var(--gris); font-weight: 500; padding: 8px 12px; border-radius: 10px; }
-.menu a:hover { background: var(--fond); color: var(--encre); text-decoration: none; }
-.menu a.actif { color: var(--primaire); background: var(--clair); }
-.menu a.bouton { color: #fff; background: var(--primaire); }
-.menu a.bouton:hover { background: var(--primaire-fonce); }
-.menu .droite { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-.menu form { margin: 0; }
+/* Liens : le lien actif est souligné d'un trait orange */
+.navigation { display: flex; align-items: stretch; gap: var(--e-1); height: 100%; }
+.navigation a { display: flex; align-items: center; white-space: nowrap; padding: 0 var(--e-3); color: var(--texte-2); text-decoration: none; font-family: var(--police-titre); font-weight: 600; font-size: 15px; border-bottom: 3px solid transparent; border-top: 3px solid transparent; }
+.navigation a:hover { color: var(--encre); }
+.navigation a.actif { color: var(--encre); border-bottom-color: var(--orange); }
 
-/* Lien vers mon profil avec mes initiales */
-.moi { display: flex; align-items: center; gap: 8px; }
-.moi .avatar { width: 30px; height: 30px; font-size: 12px; }
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: var(--e-3); }
+.header-actions form { margin: 0; }
+.lien-header { white-space: nowrap; background: none; border: 0; color: var(--encre); font: 600 var(--t-sm) var(--police-titre); cursor: pointer; text-decoration: none; padding: var(--e-2); }
+.lien-header:hover { color: var(--orange-texte); }
+.moi { display: flex; align-items: center; gap: var(--e-2); white-space: nowrap; color: var(--encre); text-decoration: none; font-family: var(--police-titre); font-weight: 600; font-size: var(--t-sm); padding: var(--e-1) var(--e-3) var(--e-1) var(--e-1); border-radius: 999px; }
+.moi:hover { background: var(--fond); }
 
-/* Bouton du menu mobile : caché sur grand écran */
-.bouton-menu { display: none; margin-left: auto; background: none; border: 1px solid var(--bord); border-radius: 10px; padding: 8px 10px; cursor: pointer; }
-.bouton-menu span { display: block; width: 20px; height: 2px; background: var(--encre); margin: 4px 0; }
+/* Barre d'onglets en bas de l'écran : visible uniquement sur mobile (voir section 7) */
+.barre-mobile { display: none; }
 
+/* ---------- 4.2 En-tête de page et onglets ---------- */
 
-/* ============ 4. BOUTONS ============ */
+.entete-page { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--e-5); flex-wrap: wrap; margin-bottom: var(--e-6); }
+.entete-page h1 { margin-bottom: var(--e-2); }
+.entete-page p { margin: 0; color: var(--texte-2); max-width: 640px; }
+.entete-actions { display: flex; gap: var(--e-2); flex-wrap: wrap; }
+
+/* Petite ligne orange au-dessus du titre (ex : Espace conducteur) */
+.surtitre { font-family: var(--police-titre); font-weight: 600; font-size: var(--t-sm); color: var(--orange-texte); margin-bottom: var(--e-2); }
+
+.retour { display: inline-block; margin-bottom: var(--e-4); font-family: var(--police-titre); font-weight: 600; font-size: var(--t-sm); color: var(--texte-2); text-decoration: none; }
+.retour:hover { color: var(--encre); }
+
+/* Onglets de l'espace personnel et du back-office */
+.onglets { display: flex; gap: var(--e-1); margin: calc(-1 * var(--e-3)) 0 var(--e-6); border-bottom: 1px solid var(--bord-fort); overflow-x: auto; }
+.onglets a { padding: var(--e-3) var(--e-4); color: var(--texte-2); text-decoration: none; font-family: var(--police-titre); font-weight: 600; font-size: 15px; border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.onglets a:hover { color: var(--encre); }
+.onglets a.actif { color: var(--encre); border-bottom-color: var(--orange); }
+
+/* ---------- 4.3 Boutons ---------- */
 
 .bouton {
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    background: var(--primaire); color: #fff;
-    border: none; border-radius: 12px;
-    padding: 11px 20px;
-    font: inherit; font-weight: 500;
-    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--e-2);
+    min-height: 46px; padding: 0 var(--e-5);
+    border: 1.5px solid transparent; border-radius: var(--rayon-petit);
+    font: 600 15px var(--police-titre);
+    text-decoration: none; cursor: pointer; white-space: nowrap;
+    transition: background var(--vite) var(--courbe), border-color var(--vite), color var(--vite), transform var(--vite);
 }
-.bouton:hover { background: var(--primaire-fonce); text-decoration: none; }
-.bouton-secondaire { background: var(--clair); color: var(--primaire-fonce); }
-.bouton-secondaire:hover { background: #bfe5d8; }
-.bouton-danger { background: var(--rouge-clair); color: var(--rouge); }
-.bouton-danger:hover { background: #f6cfc9; }
-.bouton-contour { background: transparent; color: var(--gris); border: 1px solid var(--bord); }
-.bouton-contour:hover { background: var(--fond); color: var(--encre); }
-.bouton-petit { padding: 7px 14px; font-size: 13.5px; border-radius: 10px; }
-.bouton-large { width: 100%; }
+.bouton:active { transform: translateY(1px); }
+.bouton:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 
-/* Un bouton dans un petit formulaire, aligné avec les autres */
+/* Action principale : UNE seule par écran. Texte encre sur orange (lisible) */
+.bouton--principal { background: var(--orange); color: var(--encre); box-shadow: inset 0 -2px 0 rgba(43, 35, 64, .15); }
+.bouton--principal:hover { background: var(--orange-survol); }
+
+/* Bouton foncé : "Créer un compte" dans le header */
+.bouton--sombre { background: var(--encre); color: #fff; }
+.bouton--sombre:hover { background: #3D3358; }
+
+/* Action secondaire : contour */
+.bouton--secondaire { background: var(--surface); color: var(--encre); border-color: var(--bord-fort); }
+.bouton--secondaire:hover { border-color: var(--encre); }
+
+/* Action destructrice : discrète, en rouge */
+.bouton--danger { background: transparent; color: var(--refuse); padding: 0 var(--e-3); }
+.bouton--danger:hover { background: var(--refuse-fond); }
+.bouton--danger-plein { background: var(--refuse); color: #fff; }
+.bouton--danger-plein:hover { background: #9E2A22; }
+
+.bouton--petit { min-height: 38px; padding: 0 var(--e-4); font-size: var(--t-sm); }
+.bouton--large { width: 100%; }
+
+/* Petit formulaire qui ne contient qu'un bouton */
 .en-ligne { display: inline; margin: 0; }
-.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--e-2); align-items: center; }
 
+/* ---------- 4.4 Formulaires ---------- */
 
-/* ============ 5. CARTES, BILLETS, STATUTS ============ */
-
-.carte { background: var(--surface); border-radius: var(--rayon); box-shadow: var(--ombre); padding: 22px; margin-bottom: 20px; }
-.carte > h2 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-
-/* Avatar rond avec les initiales */
-.avatar {
-    width: 40px; height: 40px; flex: none;
-    border-radius: 50%;
-    background: var(--clair); color: var(--primaire-fonce);
-    display: grid; place-items: center;
-    font-weight: 700; font-size: 14px;
-}
-.avatar-grand { width: 72px; height: 72px; font-size: 26px; }
-/* 5 couleurs d'avatar (choisies par la fonction PHP avatar()) */
-.avatar-couleur-0 { background: var(--clair); color: var(--primaire-fonce); }
-.avatar-couleur-1 { background: var(--jaune-clair); color: #7a5b00; }
-.avatar-couleur-2 { background: #dbeafe; color: #1e4b8f; }
-.avatar-couleur-3 { background: #fde4dc; color: #9a3b1f; }
-.avatar-couleur-4 { background: #ece6fb; color: #4b3a8c; }
-
-.note { color: var(--etoile); font-weight: 700; }
-.note-vide { color: var(--gris); font-style: italic; font-weight: 400; }
-
-/* Grille de billets (3 colonnes sur ordinateur) */
-.grille-billets { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
-
-/* --- Le billet : partie haute / découpe pointillée / partie basse --- */
-.billet { background: var(--surface); border-radius: var(--rayon); box-shadow: var(--ombre); overflow: hidden; display: flex; flex-direction: column; }
-.billet-haut { padding: 16px 18px 14px; }
-.billet-bas { padding: 12px 18px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; }
-
-/* La découpe : un trait pointillé et deux demi-cercles de la couleur du fond */
-.decoupe { position: relative; border-top: 2px dashed var(--bord); margin: 0 18px; }
-.decoupe::before, .decoupe::after { content: ""; position: absolute; top: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--fond); }
-.decoupe::before { left: -29px; }
-.decoupe::after { right: -29px; }
-/* Numéro du billet, posé au milieu du pointillé */
-.decoupe span {
-    position: absolute; left: 50%; top: -9px; transform: translateX(-50%);
-    background: var(--surface); padding: 0 8px;
-    font-size: 10.5px; letter-spacing: 1.5px; color: var(--gris); text-transform: uppercase; white-space: nowrap;
-}
-
-.conducteur { display: flex; align-items: center; gap: 10px; }
-.conducteur .nom { font-weight: 500; color: var(--encre); }
-.conducteur small { display: block; color: var(--gris); font-size: 12.5px; }
-.conducteur .statut { margin-left: auto; }
-
-/* Ligne horaire : 08:15 Départ ----- Arrivée */
-.horaire { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
-.horaire .lieu { flex: 1; min-width: 0; }
-.horaire .lieu b { display: block; font-size: 17px; }
-.horaire .lieu span { display: block; color: var(--gris); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.horaire .lieu.arrivee { text-align: right; }
-.horaire .trait { flex: 0 0 64px; border-bottom: 2px dotted var(--primaire); position: relative; top: -8px; }
-.horaire .trait::after { content: ""; position: absolute; right: -4px; top: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--primaire); }
-/* Petite voiture dessinée en SVG au milieu de la ligne pointillée */
-.horaire .trait::before {
-    content: ""; position: absolute; left: 50%; top: -8px; width: 22px; height: 14px; margin-left: -11px;
-    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 14'%3E%3Cpath d='M5 4l2.5-3h7L17 4h2.5A1.5 1.5 0 0 1 21 5.5V10h-2a2 2 0 0 0-4 0H7a2 2 0 0 0-4 0H1V5.5A1.5 1.5 0 0 1 2.5 4z' fill='%230f7a63'/%3E%3Ccircle cx='5' cy='11' r='2' fill='%2310261f'/%3E%3Ccircle cx='17' cy='11' r='2' fill='%2310261f'/%3E%3C/svg%3E") center / 18px no-repeat;
-}
-
-/* Sièges : un carré par place, gris si occupé */
-.sieges { display: flex; align-items: center; gap: 4px; color: var(--gris); font-size: 13px; }
-.siege { width: 13px; height: 13px; border-radius: 4px; background: var(--primaire); }
-.siege.pris { background: #cfd9d5; }
-.sieges span { margin-left: 4px; }
-
-/* Tampon jaune du prix */
-.tampon { background: var(--jaune); color: var(--encre); border-radius: 10px; padding: 4px 10px; font-weight: 700; font-size: 16px; white-space: nowrap; }
-
-/* Pastilles de statut (classe générée par classeStatut()) */
-.statut { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
-.statut::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.statut-ouvert, .statut-confirmee { background: var(--clair); color: var(--primaire-fonce); }
-.statut-complet, .statut-en-attente { background: var(--jaune-clair); color: #8a6a00; }
-.statut-termine { background: #e8edeb; color: var(--gris); }
-.statut-refusee { background: var(--rouge-clair); color: var(--rouge); }
-
-/* Bloc vide (aucun résultat) */
-.vide { text-align: center; color: var(--gris); padding: 34px 20px; border: 2px dashed var(--bord); border-radius: var(--rayon); }
-.vide b { display: block; color: var(--encre); font-size: 17px; margin-bottom: 4px; }
-
-
-/* ============ 6. FORMULAIRES ============ */
-
-label { display: block; font-weight: 500; font-size: 14px; margin-bottom: 6px; }
+.champ { margin-bottom: var(--e-4); }
+label, .libelle { display: block; margin-bottom: var(--e-2); font-family: var(--police-titre); font-weight: 600; font-size: var(--t-sm); }
 
 input, select, textarea {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1px solid var(--bord); border-radius: 12px;
-    background: var(--champ);
-    font: inherit; color: var(--encre);
+    width: 100%; min-height: 48px; padding: var(--e-3) var(--e-4);
+    background: var(--surface); color: var(--encre);
+    border: 1.5px solid var(--bord-fort); border-radius: var(--rayon-petit);
+    font: 400 var(--t-base) var(--police-texte);
+    transition: border-color var(--vite), box-shadow var(--vite);
 }
-input:focus, select:focus, textarea:focus { outline: 2px solid var(--clair); border-color: var(--primaire); }
-textarea { min-height: 110px; resize: vertical; }
+input::placeholder, textarea::placeholder { color: #A097AE; }
+input:hover, textarea:hover { border-color: #CDB9AA; }
+input:focus, textarea:focus { border-color: var(--orange-titre); outline: none; box-shadow: 0 0 0 4px rgba(255, 122, 69, .22); }
+textarea { min-height: 120px; resize: vertical; }
 
-.groupe { margin-bottom: 16px; }
-.deux-champs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.aide { color: var(--gris); font-size: 12.5px; margin-top: 4px; }
+/* Champ en erreur + message sous le champ */
+.champ--erreur input, .champ--erreur textarea { border-color: var(--refuse); }
+.erreur-champ { display: flex; gap: var(--e-2); align-items: flex-start; margin: var(--e-2) 0 0; color: var(--refuse); font-size: var(--t-sm); font-weight: 700; }
+.erreur-champ svg, .message svg { flex: none; margin-top: 2px; }
+.aide { margin: var(--e-2) 0 0; color: var(--texte-2); font-size: var(--t-sm); }
 
-/* Petit formulaire centré (connexion, inscription) */
-.formulaire-centre { max-width: 440px; margin: 10px auto; }
-.formulaire-centre h1 { text-align: center; }
-.logo-formulaire { display: block; width: 56px; height: 56px; margin: 0 auto 14px; }
-.formulaire-centre .sous-titre { text-align: center; margin-bottom: 20px; }
+/* Blocs de champs titrés (Itinéraire, Horaire, Places et prix) */
+fieldset { border: 0; border-top: var(--trait); margin: 0; padding: var(--e-5) 0 var(--e-2); }
+fieldset:first-of-type { border-top: 0; padding-top: 0; }
+legend + * { clear: both; }
+legend { float: left; width: 100%; padding: 0; margin-bottom: var(--e-4); font-family: var(--police-titre); font-weight: 600; font-size: var(--t-md); }
+.deux-champs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e-4); }
 
-.formulaire-large { max-width: 600px; }
-.lien-bas { text-align: center; margin-top: 16px; }
+/* Départ / arrivée : deux champs reliés comme sur une carte de trajet */
+.arrets { position: relative; }
+.arrets .champ-lieu { position: relative; }
+.arrets .champ-lieu input { padding-left: 42px; }
+.arrets .champ-lieu::before { content: ""; position: absolute; left: 17px; top: 47px; width: 10px; height: 10px; border: 2.5px solid var(--encre); border-radius: 50%; background: var(--surface); z-index: 1; }
+.arrets .champ-lieu:last-child::before { background: var(--orange); border-color: var(--orange); }   /* arrivée = rond orange */
 
-/* Encadré des comptes de démonstration */
-.demo { background: var(--jaune-clair); border-radius: 12px; padding: 12px 14px; font-size: 13.5px; margin-top: 18px; }
+/* Bouton rond qui inverse départ et arrivée */
+.bouton-inverser { position: absolute; right: 0; top: -6px; z-index: 2; width: 34px; height: 34px; display: grid; place-items: center; background: var(--surface); border: 1.5px solid var(--bord-fort); border-radius: 50%; cursor: pointer; color: var(--encre); transition: border-color var(--vite), transform var(--normal) var(--courbe); }
+.bouton-inverser:hover { border-color: var(--encre); transform: rotate(180deg); }
 
-/* Choix de la note : 5 boutons radio présentés comme des cases */
-.choix-note { display: flex; gap: 8px; }
-.choix-note input { position: absolute; opacity: 0; width: 1px; }
-.choix-note label { margin: 0; padding: 8px 12px; border: 1px solid var(--bord); border-radius: 10px; cursor: pointer; background: var(--champ); font-weight: 700; color: var(--gris); }
-.choix-note input:checked + label { background: var(--jaune); border-color: var(--jaune); color: var(--encre); }
-.choix-note input:focus + label { outline: 2px solid var(--primaire); }
+/* Choix de la note : 5 cases numérotées (boutons radio cachés) */
+.choix-note { display: flex; gap: var(--e-2); }
+.choix-note input { position: absolute; opacity: 0; width: 1px; height: 1px; min-height: 0; }
+.choix-note label { width: 52px; height: 52px; margin: 0; display: grid; place-items: center; border: 1.5px solid var(--bord-fort); border-radius: var(--rayon-petit); background: var(--surface); font: 700 var(--t-md) var(--police-titre); cursor: pointer; }
+.choix-note label:hover { border-color: var(--encre); }
+.choix-note input:checked + label { background: var(--orange); border-color: var(--orange); }
+.choix-note input:focus-visible + label { outline: 3px solid var(--violet); outline-offset: 2px; }
 
+/* ---------- 4.5 Plaques de statut et prix ---------- */
 
-/* ============ 7. ACCUEIL ============ */
+/* Petite étiquette arrondie */
+.plaque { display: inline-block; padding: 3px 10px; border-radius: 999px; font: 600 12.5px/1.4 var(--police-titre); white-space: nowrap; }
 
-.hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 30px; align-items: center; margin-bottom: 34px; }
-.hero h1 { font-size: 44px; line-height: 1.08; letter-spacing: -1px; margin-bottom: 14px; text-wrap: balance; }
-.hero h1 em { font-style: normal; background: linear-gradient(transparent 62%, var(--jaune) 62%); }
-.hero .intro { color: var(--gris); font-size: 17px; max-width: 460px; }
-.hero img { width: 100%; height: auto; }
+/* Couleur selon le statut (classe générée par classeStatut() en PHP) */
+.statut-ouvert, .statut-confirmee { background: var(--ouvert-fond); color: var(--ouvert); }
+.statut-complet { background: var(--complet-fond); color: var(--complet); }
+.statut-en-attente { background: var(--attente-fond); color: var(--attente); }
+.statut-refusee { background: var(--refuse-fond); color: var(--refuse); }
+.statut-termine { background: var(--termine-fond); color: var(--termine); }
 
-/* Bloc de recherche */
-.recherche { background: var(--surface); border-radius: 20px; box-shadow: var(--ombre); padding: 18px; margin-top: 22px; }
-.recherche-lieux { position: relative; }
-.champ-lieu { position: relative; margin-bottom: 8px; }
-.champ-lieu input { padding-left: 36px; }
-.champ-lieu .point { position: absolute; left: 14px; top: 50%; width: 11px; height: 11px; margin-top: -5.5px; border-radius: 50%; border: 2.5px solid var(--primaire); }
-.champ-lieu .point.fin { background: var(--primaire); }
-.bouton-inverser {
-    position: absolute; right: 12px; top: 50%; transform: translateY(-50%); z-index: 1;
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 1px solid var(--bord); background: var(--surface); color: var(--primaire);
-    cursor: pointer; font-size: 16px; line-height: 1;
+/* Prix : sur fond orange pâle */
+.prix { display: inline-block; padding: 3px 10px; border-radius: 8px; background: var(--orange-pale); color: var(--encre); font: 700 15px var(--police-titre); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.prix--grand { font-size: var(--t-lg); padding: var(--e-1) var(--e-3); border-radius: var(--rayon-petit); }
+
+/* ---------- 4.6 Avatar, note, sièges ---------- */
+
+.avatar { width: 40px; height: 40px; flex: none; border-radius: 50%; display: inline-grid; place-items: center; color: var(--encre); font: 700 14px var(--police-titre); }
+.avatar--petit { width: 30px; height: 30px; font-size: 11px; }
+.avatar--grand { width: 76px; height: 76px; font-size: 26px; }
+.avatar-couleur-0 { background: var(--avatar-0); }
+.avatar-couleur-1 { background: var(--avatar-1); }
+.avatar-couleur-2 { background: var(--avatar-2); }
+.avatar-couleur-3 { background: var(--avatar-3); }
+.avatar-couleur-4 { background: var(--avatar-4); }
+
+/* Note moyenne : "★ 4,75" */
+.note { font-family: var(--police-titre); font-weight: 600; font-size: var(--t-sm); color: var(--encre); white-space: nowrap; }
+.note::first-letter { color: var(--etoile); }
+.note-vide { color: var(--texte-2); font-size: var(--t-sm); }
+.etoiles { color: var(--etoile); letter-spacing: 2px; white-space: nowrap; }
+.etoiles .eteinte { color: var(--bord-fort); }
+
+/* Personne : avatar + nom + petite ligne d'info */
+.personne { display: flex; align-items: center; gap: var(--e-3); min-width: 0; font-family: var(--police-titre); font-weight: 600; font-size: 15px; }
+.personne-nom { color: var(--encre); text-decoration: none; }
+a.personne-nom:hover { text-decoration: underline; }
+.personne small { display: block; color: var(--texte-2); font-size: 13px; line-height: 1.3; }
+
+/* Sièges : un petit carré par place (turquoise = libre, gris = pris) */
+.sieges { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.siege { width: 12px; height: 14px; border-radius: 4px 4px 3px 3px; background: var(--turquoise); }
+.siege.pris { background: #DCD3DA; }
+.sieges-texte { margin-left: var(--e-1); font-size: var(--t-sm); color: var(--texte-2); }
+
+/* ---------- 4.7 Cartes de trajets (composant principal) ---------- */
+
+.grille-trajets { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--e-4); }
+
+/* La carte : toute la surface est cliquable grâce au lien étiré (.trajet-lien) */
+.trajet {
+    position: relative; display: flex; flex-direction: column; gap: var(--e-4);
+    padding: var(--e-4) var(--e-5); background: var(--surface);
+    border: var(--trait); border-radius: var(--rayon); box-shadow: var(--ombre);
+    transition: border-color var(--vite), box-shadow var(--normal) var(--courbe), transform var(--normal) var(--courbe);
 }
-.bouton-inverser:hover { background: var(--clair); }
-.recherche-bas { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.trajet:hover { border-color: #FFC9B0; box-shadow: var(--ombre-survol); transform: translateY(-2px); }
+.trajet:focus-within { outline: 3px solid var(--violet); outline-offset: 2px; }
 
-/* Bandeau de recherche horizontal (page des résultats) */
-.recherche-ligne { display: grid; grid-template-columns: 1fr 1fr 180px auto; gap: 10px; align-items: end; margin: 0 0 24px; }
-.recherche-ligne .champ-lieu { margin: 0; }
+.trajet-haut { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--e-3); }
+.trajet-horaire { margin: 0; display: flex; align-items: baseline; gap: var(--e-2); }
+.trajet-heure { font: 700 22px/1.1 var(--police-titre); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.trajet-jour { font-size: var(--t-sm); color: var(--texte-2); }
 
-/* Chiffres clés */
-.chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 34px; }
-.chiffre { background: var(--surface); border-radius: var(--rayon); padding: 18px 20px; box-shadow: var(--ombre); border-left: 5px solid var(--primaire); }
-.chiffre:nth-child(2) { border-left-color: var(--jaune); }
-.chiffre:nth-child(3) { border-left-color: #3aa486; }
-.chiffre:nth-child(4) { border-left-color: var(--primaire-fonce); }
-.chiffre b { display: block; font-size: 28px; color: var(--primaire-fonce); }
-.chiffre span { color: var(--gris); font-size: 13px; text-transform: uppercase; letter-spacing: .5px; }
+.trajet-lien { color: var(--encre); text-decoration: none; }
+.trajet-lien::after { content: ""; position: absolute; inset: 0; border-radius: var(--rayon); }   /* lien étiré sur toute la carte */
+.trajet-lien:focus-visible { outline: none; }
 
-.section { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 14px; }
-.section h2 { margin: 0; }
+/* Parcours : rond vide (départ), pointillés, rond orange (arrivée).
+   Aucun élément positionné ici : sinon le lien étiré ne couvrirait plus toute la carte */
+.parcours { list-style: none; margin: 0; padding: 0; min-width: 0; }
+.parcours li { padding-left: 24px; font: 600 15.5px/1.35 var(--police-titre); overflow-wrap: anywhere; }
+.parcours li::before { content: ""; display: inline-block; width: 8px; height: 8px; margin: 0 14px 0 -24px; vertical-align: 1px; border: 2.5px solid var(--encre); border-radius: 50%; background: var(--surface); }
+.parcours li:last-child::before { background: var(--orange); border-color: var(--orange); }
+.parcours li:first-child { padding-bottom: var(--e-3); background: repeating-linear-gradient(to bottom, var(--bord-fort) 0 2px, transparent 2px 5px) 6px 20px / 2px calc(100% - 18px) no-repeat; }
 
-.deux-colonnes { display: grid; grid-template-columns: 2fr 1fr; gap: 22px; align-items: start; }
-.colonnes-egales { grid-template-columns: 1fr 1fr; }
+.trajet-bas { display: flex; align-items: center; justify-content: space-between; gap: var(--e-3); margin-top: auto; padding-top: var(--e-3); border-top: 1px dashed var(--bord-fort); }
 
-/* Classement des membres les mieux notés */
+/* ---------- 4.8 Tableaux de données (admin, demandes, avis) ---------- */
+
+.defilant { position: relative; overflow-x: auto; border: var(--trait); border-radius: var(--rayon); background: var(--surface); box-shadow: var(--ombre); }
+.donnees { width: 100%; border-collapse: collapse; font-size: 15px; }
+.donnees th { text-align: left; padding: var(--e-3) var(--e-4); font: 600 13px var(--police-titre); color: var(--texte-2); background: var(--surface-douce); border-bottom: var(--trait); white-space: nowrap; }
+.donnees td { padding: var(--e-3) var(--e-4); border-bottom: var(--trait); vertical-align: middle; }
+.donnees tr:last-child td { border-bottom: 0; }
+.donnees tbody tr:hover { background: #FFFBF8; }
+.donnees .chiffre, .donnees .date { font-variant-numeric: tabular-nums; font-size: var(--t-sm); white-space: nowrap; }
+.donnees .commentaire { color: var(--texte-2); max-width: 420px; }
+.nombre { text-align: right; }
+.fleche { color: var(--texte-2); margin: 0 var(--e-1); }
+
+/* ---------- 4.9 Billet (mes réservations) ---------- */
+
+.billets { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: var(--e-5); }
+.billet { display: grid; grid-template-columns: 116px minmax(0, 1fr); background: var(--surface); border: var(--trait); border-radius: var(--rayon); box-shadow: var(--ombre); }
+
+/* Talon du billet : l'heure et le jour, séparés par une perforation */
+.billet-talon { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--e-1); padding: var(--e-4); background: var(--surface-douce); border-right: 2px dashed var(--bord-fort); border-radius: var(--rayon) 0 0 var(--rayon); }
+.billet-talon::before, .billet-talon::after { content: ""; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--fond); border: var(--trait); }
+.billet-talon::before { top: -11px; clip-path: inset(50% 0 0 0); }
+.billet-talon::after { bottom: -11px; clip-path: inset(0 0 50% 0); }
+.billet-heure { font: 700 28px/1 var(--police-titre); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.billet-jour { font-size: 13px; color: var(--texte-2); text-align: center; }
+
+.billet-corps { padding: var(--e-4) var(--e-5); display: flex; flex-direction: column; gap: var(--e-3); min-width: 0; }
+.billet-haut { display: flex; justify-content: space-between; align-items: center; gap: var(--e-3); }
+.billet-numero { font: 600 var(--t-xs) var(--police-titre); color: var(--texte-2); letter-spacing: .04em; }
+.billet-itineraire { margin: 0; font: 700 var(--t-md) var(--police-titre); letter-spacing: -.01em; }
+.billet-pied { display: flex; justify-content: space-between; align-items: center; gap: var(--e-3); flex-wrap: wrap; padding-top: var(--e-3); border-top: 1px dashed var(--bord-fort); }
+
+/* ---------- 4.10 Indicateurs, barres et jauges ---------- */
+
+/* Bande de chiffres clés */
+.indicateurs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--surface); border: var(--trait); border-radius: var(--rayon); box-shadow: var(--ombre); margin-bottom: var(--e-7); }
+.indicateur { padding: var(--e-5); border-left: var(--trait); }
+.indicateur:first-child { border-left: 0; }
+.indicateur b { display: block; font: 700 34px/1.1 var(--police-titre); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.indicateur span { display: block; margin-top: var(--e-1); color: var(--texte-2); font-size: var(--t-sm); }
+
+/* Barre empilée : répartition en % (ex : trajets par statut) */
+.barre-empilee { display: flex; gap: 3px; height: 14px; border-radius: 999px; overflow: hidden; margin: var(--e-3) 0; }
+.barre-empilee span { display: block; height: 100%; }
+.legende { display: flex; flex-wrap: wrap; gap: var(--e-2) var(--e-5); margin: 0; padding: 0; list-style: none; font-size: var(--t-sm); }
+.legende li { display: flex; align-items: center; gap: var(--e-2); }
+.legende i { width: 10px; height: 10px; border-radius: 50%; }
+.fond-ouvert { background: var(--turquoise); }
+.fond-complet { background: var(--orange); }
+.fond-termine { background: #B9AFC4; }
+.fond-attente { background: var(--violet); }
+.fond-refuse { background: var(--refuse); }
+
+/* Jauge : taux de remplissage */
+.jauge { height: 12px; background: var(--surface-douce); border-radius: 999px; overflow: hidden; margin: var(--e-3) 0 var(--e-2); }
+.jauge span { display: block; height: 100%; background: var(--orange); border-radius: 999px; }
+.gros-chiffre { font: 700 44px/1 var(--police-titre); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+
+/* Classement (membres les mieux notés) */
 .classement { list-style: none; margin: 0; padding: 0; }
-.classement li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--bord); }
-.classement li:last-child { border-bottom: none; }
-.classement .rang { width: 24px; font-weight: 700; color: var(--gris); }
-.classement .nom { flex: 1; font-weight: 500; }
+.classement li { display: flex; align-items: center; gap: var(--e-3); padding: var(--e-3) 0; border-bottom: var(--trait); }
+.classement li:first-child { padding-top: 0; }
+.classement li:last-child { border-bottom: 0; padding-bottom: 0; }
+.classement .rang { width: 28px; font: 700 var(--t-md) var(--police-titre); color: var(--texte-2); font-variant-numeric: tabular-nums; }
+.classement li:first-child .rang { color: var(--orange-texte); }
+.classement .personne { flex: 1; }
 
-/* Encart "Comment ça marche" */
-.etapes-accueil { counter-reset: etape; list-style: none; margin: 0; padding: 0; }
-.etapes-accueil li { counter-increment: etape; position: relative; padding-left: 40px; margin-bottom: 14px; color: var(--gris); }
-.etapes-accueil li b { color: var(--encre); display: block; }
-.etapes-accueil li::before { content: counter(etape); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--clair); color: var(--primaire-fonce); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+/* Liste d'avis */
+.avis-liste { list-style: none; margin: 0; padding: 0; }
+.avis-liste li { padding: var(--e-4) 0; border-bottom: var(--trait); }
+.avis-liste li:first-child { padding-top: 0; }
+.avis-liste li:last-child { border-bottom: 0; padding-bottom: 0; }
+.avis-tete { display: flex; align-items: center; gap: var(--e-3); flex-wrap: wrap; margin-bottom: var(--e-2); }
+.avis-tete .etoiles { margin-left: auto; }
+.avis-contexte { display: block; color: var(--texte-2); font-size: var(--t-sm); }
+.avis-liste p { margin: var(--e-2) 0 0; }
+
+/* ---------- 4.11 Messages (succès / erreur après une action) ---------- */
+
+.messages { padding-top: var(--e-5); }
+.message { display: flex; align-items: center; gap: var(--e-3); padding: var(--e-3) var(--e-4); border-radius: var(--rayon-petit); margin-bottom: var(--e-2); font-weight: 700; animation: arrivee var(--normal) var(--courbe) both; }
+.message p { margin: 0; flex: 1; }
+.message--succes { background: var(--ouvert-fond); color: var(--ouvert); }
+.message--erreur { background: var(--refuse-fond); color: var(--refuse); }
+.message ul { margin: var(--e-2) 0 0; padding-left: var(--e-5); font-weight: 400; }
+.message-fermer { background: none; border: 0; cursor: pointer; color: inherit; opacity: .7; padding: var(--e-1); display: grid; place-items: center; border-radius: 6px; }
+.message-fermer:hover { opacity: 1; }
+@keyframes arrivee { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- 4.12 Boîte de dialogue (confirmation avant suppression) ---------- */
+
+.dialogue { width: min(440px, calc(100% - 32px)); padding: var(--e-5); border: 0; border-radius: 20px; background: var(--surface); color: var(--encre); box-shadow: var(--ombre-flottant); }
+.dialogue::backdrop { background: rgba(43, 35, 64, .45); }
+.dialogue[open] { animation: arrivee var(--normal) var(--courbe); }
+.dialogue h2 { font-size: var(--t-md); }
+.dialogue p { color: var(--texte-2); }
+.dialogue .actions { justify-content: flex-end; margin-top: var(--e-5); }
+.dialogue form { margin: 0; }
+
+/* ---------- 4.13 États vides et page d'erreur ---------- */
+
+.vide { text-align: center; padding: var(--e-6) var(--e-5) var(--e-7); background: var(--surface); border: var(--trait); border-radius: var(--rayon); }
+.vide svg { color: var(--texte-2); margin-bottom: var(--e-3); }
+.vide-illustration { display: block; width: 180px; height: auto; margin: 0 auto var(--e-4); }
+.vide h3 { margin-bottom: var(--e-2); }
+.vide p { color: var(--texte-2); margin: 0 auto var(--e-4); max-width: 420px; }
+
+.erreur-page { max-width: 560px; margin: var(--e-6) auto; text-align: center; }
+.erreur-panneau { display: inline-block; padding: var(--e-2) var(--e-4); margin-bottom: var(--e-5); background: var(--orange-pale); color: var(--orange-texte); border-radius: 999px; font: 600 var(--t-sm) var(--police-titre); }
+.erreur-page h1 { font-size: 40px; }
+.erreur-page p { color: var(--texte-2); }
+
+/* ---------- 4.14 Footer ---------- */
+
+.footer { background: var(--encre); color: #C9C2D6; font-size: var(--t-sm); }
+.footer .conteneur { display: flex; justify-content: space-between; align-items: center; gap: var(--e-3); flex-wrap: wrap; padding-top: var(--e-5); padding-bottom: var(--e-5); }
+.footer-marque { display: flex; align-items: center; gap: var(--e-2); }
+.footer-marque img { width: 26px; height: 26px; }
+.footer strong { color: #fff; font-family: var(--police-titre); }
 
 
-/* ============ 8. DÉTAIL ET LISTES ============ */
+/* ==================================================================
+   5. PAGES
+   ================================================================== */
 
-/* Grand billet du détail d'un trajet */
-.billet-detail .billet-haut { padding: 24px 26px 20px; }
-.billet-detail .billet-bas { padding: 18px 26px 22px; }
-.billet-detail .decoupe { margin: 0 26px; }
-.billet-detail .decoupe::before { left: -37px; }
-.billet-detail .decoupe::after { right: -37px; }
-.billet-detail .horaire .lieu b { font-size: 24px; }
-.billet-detail .horaire .lieu span { font-size: 15px; white-space: normal; }
-.billet-detail .horaire .trait { flex-basis: 120px; }
-.retour { margin: -6px 0 14px; }
-.ligne-haut { display: flex; align-items: center; gap: 10px; }
-.billet-bas .etapes { flex: 1; }
-.carte-demandes { margin-top: 20px; }
-.formulaire-avis { margin-top: 16px; }
-.infos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
-.infos div { background: var(--fond); border-radius: 12px; padding: 10px 14px; }
-.infos small { display: block; color: var(--gris); font-size: 12.5px; }
-.infos b { font-size: 16px; }
+/* --- Accueil : texte + illustration, puis barre de recherche à cheval --- */
+.accueil-haut { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); gap: var(--e-5) var(--e-7); align-items: center; margin-bottom: var(--e-7); }
+.accueil-haut h1 { font-size: var(--t-hero); line-height: 1.05; letter-spacing: -.035em; margin-bottom: var(--e-4); text-wrap: balance; }
+.accueil-haut h1 em { font-style: normal; color: var(--orange-titre); }
+.accroche { color: var(--texte-2); font-size: var(--t-md); max-width: 480px; margin: 0; }
+.accueil-illustration { width: 100%; max-width: 460px; height: auto; justify-self: end; }
+
+/* Barre de recherche horizontale (accueil et page "Trouver un trajet") */
+.recherche { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) 190px auto; gap: var(--e-3); align-items: end; padding: var(--e-4); background: var(--surface); border-radius: 20px; box-shadow: var(--ombre-flottant); }
+.recherche .champ { margin: 0; }
+.recherche .bouton { min-height: 48px; padding: 0 var(--e-6); }
+.recherche .bouton-inverser { position: static; width: 40px; height: 40px; margin-bottom: 4px; }
+.recherche .bouton-inverser svg { transform: rotate(90deg); }   /* champs côte à côte : flèches horizontales */
+.recherche--page { margin-bottom: var(--e-6); box-shadow: var(--ombre); border: var(--trait); }
+
+/* Les 3 étapes "Comment ça marche ?" */
+.etapes-accueil { list-style: none; margin: 0; padding: 0; counter-reset: etape; }
+.etapes-accueil li { counter-increment: etape; display: grid; grid-template-columns: 40px 1fr; gap: var(--e-3); padding: var(--e-4) 0; border-bottom: var(--trait); color: var(--texte-2); }
+.etapes-accueil li:first-child { padding-top: 0; }
+.etapes-accueil li:last-child { border-bottom: 0; padding-bottom: 0; }
+.etapes-accueil li::before { content: counter(etape); width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--orange-pale); color: var(--encre); font: 700 15px var(--police-titre); }
+.etapes-accueil b { display: block; color: var(--encre); font-family: var(--police-titre); font-weight: 600; }
+
+/* --- Détail d'un trajet : frise verticale départ -> arrivée --- */
+.frise { list-style: none; margin: 0; padding: 0; }
+.frise li { position: relative; display: block; padding: 0 0 var(--e-5) 40px; }
+.frise li:last-child { padding-bottom: 0; }
+.frise li::before { content: ""; position: absolute; left: 4px; top: 8px; width: 12px; height: 12px; border: 3px solid var(--encre); border-radius: 50%; background: var(--surface); }
+.frise li:last-child::before { background: var(--orange); border-color: var(--orange); }
+.frise li:not(:last-child)::after { content: ""; position: absolute; left: 11px; top: 30px; bottom: 6px; border-left: 2px dotted var(--bord-fort); }
+.frise-heure { display: inline-block; margin-right: var(--e-2); font: 700 var(--t-lg) var(--police-titre); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.frise-lieu { font: 600 var(--t-md) var(--police-titre); }
+.frise small { display: block; color: var(--texte-2); }
 
 /* Étapes du statut : Ouvert -> Complet -> Terminé */
-.etapes { display: flex; align-items: center; margin: 4px 0 0; font-size: 12.5px; color: var(--gris); }
-.etape { text-align: center; flex: none; min-width: 64px; }
-.etape i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--bord); background: var(--surface); display: block; margin: 0 auto 4px; }
-.etape.faite i { background: var(--primaire); border-color: var(--primaire); }
-.etape.faite { color: var(--encre); font-weight: 500; }
-.etapes .ligne { flex: 1; height: 2px; background: var(--bord); margin: 0 4px 20px; }
-.etapes .ligne.faite { background: var(--primaire); }
+.bloc-pied { margin: var(--e-5) calc(-1 * var(--e-5)) calc(-1 * var(--e-5)); padding: var(--e-4) var(--e-5); border-top: var(--trait); background: var(--surface-douce); border-radius: 0 0 var(--rayon) var(--rayon); }
+.surtitre .plaque { margin-left: var(--e-2); vertical-align: 1px; }
+.cycle { margin-bottom: var(--e-2); display: flex; align-items: center; gap: var(--e-2); flex-wrap: wrap; font: 600 var(--t-sm) var(--police-titre); color: var(--texte-2); }
+.cycle .fait { color: var(--encre); }
+.cycle .actuel { background: var(--encre); color: #fff; padding: 2px 10px; border-radius: 999px; }
+.cycle .separateur { color: var(--bord-fort); }
 
-/* Liste de demandes / personnes */
-.liste { list-style: none; margin: 0; padding: 0; }
-.liste li { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--bord); flex-wrap: wrap; }
-.liste li:last-child { border-bottom: none; }
-.liste .infos-personne { flex: 1; min-width: 160px; }
-.liste .infos-personne b { display: block; font-weight: 500; }
-.liste .infos-personne small { color: var(--gris); }
+/* Panneau d'action à droite : reste visible pendant le défilement */
+.panneau-action { position: sticky; top: 96px; }
+.panneau-prix { display: flex; align-items: center; justify-content: space-between; gap: var(--e-3); margin-bottom: var(--e-4); padding-bottom: var(--e-4); border-bottom: 1px dashed var(--bord-fort); }
+.panneau-action .bloc h3 { margin-top: 0; }
+.panneau-action .bloc + .bloc { margin-top: var(--e-4); }
 
-/* Avis */
-.avis { padding: 14px 0; border-bottom: 1px solid var(--bord); }
-.avis:last-child { border-bottom: none; }
-.avis-tete { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
-.avis-tete .avatar { width: 32px; height: 32px; font-size: 12px; }
-.avis-tete small { color: var(--gris); }
-.etoiles { color: var(--etoile); letter-spacing: 1px; margin-left: auto; }
-.etoiles .eteinte { color: #d7e2de; }
-.avis p { margin: 0; }
+/* --- Profil --- */
+.profil { display: flex; align-items: center; gap: var(--e-5); flex-wrap: wrap; }
+.entete-page .profil h1 { margin-bottom: var(--e-1); }
+.badge-admin { display: inline-block; vertical-align: middle; margin-left: var(--e-2); padding: 2px 10px; background: var(--encre); color: #fff; border-radius: 999px; font: 600 12px var(--police-titre); }
+.surtitre .badge-admin { margin-left: var(--e-1); }
 
-/* En-tête de profil */
-.profil { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.profil h1 { margin-bottom: 2px; }
-.profil-chiffres { display: flex; gap: 12px; margin-left: auto; flex-wrap: wrap; }
-.profil-chiffres div { background: var(--fond); border-radius: 12px; padding: 10px 16px; text-align: center; min-width: 110px; }
-.profil-chiffres b { display: block; font-size: 22px; }
-.profil-chiffres small { color: var(--gris); }
+/* --- Connexion / inscription : formulaire à gauche, illustration à droite --- */
+.authentification-page { max-width: 1040px; margin: 0 auto; }
+.authentification { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--e-7); align-items: start; }
+.authentification form.bloc { padding: var(--e-6); }
+.authentification-cote { display: flex; flex-direction: column; gap: var(--e-5); }
+.authentification-illustration { width: 100%; max-width: 230px; height: auto; margin: 0 auto; }
+.lien-bas { margin: var(--e-4) 0 0; color: var(--texte-2); text-align: center; }
 
-/* Jauge du taux de remplissage */
-.jauge { height: 12px; background: var(--clair); border-radius: 999px; overflow: hidden; margin: 8px 0 4px; }
-.jauge div { height: 100%; background: var(--primaire); border-radius: 999px; }
-
-/* Tuile du passager le plus fréquent */
-.mise-en-avant { display: flex; align-items: center; gap: 14px; background: var(--jaune-clair); border-radius: 14px; padding: 14px 16px; }
+/* Comptes de démonstration : une ligne par compte */
+.comptes-demo { list-style: none; margin: var(--e-3) 0 0; padding: 0; }
+.comptes-demo li { display: flex; justify-content: space-between; align-items: center; gap: var(--e-3); padding: var(--e-2) 0; border-top: 1px solid var(--orange-pale); font-size: var(--t-sm); }
+.comptes-demo span { font-family: var(--police-titre); font-weight: 600; }
+.comptes-demo code { overflow-wrap: anywhere; text-align: right; }
 
 
-/* ============ 9. TABLEAUX ET BACK-OFFICE ============ */
+/* ==================================================================
+   6. UTILITAIRES
+   ================================================================== */
 
-/* Le conteneur permet de faire défiler le tableau sur téléphone */
-.tableau-defilant { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th { text-align: left; color: var(--primaire-fonce); background: var(--fond); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 10px 12px; white-space: nowrap; }
-th:first-child { border-radius: 10px 0 0 10px; }
-th:last-child { border-radius: 0 10px 10px 0; }
-tr:hover td { background: #fafdfc; }
-td { padding: 12px; border-bottom: 1px solid var(--bord); vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-td.nombre, th.nombre { text-align: right; }
+/* Texte lu par les lecteurs d'écran mais invisible à l'écran
+   (son parent doit être positionné, sinon il peut élargir la page sur mobile) */
+.visuellement-cache { position: absolute; top: 0; left: 0; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.discret { color: var(--texte-2); font-size: var(--t-sm); }
+.mono { font-family: Consolas, "Courier New", monospace; }
+.sans-marge { margin: 0; }
 
-.onglets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px; }
-.onglets a { padding: 8px 14px; border-radius: 10px; background: var(--surface); color: var(--gris); font-weight: 500; box-shadow: var(--ombre); }
-.onglets a.actif { background: var(--primaire); color: #fff; }
-.onglets a:hover { text-decoration: none; }
-
-.badge-admin { background: var(--encre); color: #fff; padding: 2px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .4px; }
-
-/* Page d'erreur */
-.erreur { text-align: center; padding: 50px 20px; }
-.erreur .code { display: inline-block; font-size: 56px; font-weight: 700; color: var(--primaire); line-height: 1; padding: 10px 22px; border: 3px dashed var(--clair); border-radius: 16px; margin-bottom: 12px; }
-
-
-/* ============ 10. FOOTER ============ */
-
-.footer { border-top: 1px solid var(--bord); background: var(--surface); color: var(--gris); font-size: 13.5px; }
-.footer .conteneur { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 18px; padding-bottom: 18px; flex-wrap: wrap; }
-.footer .footer-marque { display: flex; align-items: center; gap: 8px; }
-.footer img { width: 22px; height: 22px; }
-
-
-/* ============ 10 bis. ANIMATIONS DOUCES ============ */
-
-/* Les billets se soulèvent un peu au survol */
-.billet { transition: transform .2s ease, box-shadow .2s ease; }
-.billet:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(15, 122, 99, .14); }
-
-/* Les boutons s'enfoncent légèrement au clic */
-.bouton { transition: background .15s, transform .1s; }
-.bouton:active { transform: scale(.97); }
-
-/* Le contenu de la page et les messages apparaissent en fondu */
-@keyframes apparition {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-main.conteneur > * { animation: apparition .35s ease both; }
-.message { animation: apparition .3s ease both; }
-
-/* Accessibilité : pas d'animation si l'utilisateur les a désactivées sur son ordinateur */
+/* Accessibilité : pas d'animation si l'utilisateur les a désactivées */
 @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
 
-/* ============ 11. ÉCRANS ÉTROITS ============ */
+/* ==================================================================
+   7. RESPONSIVE (le site est pensé d'abord pour l'ordinateur)
+   ================================================================== */
 
-@media (max-width: 900px) {
-    .hero, .deux-colonnes { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 34px; }
-    .hero img { max-width: 440px; }
-    .chiffres { grid-template-columns: repeat(2, 1fr); }
-    .recherche-ligne { grid-template-columns: 1fr 1fr; }
+/* ---------- Bureau étroit (moins de 1240px) : le header doit tenir sur une ligne ---------- */
+@media (max-width: 1239px) {
+    .moi span { display: none; }
+    .moi { padding: var(--e-1); }
+    .navigation a { padding: 0 var(--e-2); }
+    .header-interieur { gap: var(--e-4); }
+}
 
-    /* Le menu se replie : il s'ouvre avec le bouton (voir js/script.js) */
-    .bouton-menu { display: block; }
-    .menu {
-        display: none;
-        position: absolute; left: 0; right: 0; top: 66px;
-        flex-direction: column; align-items: stretch;
-        background: var(--surface); border-bottom: 1px solid var(--bord);
-        padding: 10px 20px 16px;
+/* ---------- Tablette et mobile (moins de 960px) ---------- */
+@media (max-width: 959px) {
+    :root { --gouttiere: 24px; --t-hero: 42px; }
+
+    /* minmax(0, 1fr) : une colonne qui ne s'élargit jamais à cause d'un tableau trop large */
+    .gabarit-detail, .gabarit-formulaire, .deux-colonnes, .authentification { grid-template-columns: minmax(0, 1fr); }
+    .accueil-haut { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--e-5); }
+    .panneau-action { position: static; order: -1; }   /* l'action passe en premier */
+    .authentification-cote { order: 1; }
+    .authentification-illustration { display: none; }
+    .indicateurs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .indicateur:nth-child(3) { border-left: 0; }
+    .indicateur:nth-child(n+3) { border-top: var(--trait); }
+    .recherche { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+    .recherche .champ-date, .recherche .bouton { grid-column: span 3; }
+
+    /* Membre connecté : les liens passent dans la barre d'onglets en bas de l'écran */
+    body.connecte { padding-bottom: 76px; }
+    body.connecte .navigation, .header-actions form { display: none; }   /* déconnexion : depuis la page Profil */
+    .header-actions .bouton span { display: none; }   /* bouton "Publier" réduit à l'icône + */
+    .barre-mobile {
+        display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+        background: var(--surface); border-top: var(--trait); box-shadow: 0 -8px 24px rgba(43, 35, 64, .08);
     }
-    .menu.ouvert { display: flex; }
-    .menu .droite { margin-left: 0; flex-direction: column; align-items: stretch; border-top: 1px solid var(--bord); padding-top: 10px; margin-top: 6px; }
-    .menu .droite .bouton { width: 100%; }
+    .barre-mobile a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: var(--e-2) 0; color: var(--texte-2); text-decoration: none; font: 600 11px var(--police-titre); border-top: 3px solid transparent; }
+    .barre-mobile a.actif { color: var(--encre); border-top-color: var(--orange); }
+
+    .donnees { min-width: 720px; }   /* les tableaux de données défilent horizontalement */
+    .donnees td a { white-space: nowrap; }
 }
 
-@media (max-width: 560px) {
-    main.conteneur { padding-top: 20px; }
-    .conteneur { padding: 0 16px; }
-    h1 { font-size: 24px; }
-    .grille-billets { grid-template-columns: 1fr; }
-    .deux-champs, .recherche-ligne, .infos { grid-template-columns: 1fr; }
-    .chiffre b { font-size: 22px; }
-    .carte { padding: 18px; }
-    .billet-detail .horaire .lieu b { font-size: 19px; }
-    .billet-detail .horaire .trait { flex-basis: 40px; }
-    .profil-chiffres { margin-left: 0; }
+/* ---------- Mobile (moins de 640px) ---------- */
+@media (max-width: 639px) {
+    :root { --gouttiere: 16px; --t-hero: 34px; }
+    h1 { font-size: 27px; }
+    main.conteneur { padding-top: var(--e-5); }
+
+    /* Header : seulement le logo et les actions essentielles */
+    .header-interieur { gap: var(--e-3); height: 60px; }
+    .marque span, .navigation { display: none; }   /* le visiteur cherche un trajet depuis l'accueil */
+    .header-actions .bouton { padding: 0 var(--e-3); }
+
+    .accueil-haut { grid-template-columns: minmax(0, 1fr); }
+    .accueil-illustration { display: none; }
+    .recherche { grid-template-columns: minmax(0, 1fr); padding: var(--e-4); }
+    .recherche .champ-date, .recherche .bouton { grid-column: auto; }
+    .recherche .bouton-inverser { justify-self: end; margin: calc(-1 * var(--e-3)) 0; }
+    .recherche .bouton-inverser svg { transform: none; }
+
+    .grille-trajets { grid-template-columns: minmax(0, 1fr); }
+    .trajet { padding: var(--e-4); }
+    .trajet:hover { transform: none; }
+
+    .billets { grid-template-columns: minmax(0, 1fr); }
+    .billet { grid-template-columns: 88px minmax(0, 1fr); }
+    .billet-heure { font-size: 22px; }
+    .billet-corps { padding: var(--e-3) var(--e-4); }
+
+    .indicateur { padding: var(--e-4); }
+    .indicateur b { font-size: 26px; }
+    .deux-champs { grid-template-columns: 1fr; }
+    .entete-actions, .entete-actions .bouton { width: 100%; }
+    .authentification form.bloc { padding: var(--e-5); }
 }

@@ -1,24 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Logo CoVoie : une voiture vue de face avec deux passagers (le covoiturage) -->
-  <rect width="64" height="64" rx="16" fill="#0f7a63"/>
-  <g transform="translate(8 9) scale(.75)">
-    <!-- Carrosserie (blanche) -->
-    <path d="M18 9h28c2.4 0 4.4 1.4 5.3 3.6L57 27H7l5.7-14.4C13.6 10.4 15.6 9 18 9z" fill="#fff"/>
-    <rect x="4" y="25" width="56" height="24" rx="9" fill="#fff"/>
-    <rect x="8" y="44" width="12" height="12" rx="3.5" fill="#fff"/>
-    <rect x="44" y="44" width="12" height="12" rx="3.5" fill="#fff"/>
-    <rect x="-1" y="22.5" width="10" height="6" rx="3" fill="#fff"/>
-    <rect x="55" y="22.5" width="10" height="6" rx="3" fill="#fff"/>
-    <!-- Pare-brise -->
-    <path d="M20.5 13h23c1.2 0 2.2.7 2.6 1.8L50 25H14l3.9-10.2c.4-1.1 1.4-1.8 2.6-1.8z" fill="#0f7a63"/>
-    <!-- Deux passagers -->
-    <circle cx="25.5" cy="17.8" r="2.8" fill="#fff"/>
-    <path d="M19.3 25c0-2.4 2.7-3.4 6.2-3.4s6.2 1 6.2 3.4z" fill="#fff"/>
-    <circle cx="38.5" cy="17.8" r="2.8" fill="#fff"/>
-    <path d="M32.3 25c0-2.4 2.7-3.4 6.2-3.4s6.2 1 6.2 3.4z" fill="#fff"/>
-    <!-- Phares et plaque -->
-    <rect x="9" y="31" width="11" height="6" rx="3" fill="#0f7a63"/>
-    <rect x="44" y="31" width="11" height="6" rx="3" fill="#0f7a63"/>
-    <rect x="25" y="40" width="14" height="4" rx="2" fill="#f2c94c"/>
-  </g>
+  <!-- Logo CoVoie "Duo" : deux cercles qui se chevauchent = deux étudiants qui partagent le même trajet.
+       La partie commune (le trajet partagé) est en encre. Sert aussi d'icône d'onglet (favicon). -->
+  <defs><clipPath id="gauche"><circle cx="24" cy="32" r="17"/></clipPath></defs>
+  <circle cx="24" cy="32" r="17" fill="#FF7A45"/>
+  <circle cx="40" cy="32" r="17" fill="#6C5CE7"/>
+  <circle cx="40" cy="32" r="17" fill="#2B2340" clip-path="url(#gauche)"/>
 </svg>

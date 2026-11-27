@@ -23,8 +23,8 @@ puis chacun note l'autre après le trajet.
 4. Ouvrir **http://localhost/covoie/**
 
 Réglages de connexion dans `includes/config.php` (par défaut : `root` sans mot de passe, comme WAMP).
-Aucune dépendance à installer : PHP 8 et l'extension PDO MySQL suffisent. La police Roboto est
-enregistrée dans `fonts/`, le site fonctionne donc **sans connexion Internet**.
+Aucune dépendance à installer : PHP 8 et l'extension PDO MySQL suffisent. Les polices (Poppins,
+Nunito Sans) sont enregistrées dans `fonts/`, le site fonctionne donc **sans connexion Internet**.
 
 ---
 
@@ -56,9 +56,9 @@ covoie/
 ├── modeles/             Classes métier : SQL + règles de gestion
 ├── controleurs/         Font le lien entre l'URL, les modèles et les vues
 ├── vues/                HTML (un dossier par thème + gabarit commun)
-├── css/style.css        Toute la mise en forme (variables de couleur en haut)
-├── js/script.js         Menu mobile, confirmation, inverser départ/arrivée
-├── images/  fonts/      Logo, illustration d'accueil, police Roboto
+├── css/style.css        Toute la mise en forme : design tokens en haut, puis composants
+├── js/script.js         Confirmation, bouton "Envoi…", inverser départ/arrivée
+├── images/  fonts/      Logo, illustrations, polices
 ├── sql/bdd_covoie.sql  Structure de la base + jeu de démonstration
 ├── docs/                MCD, MLD, diagramme de classes, conception
 └── gantt/               Planning du projet (GanttProject)
@@ -107,3 +107,7 @@ covoie/
 - **[Documentation technique (PDF)](docs/documentation.pdf)** : MLD, diagramme de classes, décrément des places, clôture, note moyenne
 - [MCD](docs/mcd.png) - [MLD](docs/mld.png) - [Diagramme de classes](docs/diagramme-classes.png)
 - [Conception détaillée](docs/conception.md) - [Arborescence](docs/arborescence.txt)
+
+---
+
+**Crédits** : illustrations issues d'unDraw (undraw.co, libres d'utilisation, recolorées aux couleurs du site). Polices Poppins et Nunito Sans (licence SIL Open Font).

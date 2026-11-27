@@ -54,7 +54,7 @@ class Utilisateur
 
     /**
      * Crée un nouveau compte après avoir vérifié les champs.
-     * @return array La liste des erreurs (tableau vide = compte créé)
+     * @return array Les erreurs rangées par nom de champ (tableau vide = compte créé)
      */
     public static function inscrire(string $nom, string $email, string $motDePasse, string $confirmation): array
     {
@@ -63,22 +63,22 @@ class Utilisateur
 
         // Contrôles de saisie
         if (mb_strlen($nom) < 2 || mb_strlen($nom) > 100) {
-            $erreurs[] = 'Le nom doit contenir entre 2 et 100 caractères.';
+            $erreurs['nom'] = 'Le nom doit contenir entre 2 et 100 caractères.';
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 180) {
-            $erreurs[] = 'L\'adresse email n\'est pas valide.';
+            $erreurs['email'] = 'L\'adresse email n\'est pas valide.';
         }
         if (strlen($motDePasse) < 8 || strlen($motDePasse) > 72) {
-            $erreurs[] = 'Le mot de passe doit contenir entre 8 et 72 caractères.';
+            $erreurs['mot_de_passe'] = 'Le mot de passe doit contenir entre 8 et 72 caractères.';
         }
         if ($motDePasse !== $confirmation) {
-            $erreurs[] = 'Les deux mots de passe ne sont pas identiques.';
+            $erreurs['confirmation'] = 'Les deux mots de passe ne sont pas identiques.';
         }
 
         // RÈGLE MÉTIER : un seul compte par adresse email
         $dejaPris = requete('SELECT COUNT(*) FROM utilisateurs WHERE email = ?', [$email])->fetchColumn();
         if ($dejaPris > 0) {
-            $erreurs[] = 'Cette adresse email est déjà utilisée.';
+            $erreurs['email'] = 'Cette adresse email est déjà utilisée.';
         }
 
         if (count($erreurs) > 0) {

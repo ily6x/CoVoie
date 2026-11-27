@@ -17,166 +17,204 @@
 // Étapes du cycle de vie : quelles étapes sont atteintes ?
 $etapeComplet = ($trajet->statut === 'Complet' || $trajet->statut === 'Termine');
 $etapeTermine = ($trajet->statut === 'Termine');
+$placesPrises = $trajet->placesOccupees();
 ?>
-<p class="retour"><a href="index.php?page=trajets">← Retour aux trajets</a></p>
+<a class="retour" href="index.php?page=trajets">← Tous les départs</a>
 
-<div class="deux-colonnes">
+<div class="entete-page">
     <div>
-        <!-- ===== Le billet ===== -->
-        <article class="billet billet-detail">
-            <div class="billet-haut">
-                <div class="ligne-haut">
-                    <span class="statut <?= classeStatut($trajet->statut) ?>"><?= libelleStatut($trajet->statut) ?></span>
-                </div>
+        <p class="surtitre">
+            Trajet n° <?= sprintf('%04d', $trajet->id) ?> - <?= sensTrajet($trajet->origine, $trajet->destination) ?>
+            <span class="plaque <?= classeStatut($trajet->statut) ?>"><?= libelleStatut($trajet->statut) ?></span>
+        </p>
+        <h1><?= e($trajet->origine) ?> <span class="fleche" aria-hidden="true">→</span><span class="visuellement-cache"> vers </span> <?= e($trajet->destination) ?></h1>
+        <p><?= ucfirst(formaterDateLongue($trajet->date_heure)) ?>, départ à <?= formaterHeure($trajet->date_heure) ?></p>
+    </div>
+</div>
 
-                <div class="horaire">
-                    <div class="lieu">
-                        <b><?= formaterHeure($trajet->date_heure) ?></b>
-                        <span><?= e($trajet->origine) ?></span>
-                    </div>
-                    <div class="trait"></div>
-                    <div class="lieu arrivee">
-                        <b><?= formaterJour($trajet->date_heure) ?></b>
-                        <span><?= e($trajet->destination) ?></span>
-                    </div>
-                </div>
+<div class="gabarit-detail">
+    <div>
+        <!-- ===== Itinéraire : frise verticale départ -> arrivée ===== -->
+        <section class="section">
+            <h2>Itinéraire</h2>
+            <div class="bloc">
+                <ol class="frise">
+                    <li>
+                        <span class="frise-heure"><?= formaterHeure($trajet->date_heure) ?></span>
+                        <span class="frise-lieu"><?= e($trajet->origine) ?></span>
+                        <small>Départ</small>
+                    </li>
+                    <li>
+                        <span class="frise-lieu"><?= e($trajet->destination) ?></span>
+                        <small>Arrivée</small>
+                    </li>
+                </ol>
 
-                <div class="infos">
-                    <div><small>Date</small><b><?= formaterDate($trajet->date_heure) ?></b></div>
-                    <div><small>Places libres</small><b><?= $trajet->places_restantes ?> sur <?= $trajet->places_totales ?></b></div>
-                    <div><small>Prix par place</small><b><?= formaterPrix($trajet->prix) ?></b></div>
+                <!-- Cycle de vie du trajet : Ouvert -> Complet -> Terminé -->
+                <div class="bloc-pied">
+                    <p class="cycle">
+                        <span class="<?= $trajet->statut === 'Ouvert' ? 'actuel' : 'fait' ?>">Ouvert</span>
+                        <span class="separateur" aria-hidden="true">→</span>
+                        <span class="<?= $trajet->statut === 'Complet' ? 'actuel' : ($etapeComplet ? 'fait' : '') ?>">Complet</span>
+                        <span class="separateur" aria-hidden="true">→</span>
+                        <span class="<?= $etapeTermine ? 'actuel' : '' ?>">Terminé</span>
+                    </p>
+                    <p class="discret sans-marge">
+                        <?php if ($etapeTermine) { ?>
+                            Le trajet est terminé : les participants peuvent se noter.
+                        <?php } else { ?>
+                            Le trajet passera « Terminé » automatiquement à l'heure du départ.
+                        <?php } ?>
+                    </p>
                 </div>
             </div>
-
-            <div class="decoupe"><span>Billet n° <?= sprintf('%04d', $trajet->id) ?></span></div>
-
-            <div class="billet-bas">
-                <!-- Cycle de vie du trajet -->
-                <div class="etapes">
-                    <div class="etape faite"><i></i>Ouvert</div>
-                    <div class="ligne<?= $etapeComplet ? ' faite' : '' ?>"></div>
-                    <div class="etape<?= $etapeComplet ? ' faite' : '' ?>"><i></i>Complet</div>
-                    <div class="ligne<?= $etapeTermine ? ' faite' : '' ?>"></div>
-                    <div class="etape<?= $etapeTermine ? ' faite' : '' ?>"><i></i>Terminé</div>
-                </div>
-                <span class="tampon"><?= formaterPrix($trajet->prix) ?></span>
-            </div>
-        </article>
+        </section>
 
         <?php
         // ===== Demandes de réservation : visibles UNIQUEMENT par le conducteur =====
         if ($estConducteur) { ?>
-            <div class="carte carte-demandes">
-                <h2>Demandes de réservation <span class="discret"><?= count($demandes) ?> au total</span></h2>
+            <section class="section">
+                <div class="section-titre">
+                    <h2>Demandes de réservation</h2>
+                    <span class="discret"><?= count($demandes) ?> au total</span>
+                </div>
                 <p class="discret">Accepter une demande retire une place du trajet. À zéro place, le trajet passe « Complet ».</p>
 
                 <?php if (count($demandes) === 0) { ?>
-                    <div class="vide"><b>Aucune demande</b>Les demandes des passagers apparaîtront ici.</div>
+                    <div class="vide">
+                        <img class="vide-illustration" src="images/illustration-vide.svg" alt="">
+                        <h3>Aucune demande pour l'instant</h3>
+                        <p>Les demandes des passagers apparaîtront ici.</p>
+                    </div>
+                <?php } else { ?>
+                    <div class="defilant">
+                        <table class="donnees">
+                            <thead>
+                                <tr><th>Passager</th><th>Demande du</th><th>Statut</th><th><span class="visuellement-cache">Actions</span></th></tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($demandes as $demande) { ?>
+                                    <tr>
+                                        <td>
+                                            <span class="personne">
+                                                <?= avatar($demande['nom_passager']) ?>
+                                                <span>
+                                                    <a class="personne-nom" href="index.php?page=profil&amp;id=<?= $demande['id_passager'] ?>"><?= e($demande['nom_passager']) ?></a>
+                                                    <!-- La note moyenne du passager aide le conducteur à décider -->
+                                                    <?php if ($demande['note_passager'] === null) { ?>
+                                                        <small class="note-vide">Pas encore noté</small>
+                                                    <?php } else { ?>
+                                                        <small class="note"><?= formaterNote((float) $demande['note_passager']) ?></small>
+                                                    <?php } ?>
+                                                </span>
+                                            </span>
+                                        </td>
+                                        <td class="date"><?= formaterDate($demande['date_reservation']) ?></td>
+                                        <td><span class="plaque <?= classeStatut($demande['statut']) ?>"><?= libelleStatut($demande['statut']) ?></span></td>
+                                        <td>
+                                            <?php
+                                            // Boutons seulement pour une demande en attente sur un trajet pas encore parti
+                                            if ($demande['statut'] === 'En attente' && $trajet->estModifiable()) { ?>
+                                                <div class="actions">
+                                                    <?php if ($trajet->places_restantes > 0) { ?>
+                                                        <form class="en-ligne" method="post" action="index.php?page=accepter&amp;id=<?= $trajet->id ?>&amp;reservation=<?= $demande['id'] ?>">
+                                                            <?= champCsrf() ?>
+                                                            <button class="bouton bouton--principal bouton--petit" type="submit">Accepter</button>
+                                                        </form>
+                                                    <?php } ?>
+                                                    <form class="en-ligne" method="post" action="index.php?page=refuser&amp;id=<?= $trajet->id ?>&amp;reservation=<?= $demande['id'] ?>">
+                                                        <?= champCsrf() ?>
+                                                        <button class="bouton bouton--danger bouton--petit" type="submit">Refuser</button>
+                                                    </form>
+                                                </div>
+                                            <?php } ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php } ?>
-
-                <ul class="liste">
-                    <?php foreach ($demandes as $demande) { ?>
-                        <li>
-                            <?= avatar($demande['nom_passager']) ?>
-                            <div class="infos-personne">
-                                <b><a href="index.php?page=profil&amp;id=<?= $demande['id_passager'] ?>"><?= e($demande['nom_passager']) ?></a></b>
-                                <small>
-                                    <?php if ($demande['note_passager'] === null) { ?>
-                                        <span class="note-vide">Pas encore noté</span>
-                                    <?php } else { ?>
-                                        <span class="note"><?= formaterNote((float) $demande['note_passager']) ?></span>
-                                    <?php } ?>
-                                    - demande du <?= formaterDate($demande['date_reservation']) ?>
-                                </small>
-                            </div>
-
-                            <?php if ($demande['statut'] === 'En attente' && $trajet->estModifiable()) { ?>
-                                <div class="actions">
-                                    <?php if ($trajet->places_restantes > 0) { ?>
-                                        <form class="en-ligne" method="post" action="index.php?page=accepter&amp;id=<?= $trajet->id ?>&amp;reservation=<?= $demande['id'] ?>">
-                                            <?= champCsrf() ?>
-                                            <button class="bouton bouton-petit" type="submit">Accepter</button>
-                                        </form>
-                                    <?php } ?>
-                                    <form class="en-ligne" method="post" action="index.php?page=refuser&amp;id=<?= $trajet->id ?>&amp;reservation=<?= $demande['id'] ?>">
-                                        <?= champCsrf() ?>
-                                        <button class="bouton bouton-danger bouton-petit" type="submit">Refuser</button>
-                                    </form>
-                                </div>
-                            <?php } else { ?>
-                                <span class="statut <?= classeStatut($demande['statut']) ?>"><?= libelleStatut($demande['statut']) ?></span>
-                            <?php } ?>
-                        </li>
-                    <?php } ?>
-                </ul>
-            </div>
+            </section>
         <?php } ?>
     </div>
 
-    <aside>
-        <!-- ===== Le conducteur ===== -->
-        <div class="carte">
-            <h2>Conducteur</h2>
-            <div class="conducteur">
-                <?= avatar($conducteur->nom) ?>
-                <div>
-                    <a class="nom" href="index.php?page=profil&amp;id=<?= $conducteur->id ?>"><?= e($conducteur->nom) ?></a>
-                    <?php if ($noteConducteur === null) { ?>
-                        <small class="note-vide">Pas encore noté</small>
-                    <?php } else { ?>
-                        <small><span class="note"><?= formaterNote($noteConducteur) ?></span> - <?= $nombreAvisConducteur ?> avis</small>
+    <!-- ===== Panneau d'action : reste visible pendant le défilement ===== -->
+    <aside class="panneau-action">
+        <div class="bloc">
+            <div class="panneau-prix">
+                <span class="prix prix--grand"><?= formaterPrix($trajet->prix) ?></span>
+                <span class="sieges" title="<?= $trajet->places_restantes ?> place(s) libre(s) sur <?= $trajet->places_totales ?>">
+                    <?php for ($i = 1; $i <= $trajet->places_totales; $i++) { ?>
+                        <i class="siege<?= $i <= $placesPrises ? ' pris' : '' ?>"></i>
                     <?php } ?>
-                </div>
+                    <span class="sieges-texte"><?= $trajet->places_restantes ?> sur <?= $trajet->places_totales ?> libre<?= $trajet->places_restantes > 1 ? 's' : '' ?></span>
+                </span>
             </div>
-        </div>
 
-        <!-- ===== Action possible : dépend de QUI regarde la page ===== -->
-        <div class="carte">
-            <?php if (!estConnecte()) { ?>
-                <h2>Réserver</h2>
+            <?php
+            // L'action proposée dépend de QUI regarde la page
+            if (!estConnecte()) { ?>
+                <h3>Réserver</h3>
                 <p class="discret">Connectez-vous pour demander une place.</p>
-                <a class="bouton bouton-large" href="index.php?page=connexion">Se connecter</a>
+                <a class="bouton bouton--principal bouton--large" href="index.php?page=connexion">Se connecter</a>
 
             <?php } elseif ($estConducteur) { ?>
-                <h2>Gérer mon trajet</h2>
+                <h3>Gérer mon trajet</h3>
                 <div class="actions">
                     <?php if ($trajet->estModifiable()) { ?>
-                        <a class="bouton bouton-secondaire bouton-petit" href="index.php?page=modifier&amp;id=<?= $trajet->id ?>">Modifier</a>
+                        <a class="bouton bouton--secondaire bouton--petit" href="index.php?page=modifier&amp;id=<?= $trajet->id ?>">Modifier</a>
                     <?php } ?>
 
                     <?php if ($trajet->statut === 'Termine') { ?>
-                        <a class="bouton bouton-petit" href="index.php?page=noter&amp;id=<?= $trajet->id ?>">Noter mes passagers</a>
+                        <a class="bouton bouton--principal bouton--petit" href="index.php?page=noter&amp;id=<?= $trajet->id ?>">Noter mes passagers</a>
                     <?php } ?>
 
                     <!-- data-confirmation : le JavaScript demande confirmation avant l'envoi -->
                     <form class="en-ligne" method="post" action="index.php?page=supprimer-trajet&amp;id=<?= $trajet->id ?>"
                           data-confirmation="Supprimer définitivement ce trajet et toutes ses réservations ?">
                         <?= champCsrf() ?>
-                        <button class="bouton bouton-danger bouton-petit" type="submit">Supprimer</button>
+                        <button class="bouton bouton--danger bouton--petit" type="submit">Supprimer</button>
                     </form>
                 </div>
 
             <?php } elseif ($maDemande !== null) { ?>
-                <h2>Ma demande</h2>
-                <p><span class="statut <?= classeStatut($maDemande) ?>"><?= libelleStatut($maDemande) ?></span></p>
+                <h3>Ma demande</h3>
+                <p><span class="plaque <?= classeStatut($maDemande) ?>"><?= libelleStatut($maDemande) ?></span></p>
                 <?php if ($maDemande === 'Confirmee' && $trajet->statut === 'Termine') { ?>
-                    <a class="bouton bouton-large" href="index.php?page=noter&amp;id=<?= $trajet->id ?>">Noter le conducteur</a>
+                    <a class="bouton bouton--principal bouton--large" href="index.php?page=noter&amp;id=<?= $trajet->id ?>">Noter le conducteur</a>
                 <?php } else { ?>
-                    <a class="bouton bouton-secondaire bouton-large" href="index.php?page=mes-reservations">Voir mes réservations</a>
+                    <a class="bouton bouton--secondaire bouton--large" href="index.php?page=mes-reservations">Voir mes réservations</a>
                 <?php } ?>
 
             <?php } elseif ($trajet->statut !== 'Ouvert' || $trajet->places_restantes < 1 || $trajet->estParti()) { ?>
-                <h2>Réservation impossible</h2>
-                <p class="discret">Ce trajet est complet, déjà parti ou terminé.</p>
+                <h3>Réservation impossible</h3>
+                <p class="discret sans-marge">Ce trajet est complet, déjà parti ou terminé.</p>
 
             <?php } else { ?>
-                <h2>Réserver une place</h2>
-                <p class="discret">Le conducteur recevra votre demande et pourra l'accepter.</p>
+                <h3>Réserver une place</h3>
+                <p class="discret">Le conducteur recevra votre demande et pourra l'accepter ou la refuser.</p>
                 <form method="post" action="index.php?page=reserver&amp;id=<?= $trajet->id ?>">
                     <?= champCsrf() ?>
-                    <button class="bouton bouton-large" type="submit">Demander une place - <?= formaterPrix($trajet->prix) ?></button>
+                    <button class="bouton bouton--principal bouton--large" type="submit">Demander une place</button>
                 </form>
             <?php } ?>
+        </div>
+
+        <!-- ===== Le conducteur et sa réputation ===== -->
+        <div class="bloc">
+            <p class="surtitre">Conducteur</p>
+            <div class="personne">
+                <?= avatar($conducteur->nom) ?>
+                <span>
+                    <a class="personne-nom" href="index.php?page=profil&amp;id=<?= $conducteur->id ?>"><?= e($conducteur->nom) ?></a>
+                    <?php if ($noteConducteur === null) { ?>
+                        <small class="note-vide">Pas encore noté</small>
+                    <?php } else { ?>
+                        <small><span class="note"><?= formaterNote($noteConducteur) ?></span> - <?= $nombreAvisConducteur ?> avis</small>
+                    <?php } ?>
+                </span>
+            </div>
         </div>
     </aside>
 </div>

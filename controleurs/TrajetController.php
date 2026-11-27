@@ -172,7 +172,8 @@ class TrajetController
         if (count($erreurs) === 0) {
             $erreur = $trajet->modifier($v['origine'], $v['destination'], $v['date_heure'], $v['places'], $v['prix']);
             if ($erreur !== '') {
-                $erreurs[] = $erreur;
+                // Erreur qui ne concerne pas un seul champ : affichée en haut du formulaire
+                $erreurs['general'] = $erreur;
             }
         }
 

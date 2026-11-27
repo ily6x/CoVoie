@@ -20,13 +20,17 @@ covoie/
 │   ├── mld.png
 │   └── mld.svg
 ├── fonts/
-│   ├── roboto-latin-400-normal.woff2
-│   ├── roboto-latin-500-normal.woff2
-│   └── roboto-latin-700-normal.woff2
+│   ├── nunito-sans-latin-400-normal.woff2
+│   ├── nunito-sans-latin-700-normal.woff2
+│   ├── poppins-latin-600-normal.woff2
+│   └── poppins-latin-700-normal.woff2
 ├── gantt/
 │   └── covoiturage.gan
 ├── images/
 │   ├── illustration-accueil.svg   illustration de l'accueil
+│   ├── illustration-connexion.svg illustration de la page connexion
+│   ├── illustration-inscription.svg illustration de la page inscription
+│   ├── illustration-vide.svg      illustration des listes vides
 │   └── logo.svg                   logo
 ├── includes/
 │   ├── config.php                 réglages + session
@@ -59,9 +63,10 @@ covoie/
 │   │   ├── formulaire.php
 │   │   └── mes-avis.php
 │   ├── gabarit/
-│   │   ├── carte-trajet.php       billet réutilisable
-│   │   ├── footer.php             bas de page
-│   │   └── header.php             haut de page + menu
+│   │   ├── cartes-trajets.php     cartes de trajets réutilisables
+│   │   ├── footer.php             bas de page + boîte de confirmation
+│   │   ├── header.php             haut de page, menu, barre mobile
+│   │   └── onglets-espace.php     onglets de l'espace personnel
 │   ├── reservations/
 │   │   ├── mes-reservations.php
 │   │   └── recherche.php

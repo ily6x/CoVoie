@@ -346,11 +346,12 @@ function avatar(string $nom, string $classe = ''): string
 function lienActif(string $page): string
 {
     $pageCourante = 'accueil';
-    if (isset($_GET['page'])) {
+    if (isset($_GET['page']) && is_string($_GET['page'])) {
         $pageCourante = $_GET['page'];
     }
 
-    if ($pageCourante === $page) {
+    // Actif si c'est la même page, ou une sous-page (ex : 'admin-avis' pour le lien 'admin')
+    if ($pageCourante === $page || strpos($pageCourante, $page . '-') === 0) {
         return ' class="actif"';
     }
     return '';
@@ -391,4 +392,106 @@ function libelleStatut(string $statut): string
 function classeStatut(string $statut): string
 {
     return 'statut-' . strtolower(str_replace(' ', '-', $statut));
+}
+
+/**
+ * Date complète en toutes lettres : "mercredi 16 décembre 2026".
+ */
+function formaterDateLongue(string $date): string
+{
+    $jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    $mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+
+    $horodatage = strtotime($date);
+    return $jours[(int) date('w', $horodatage)] . ' ' . date('j', $horodatage) . ' '
+        . $mois[(int) date('n', $horodatage) - 1] . ' ' . date('Y', $horodatage);
+}
+
+/**
+ * Sens du trajet par rapport au campus, affiché sur la page détail d'un trajet.
+ * On regarde simplement si le mot "campus" apparaît dans l'arrivée ou le départ.
+ * @return string 'Vers campus', 'Depuis campus' ou 'Hors campus'
+ */
+function sensTrajet(string $origine, string $destination): string
+{
+    if (stripos($destination, 'campus') !== false) {
+        return 'Vers campus';
+    }
+    if (stripos($origine, 'campus') !== false) {
+        return 'Depuis campus';
+    }
+    return 'Hors campus';
+}
+
+/**
+ * Affiche le message d'erreur d'un champ de formulaire, s'il y en a un.
+ * Les erreurs sont rangées par nom de champ : ['origine' => 'Le lieu de départ...'].
+ * @param array  $erreurs Les erreurs renvoyées par le modèle
+ * @param string $champ   Le nom du champ (ex : 'origine')
+ * @return string Le HTML du message, ou '' si le champ est correct
+ */
+function erreurChamp(array $erreurs, string $champ): string
+{
+    if (!isset($erreurs[$champ])) {
+        return '';
+    }
+    return '<p class="erreur-champ" id="erreur-' . $champ . '">' . icone('alerte', 16) . e($erreurs[$champ]) . '</p>';
+}
+
+/**
+ * Classe CSS d'un bloc de champ : "champ", ou "champ champ--erreur" si le champ a une erreur
+ * (le bord du champ devient alors rouge).
+ */
+function classeChamp(array $erreurs, string $champ): string
+{
+    if (isset($erreurs[$champ])) {
+        return 'champ champ--erreur';
+    }
+    return 'champ';
+}
+
+/**
+ * Attributs d'accessibilité d'un champ en erreur : le lecteur d'écran annonce
+ * que le champ est invalide et lit le message d'erreur associé.
+ */
+function attributsErreur(array $erreurs, string $champ): string
+{
+    if (isset($erreurs[$champ])) {
+        return ' aria-invalid="true" aria-describedby="erreur-' . $champ . '"';
+    }
+    return '';
+}
+
+/**
+ * Petites icônes dessinées en SVG (trait de 2 px, angles droits).
+ * Elles sont écrites directement dans la page : aucun fichier à charger.
+ * @param string $nom    Nom de l'icône (ex : 'voiture')
+ * @param int    $taille Taille en pixels
+ * @return string Le code SVG
+ */
+function icone(string $nom, int $taille = 20): string
+{
+    $dessins = [
+        'departs'      => '<path d="M4 6h16M4 12h16M4 18h10"/>',
+        'voiture'      => '<path d="M5 11l2-5h10l2 5M3 11h18v6H3zM6 17v2M18 17v2"/><path d="M7 14h1M16 14h1"/>',
+        'billet'       => '<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10" stroke-dasharray="2 2"/>',
+        'etoile'       => '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.6 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
+        'profil'       => '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+        'plus'         => '<path d="M12 5v14M5 12h14"/>',
+        'admin'        => '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+        'inverser'     => '<path d="M8 4v16M8 4L4 8M8 4l4 4M16 20V4M16 20l-4-4M16 20l4-4"/>',
+        'alerte'       => '<circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16v1"/>',
+        'valide'       => '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+        'fermer'       => '<path d="M6 6l12 12M18 6L6 18"/>',
+        'recherche'    => '<circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/>',
+        'statistiques' => '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
+    ];
+
+    $dessin = '';
+    if (isset($dessins[$nom])) {
+        $dessin = $dessins[$nom];
+    }
+
+    return '<svg width="' . $taille . '" height="' . $taille . '" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+        . ' stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">' . $dessin . '</svg>';
 }
