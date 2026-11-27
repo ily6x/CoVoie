@@ -34,10 +34,10 @@ Mot de passe de **tous** les comptes : `Password123!`
 
 | Compte | Ce qu'il permet de montrer |
 |---|---|
-| `ilyes.karim@campus.fr` | **Administrateur** : tableau de bord, modération des avis, comptes, trajets |
+| `ilyes.tizaoui@campus.fr` | **Administrateur** : tableau de bord, modération des avis, comptes, trajets |
 | `sarah.benjelloun@campus.fr` | **Module A** : 2 demandes pour la dernière place du trajet Issy → Versailles (en accepter une le fait passer « Complet ») ; son trajet d'hier est **clôturé automatiquement**, elle peut noter Emma |
 | `emma.girard@campus.fr` | **Module B** : réservations dans les 3 états (En attente, Confirmée, Refusée) |
-| `bilel.mansouri@campus.fr` | **Module C** : profil noté 4,75 / 5 |
+| `bilel.allali@campus.fr` | **Module C** : profil noté 4,75 / 5 |
 | `camille.rousset@campus.fr` | Profil noté 3,25 / 5 (pour comparer) |
 | `hugo.petit@campus.fr` | Aucun avis : affiche « Pas encore noté » (et non 0) |
 
@@ -60,7 +60,7 @@ covoie/
 ├── js/script.js         Confirmation, bouton "Envoi…", inverser départ/arrivée
 ├── images/  fonts/      Logo, illustrations, polices
 ├── sql/bdd_covoie.sql  Structure de la base + jeu de démonstration
-├── docs/                MCD, MLD, diagramme de classes, conception
+├── docs/                MCD, MLD, diagramme de classes, conception, jeu d'essai
 └── gantt/               Planning du projet (GanttProject)
 ```
 
@@ -107,6 +107,7 @@ covoie/
 - **[Documentation technique (PDF)](docs/documentation.pdf)** : MLD, diagramme de classes, décrément des places, clôture, note moyenne
 - [MCD](docs/mcd.png) - [MLD](docs/mld.png) - [Diagramme de classes](docs/diagramme-classes.png)
 - [Conception détaillée](docs/conception.md) - [Arborescence](docs/arborescence.txt)
+- **[Jeu d'essai](docs/jeu-essai.md)** : 45 tests des règles de gestion, de la sécurité et de l'affichage
 
 ---
 

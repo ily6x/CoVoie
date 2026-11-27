@@ -122,7 +122,7 @@ CREATE TABLE avis (
 --
 --  COMPTE                          CE QU'IL PERMET DE MONTRER
 --  ------------------------------  ------------------------------------------
---  ilyes.karim@campus.fr           ADMINISTRATEUR : modération des avis,
+--  ilyes.tizaoui@campus.fr           ADMINISTRATEUR : modération des avis,
 --                                  comptes, trajets, statistiques globales.
 --
 --  sarah.benjelloun@campus.fr      MODULE A : deux demandes pour la dernière
@@ -134,7 +134,7 @@ CREATE TABLE avis (
 --                                  refuse la demande d'Hugo et débloque la
 --                                  notation de la passagère (Emma).
 --
---  bilel.mansouri@campus.fr        MODULE C : profil bien noté (4,75 / 5).
+--  bilel.allali@campus.fr        MODULE C : profil bien noté (4,75 / 5).
 --                                  Réservations envoyées et trajets conduits.
 --
 --  camille.rousset@campus.fr       Profil moyennement noté (3,25 / 5).
@@ -159,9 +159,9 @@ CREATE TABLE avis (
 --  (les chaînes ci-dessous sont le résultat de password_hash())
 -- ======================================================================
 INSERT INTO utilisateurs (id, nom, email, mot_de_passe, role, date_inscription) VALUES
-( 1, 'Arkam Ghanem',     'arkam.benali@campus.fr', '$2y$12$JDqbkkeqrq5Wh58nIN7Dkedt8ZF0PCV9ilw0QUl/AwIA0T2Aurbv6', 'membre', DATE_ADD(CURDATE(), INTERVAL -529920 MINUTE)),
-( 2, 'Bilel Allali',   'bilel.mansouri@campus.fr', '$2y$12$NYRkvCNGPU8x/glQuui8qeTi5eDnBpZm1W5B5iTuQOAM2.Kq1B2US', 'membre', DATE_ADD(CURDATE(), INTERVAL -574560 MINUTE)),
-( 3, 'Ilyès Tizaoui',      'ilyes.karim@campus.fr', '$2y$12$OzqANzPnzo.JQILm21g5OeWVTSr15A//ya.GeSLWU0JFVEEFOF232', 'admin', DATE_ADD(CURDATE(), INTERVAL -208800 MINUTE)),
+( 1, 'Arkam Ghanem',     'arkam.ghanem@campus.fr', '$2y$12$JDqbkkeqrq5Wh58nIN7Dkedt8ZF0PCV9ilw0QUl/AwIA0T2Aurbv6', 'membre', DATE_ADD(CURDATE(), INTERVAL -529920 MINUTE)),
+( 2, 'Bilel Allali',   'bilel.allali@campus.fr', '$2y$12$NYRkvCNGPU8x/glQuui8qeTi5eDnBpZm1W5B5iTuQOAM2.Kq1B2US', 'membre', DATE_ADD(CURDATE(), INTERVAL -574560 MINUTE)),
+( 3, 'Ilyès Tizaoui',      'ilyes.tizaoui@campus.fr', '$2y$12$OzqANzPnzo.JQILm21g5OeWVTSr15A//ya.GeSLWU0JFVEEFOF232', 'admin', DATE_ADD(CURDATE(), INTERVAL -208800 MINUTE)),
 ( 4, 'Camille Rousset',  'camille.rousset@campus.fr', '$2y$12$PM7EqucY0bSTXPFAD8AeG.2WEs/8KXa.Zi4uuFr5dWi5DlXmIdG9K', 'membre', DATE_ADD(CURDATE(), INTERVAL -302400 MINUTE)),
 ( 5, 'Yanis Delorme',    'yanis.delorme@campus.fr', '$2y$12$HbELK5fJIPP9dfjtV8pvuOFYTu.vr0JarJ774WXl.NXNimw303872', 'membre', DATE_ADD(CURDATE(), INTERVAL -69120 MINUTE)),
 ( 6, 'Sofia Nguyen',     'sofia.nguyen@campus.fr', '$2y$12$h/dULz69RCxXJ0asE5oBreba4Vj4ARxGPwb8ldnN5xgIEoBD3thH6', 'membre', DATE_ADD(CURDATE(), INTERVAL -273600 MINUTE)),

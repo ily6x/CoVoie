@@ -26,6 +26,12 @@ require_once 'includes/fonctions.php';
 require_once 'includes/routes.php';
 /** @var array $routes  Table des pages, définie dans includes/routes.php */
 
+// Filet de sécurité : si une erreur imprévue arrive (ex : une requête SQL qui échoue),
+// on affiche la page d'erreur du site au lieu du message brut de PHP (qui montre les chemins des fichiers).
+set_exception_handler(function (Throwable $erreur) {
+    afficherErreur(500, 'Une erreur inattendue est survenue. Réessayez dans un instant.');
+});
+
 require_once 'modeles/Utilisateur.php';
 require_once 'modeles/Trajet.php';
 require_once 'modeles/Reservation.php';

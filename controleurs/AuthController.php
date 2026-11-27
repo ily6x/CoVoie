@@ -32,6 +32,9 @@ class AuthController
         $utilisateur = Utilisateur::verifierConnexion($email, $motDePasse);
 
         if ($utilisateur === null) {
+            // Pause d'une seconde après un échec : un programme ne peut plus essayer
+            // des milliers de mots de passe à la suite (attaque "par force brute")
+            sleep(1);
             // Message volontairement vague : on ne dit pas si c'est l'email ou le mot de passe
             ajouterMessage('Email ou mot de passe incorrect.', 'erreur');
             afficherVue('auth/connexion', ['titre' => 'Connexion', 'email' => $email]);

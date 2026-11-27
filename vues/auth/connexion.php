@@ -42,10 +42,10 @@
                 <p class="surtitre">Comptes de démonstration</p>
                 <p class="discret">Mot de passe commun : <code>Password123!</code></p>
                 <ul class="comptes-demo">
-                    <li><span>Admin</span><code>ilyes.karim@campus.fr</code></li>
+                    <li><span>Admin</span><code>ilyes.tizaoui@campus.fr</code></li>
                     <li><span>Conductrice</span><code>sarah.benjelloun@campus.fr</code></li>
                     <li><span>Passagère</span><code>emma.girard@campus.fr</code></li>
-                    <li><span>Bien noté</span><code>bilel.mansouri@campus.fr</code></li>
+                    <li><span>Bien noté</span><code>bilel.allali@campus.fr</code></li>
                     <li><span>Sans avis</span><code>hugo.petit@campus.fr</code></li>
                 </ul>
             </div>

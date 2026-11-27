@@ -91,7 +91,7 @@ class TrajetController
 
 
     /* ==============================================================
-       PUBLIER / MODIFIER / SUPPRIMER / CLÔTURER
+       PUBLIER / MODIFIER / SUPPRIMER
        ============================================================== */
 
     /**

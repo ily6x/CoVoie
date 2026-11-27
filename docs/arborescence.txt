@@ -15,6 +15,7 @@ covoie/
 │   ├── diagramme-classes.png
 │   ├── diagramme-classes.svg
 │   ├── documentation.pdf          documentation courte (livrable)
+│   ├── jeu-essai.md               tests réalisés (cas, résultat attendu, obtenu)
 │   ├── mcd.png
 │   ├── mcd.svg
 │   ├── mld.png

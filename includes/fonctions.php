@@ -463,7 +463,7 @@ function attributsErreur(array $erreurs, string $champ): string
 }
 
 /**
- * Petites icônes dessinées en SVG (trait de 2 px, angles droits).
+ * Petites icônes dessinées en SVG (trait de 2 px, bouts arrondis).
  * Elles sont écrites directement dans la page : aucun fichier à charger.
  * @param string $nom    Nom de l'icône (ex : 'voiture')
  * @param int    $taille Taille en pixels
@@ -484,7 +484,6 @@ function icone(string $nom, int $taille = 20): string
         'valide'       => '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
         'fermer'       => '<path d="M6 6l12 12M18 6L6 18"/>',
         'recherche'    => '<circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/>',
-        'statistiques' => '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
     ];
 
     $dessin = '';
@@ -493,5 +492,5 @@ function icone(string $nom, int $taille = 20): string
     }
 
     return '<svg width="' . $taille . '" height="' . $taille . '" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
-        . ' stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">' . $dessin . '</svg>';
+        . ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $dessin . '</svg>';
 }
